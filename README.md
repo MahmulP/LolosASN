@@ -1,4 +1,4 @@
-# LolosASN Android App
+# LolosASN
 
 LolosASN is an Android-based CPNS tryout application that uses machine learning to analyze user tryout results and applies the concept of gamification. LolosASN aims to improve the abilities of CPNS exam participants and help them to pass with satisfactory results.
 
