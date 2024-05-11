@@ -1,6 +1,6 @@
-# LolosASN Repository
+# LolosASN Android App
 
-This repository contains the codebase for the LolosASN project, an educational platform designed to assist CPNS (Civil Servant Candidate) with a tryout feature.
+LolosASN is an Android application designed to assist CPNS (Civil Servant Candidate) with a tryout feature.
 
 ## Table of Contents
 
@@ -20,19 +20,28 @@ This repository contains the codebase for the LolosASN project, an educational p
 
 ## Tech Stack
 
-The project is built using the following technologies:
+The app is built using the following technologies:
 
-- Frontend: HTML, CSS, JavaScript, React.js
-- Backend: Node.js, Express.js
-- Database: MongoDB
-- Authentication: JSON Web Tokens (JWT)
-- Testing: Jest, React Testing Library
+- Programming Language: Kotlin
+- Architecture: MVVM (Model-View-ViewModel)
+- Database: Room Persistence Library
+- Networking: Retrofit
+- Dependency Injection: Dagger Hilt
+- Testing: JUnit, Espresso
 
 ## Installation
 
-To run this project locally, follow these steps:
+To run this app on your device, follow these steps:
 
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/LolosASN.git```
+   git clone https://github.com/MahmulPe/LolosASN.git
+
+2. Open the project in Android Studio.
+
+3. Build and run the app on an Android emulator or a connected Android device.
+
+### Usage
+
+Once the app is installed on your device, you can use it to practice exams and track your performance.
