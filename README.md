@@ -42,7 +42,7 @@ To run this app on your device, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/MahmulPe/LolosASN.git
+   git clone https://github.com/MahmulP/LolosASN.git
 
 2. Open the project in Android Studio.
 
