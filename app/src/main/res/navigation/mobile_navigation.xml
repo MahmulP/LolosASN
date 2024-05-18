@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation.xml"
+    app:startDestination="@id/menu_home">
+
+    <fragment
+        android:id="@+id/menu_home"
+        android:name="com.lolos.asn.ui.fragment.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/menu_tryout"
+        android:name="com.lolos.asn.ui.fragment.TryoutFragment"
+        android:label="fragment_tryout"
+        tools:layout="@layout/fragment_tryout" />
+    <fragment
+        android:id="@+id/menu_materi"
+        android:name="com.lolos.asn.ui.fragment.LearningFragment"
+        android:label="fragment_learning"
+        tools:layout="@layout/fragment_learning" />
+    <fragment
+        android:id="@+id/menu_profil"
+        android:name="com.lolos.asn.ui.fragment.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>
