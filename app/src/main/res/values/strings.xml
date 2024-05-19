@@ -71,4 +71,35 @@
     <string name="calendar_icon">calendar icon</string>
     <string name="date_range">23 Mei - 7 Juni 2024</string>
     <string name="detail">Lihat Detail</string>
+    <string name="tab_twk">TWK</string>
+    <string name="tab_tiu">TIU</string>
+    <string name="tab_tkp">TKP</string>
+    <string name="twk">Tes Wawasan Kebangsaan</string>
+    <string name="cover">sampul foto</string>
+    <string name="ebook">Ebook</string>
+    <string name="list_material">1. Nasionalisme</string>
+    <string name="dot">Titik</string>
+    <string name="button_materi">button materi</string>
+    <string name="tkp">Tes Karakteristik Pribadi</string>
+    <string name="tiu">Tes Intelegensi Umum</string>
+    <string name="lorem_long">Lorem ipsum dolor sit amet consectetur. Amet tellus erat adipiscing magna sit feugiat venenatis. Integer dui sit posuere risus. Senectus venenatis gravida sed iaculis. Amet leo sed ac adipiscing in orci sagittis. At nunc eget fusce egestas nibh massa placerat. Ut libero nunc risus tellus ut neque augue.\nEuismod massa turpis dictum semper lorem ut accumsan. Eu ut adipiscing lectus sed et eu suscipit maecenas et. Amet ullamcorper purus dictumst phasellus ullamcorper suspendisse dolor. Venenatis suscipit posuere leo purus augue. Diam mauris arcu amet sit. Vel erat arcu ut sed purus amet aenean. Turpis duis tristique nulla etiam aliquet pellentesque arcu lectus. Pharetra ultricies tincidunt id semper amet mattis. Mauris egestas lacus turpis neque. Sit quis faucibus pulvinar morbi in viverra.\nPellentesque porttitor mauris pellentesque turpis magna sapien arcu. Proin vitae hendrerit quisque sed. Eget urna nec vitae mauris posuere sapien ullamcorper tortor eu. Nunc a enim imperdiet tincidunt luctus feugiat. Risus ultrices amet enim tincidunt. Mauris mi non commodo nibh enim. Magna egestas turpis quis blandit nisl ornare neque. Sit elementum sit sed condimentum sed suspendisse. A nec eget sed dapibus cras ut sit dui. Suspendisse diam maecenas vivamus lacus risus auctor lectus. Vitae lacus et suspendisse vitae maecenas tempus velit morbi.</string>
+    <string name="tryout_packet">PAKET TRYOUT CPNS</string>
+    <string name="premium">Premium</string>
+    <string name="free">Gratis</string>
+    <string name="packet_description">Silahkan pilih paket tryout sesuai dengan yang kamu butuhkan</string>
+    <string name="one_packet">1 Paket Tryout</string>
+    <string name="three_packet">3 Paket Tryout</string>
+    <string name="tryout_premium">Tryout Premium</string>
+    <string name="periode_tryout">Periode Tryout</string>
+    <string name="title">DAFTAR TRYOUT CPNS</string>
+    <string name="start">Mulai</string>
+    <string name="gambar_kertas">gambar kertas</string>
+    <string name="tryout_one">Tryout 1 CPNS 2024</string>
+    <string name="cancel">Gak Dulu</string>
+    <string name="detail_tryout">Detail Tryout</string>
+    <string name="soal">30 Soal</string>
+    <string name="time">30 Menit</string>
+    <string name="passing_grade">Passing Grade = %1$d poin</string>
+    <string name="info">Informasi Penting</string>
+    <string name="information_description">Sistem penilaian seleksi kompetensi dasar (SKD) oleh Badan Kepegawaian Negara (BKN):\nBenar = (+5 poin)\nSalah = (0 poin)\nKosong = (0 poin)</string>
 </resources>
