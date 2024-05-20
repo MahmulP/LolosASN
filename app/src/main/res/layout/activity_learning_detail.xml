@@ -13,12 +13,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="?attr/colorPrimary"
             app:title="@string/learning_material"
+            android:background="@color/white"
             app:titleTextAppearance="@style/CustomToolbarTitleTextAppearance"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 

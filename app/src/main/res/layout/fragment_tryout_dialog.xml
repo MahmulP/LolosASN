@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ui.dialog.TryoutDialogFragment">
+    tools:context=".ui.dialog.TryoutDialogFragment"
+    style="@style/CustomBottomSheetDialogTheme">
 
     <TextView
         android:id="@+id/tvDialogTitle"
@@ -27,13 +28,14 @@
         android:text="@string/packet_description"
         android:layout_marginTop="8dp" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_premium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
-        android:background="@drawable/orange_border">
+        app:strokeColor="@color/orange"
+        android:backgroundTint="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -146,14 +148,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_free"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white"
+        app:strokeColor="@color/green"
         android:background="@drawable/orange_border">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -165,13 +169,13 @@
                 android:id="@+id/tv_free"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_bold"
                 android:text="@string/free"
                 android:textColor="@color/green"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/roboto_bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -191,14 +195,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/one_packet"
-                android:textSize="12sp"
                 android:textColor="@color/green"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_free_packet"
                 app:layout_constraintStart_toEndOf="@id/iv_free_packet"
-                app:layout_constraintTop_toTopOf="@id/iv_free_packet"
-                app:layout_constraintBottom_toBottomOf="@id/iv_free_packet"/>
+                app:layout_constraintTop_toTopOf="@id/iv_free_packet" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

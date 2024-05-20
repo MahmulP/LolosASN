@@ -9,12 +9,20 @@
         android:id="@+id/menu_home"
         android:name="com.lolos.asn.ui.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_learning"
+            app:destination="@id/menu_materi" />
+    </fragment>
     <fragment
         android:id="@+id/menu_tryout"
         android:name="com.lolos.asn.ui.fragment.TryoutFragment"
         android:label="fragment_tryout"
-        tools:layout="@layout/fragment_tryout" />
+        tools:layout="@layout/fragment_tryout">
+        <argument
+            android:name="typeTryout"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/menu_materi"
         android:name="com.lolos.asn.ui.fragment.LearningFragment"
@@ -25,5 +33,9 @@
         android:name="com.lolos.asn.ui.fragment.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <action
+        android:id="@+id/action_global_to_tryout"
+        app:destination="@id/menu_tryout" />
 
 </navigation>

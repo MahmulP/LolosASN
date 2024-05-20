@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.lolos.asn.R
 import com.lolos.asn.databinding.FragmentTryoutBinding
@@ -19,6 +20,16 @@ class TryoutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val typeTryout = arguments?.getString("typeTryout")
+
+        if (typeTryout == "Premium") {
+            binding.tvType.text = typeTryout
+        } else {
+            binding.tvType.text = typeTryout
+            binding.tvType.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+            binding.toolbar.title = "Tryout Gratis"
+        }
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)

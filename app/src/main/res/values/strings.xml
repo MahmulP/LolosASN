@@ -102,4 +102,26 @@
     <string name="passing_grade">Passing Grade = %1$d poin</string>
     <string name="info">Informasi Penting</string>
     <string name="information_description">Sistem penilaian seleksi kompetensi dasar (SKD) oleh Badan Kepegawaian Negara (BKN):\nBenar = (+5 poin)\nSalah = (0 poin)\nKosong = (0 poin)</string>
+    <string name="are_you_sure">Apakah Kamu Sudah Yakin?</string>
+    <string name="end_the_test">Kamu telah menyelesaikan 5/25 soal. Apakah yakin ingin mengakhiri subtest ini?</string>
+    <string name="nope">Batal</string>
+    <string name="check_everything">Cek Semua</string>
+    <string name="soal_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum \n\nTeks diatas membahas tentang ...</string>
+    <string name="lorem_small">Lorem ipsum dolor sit amet</string>
+    <string name="cek_jawaban_soal">Cek Jawaban Soal</string>
+    <string name="passed">SELAMAT ANDA LULUS!</string>
+    <string name="passed_or_no">icon lulus atau tidak</string>
+    <string name="total_point">210 Poin</string>
+    <string name="result_title">Tryout 1 Premium</string>
+    <string name="point">120</string>
+    <string name="keterangan">Keterangan</string>
+    <string name="not_passed_rectangle">Persegi tidak lulus</string>
+    <string name="passed_text">Lolos Passing Grade</string>
+    <string name="not_passed_text">Tidak Lolos Passing Grade</string>
+    <string name="analysis_ai">Analisis AI</string>
+    <string name="description_ai">Identifikasi kelemahan dan kekuatan pemahaman anda terkait dengan materi ujian tryout</string>
+    <string name="pembahasan">Pembahasan</string>
+    <string name="description_pembahasan">Pelajari keselahan anda saya menjawab soal ujian tryout serta lihat penyelesaian \nsoal</string>
+    <string name="ranking_text">Perangkingan</string>
+    <string name="description_rank">Lihat peringkat nilai anda dibandingkan dengan peserta lainnya dari\nseluruh Indonesia</string>
 </resources>

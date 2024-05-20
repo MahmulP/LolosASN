@@ -2,29 +2,32 @@ package com.lolos.asn.ui.dialog
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.lolos.asn.R
 import com.lolos.asn.databinding.FragmentStartDialogBinding
+import com.lolos.asn.databinding.FragmentValidationDialogBinding
 import com.lolos.asn.ui.activity.ExaminationActivity
+import com.lolos.asn.ui.activity.ResultActivity
 
-class StartDialogFragment : DialogFragment() {
-    private lateinit var binding: FragmentStartDialogBinding
+class ValidationDialogFragment : DialogFragment() {
+    private lateinit var binding: FragmentValidationDialogBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStartDialogBinding.inflate(inflater, container, false)
+        binding = FragmentValidationDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnStart.setOnClickListener {
-            startActivity(Intent(requireContext(), ExaminationActivity::class.java))
+        binding.btnDone.setOnClickListener {
+            startActivity(Intent(requireContext(), ResultActivity::class.java))
             dismiss()
         }
 

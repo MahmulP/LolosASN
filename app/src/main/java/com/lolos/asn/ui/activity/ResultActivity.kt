@@ -1,21 +1,23 @@
 package com.lolos.asn.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.lolos.asn.R
-import com.lolos.asn.databinding.ActivityTryoutDetailBinding
-import com.lolos.asn.ui.dialog.StartDialogFragment
+import com.lolos.asn.databinding.ActivityResultBinding
 
-class TryoutDetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityTryoutDetailBinding
+class ResultActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityResultBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityResultBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        binding = ActivityTryoutDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,16 +31,23 @@ class TryoutDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.btnStart.setOnClickListener {
-            val dialog = StartDialogFragment()
-            dialog.show(supportFragmentManager, "CustomDialog")
+        binding.tvDetailRank.setOnClickListener {
+            startActivity(Intent(this, LeaderboardActivity::class.java))
+        }
+
+        binding.btnDone.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("navigate_to", "learning")
+            startActivity(intent)
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("navigate_to", "learning")
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

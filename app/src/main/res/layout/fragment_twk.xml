@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.TWKFragment">
+    tools:context=".ui.fragment.TWKFragment"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:tint="@color/grey" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_material"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,10 +43,8 @@
             app:layout_constraintTop_toBottomOf="@id/tv_category"
             app:layout_constraintStart_toEndOf="@id/iv_dot"
             app:layout_constraintEnd_toEndOf="parent"
-            app:strokeColor="@color/black_500"
-            app:strokeWidth="2dp"
-            android:outlineSpotShadowColor="@color/black_500"
-            android:outlineAmbientShadowColor="@color/black_500">
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/white">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -98,7 +97,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

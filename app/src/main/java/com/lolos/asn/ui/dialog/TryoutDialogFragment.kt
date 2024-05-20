@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.lolos.asn.R
 import com.lolos.asn.databinding.FragmentTryoutDialogBinding
 
 class TryoutDialogFragment : BottomSheetDialogFragment() {
@@ -17,12 +19,18 @@ class TryoutDialogFragment : BottomSheetDialogFragment() {
         binding = FragmentTryoutDialogBinding.inflate(inflater, container, false)
 
         binding.cvPremium.setOnClickListener {
-            Toast.makeText(requireContext(), "CardView premium", Toast.LENGTH_SHORT).show()
+            val bundle = Bundle().apply {
+                putString("typeTryout", "Premium")
+            }
+            findNavController().navigate(R.id.action_global_to_tryout, bundle)
             dismiss()
         }
 
         binding.cvFree.setOnClickListener {
-            Toast.makeText(requireContext(), "Cardview free", Toast.LENGTH_SHORT).show()
+            val bundle = Bundle().apply {
+                putString("typeTryout", "Gratis")
+            }
+            findNavController().navigate(R.id.action_global_to_tryout, bundle)
             dismiss()
         }
 
