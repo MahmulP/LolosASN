@@ -1,22 +1,20 @@
 package com.lolos.asn.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.lolos.asn.R
-import com.lolos.asn.databinding.ActivityResultBinding
+import com.lolos.asn.databinding.ActivityPurchaseBinding
+import com.lolos.asn.ui.dialog.ValidationPurchaseDialogFragment
 
-class ResultActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityResultBinding
+class PurchaseActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPurchaseBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityResultBinding.inflate(layoutInflater)
+        binding = ActivityPurchaseBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -31,31 +29,17 @@ class ResultActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.tvDetailRank.setOnClickListener {
-            startActivity(Intent(this, LeaderboardActivity::class.java))
-        }
-
-        binding.tvDetailPembahasan.setOnClickListener {
-            startActivity(Intent(this, ResultDiscussionActivity::class.java))
-        }
-
-        binding.tvDetailAi.setOnClickListener {
-            startActivity(Intent(this, AnalysisActivity::class.java))
-        }
-
-        binding.btnDone.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("navigate_to", "learning")
-            startActivity(intent)
+        binding.cvPopular.setOnClickListener {
+            val title = binding.tvTitle.text.toString()
+            val dialog = ValidationPurchaseDialogFragment.newInstance(title)
+            dialog.show(supportFragmentManager, "ValidationPurchaseDialog")
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("navigate_to", "learning")
-                startActivity(intent)
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

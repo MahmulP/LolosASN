@@ -1,22 +1,23 @@
 package com.lolos.asn.ui.activity
 
+import android.app.Instrumentation.ActivityResult
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.card.MaterialCardView
 import com.lolos.asn.R
 import com.lolos.asn.databinding.ActivityExaminationBinding
+import com.lolos.asn.databinding.ActivityResultDiscussionBinding
 import com.lolos.asn.ui.dialog.NumberDialogFragment
-import com.lolos.asn.ui.dialog.ValidationDialogFragment
 
-class ExaminationActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityExaminationBinding
+class ResultDiscussionActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityResultDiscussionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityExaminationBinding.inflate(layoutInflater)
+        binding = ActivityResultDiscussionBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -25,30 +26,25 @@ class ExaminationActivity : AppCompatActivity() {
             insets
         }
 
-        val cardA = binding.opsiA
-        val cardB = binding.opsiB
-        val cardC = binding.opsiC
-        val cardD = binding.opsiD
+        val toolbar = binding.toolbar
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
 
-        val cards = listOf(cardA, cardB, cardC, cardD)
-
-        cards.forEach { card ->
-            card.setOnClickListener {
-                cards.forEach { it.isChecked = false }
-                card.isChecked = true
-            }
-        }
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val dialog = ValidationDialogFragment()
-                dialog.show(supportFragmentManager, "ValidationDialogFragment")
-            }
-        })
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.btnCheckAll.setOnClickListener {
             val dialog = NumberDialogFragment()
             dialog.show(supportFragmentManager, "NumberDialogFragment")
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_profil -> {
-                    if (currentDestination != R.id.menu_profil) {
+                    if (currentDestination != R.id.menu_profil && currentDestination != R.id.termPrivacyFragment) {
                         navController.navigate(R.id.menu_profil)
                     }
                     true
@@ -60,6 +60,9 @@ class MainActivity : AppCompatActivity() {
             when (navigateTo) {
                 "learning" -> {
                     navController.navigate(R.id.menu_materi)
+                }
+                "main" -> {
+                    navController.navigate(R.id.menu_home)
                 }
             }
         }

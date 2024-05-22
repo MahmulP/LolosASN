@@ -7,11 +7,14 @@
     <color name="red">#EB4F45</color>
     <color name="pink_200">#C39A9A</color>
     <color name="blue_500">#5F7DCB</color>
+    <color name="green_100">#E2FEE5</color>
     <color name="green_200">#9AC39E</color>
     <color name="green_400">#58CC02</color>
+    <color name="green_500">#13A984</color>
     <color name="primaryColor">#0F78CB</color>
-    <color name="secondPrimary">#7EBFF1</color>
+    <color name="secondPrimary">#C7F3FE</color>
     <color name="thirdPrimary">#EBF2FA</color>
+    <color name="blue_100">#B0EBF9</color>
     <color name="orange">#FF9F00</color>
     <color name="green">#89E219</color>
 </resources>

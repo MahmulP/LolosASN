@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.ExaminationActivity">
+    tools:context=".ui.activity.ResultDiscussionActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -122,7 +122,7 @@
         android:paddingBottom="8dp"
         android:paddingRight="16dp"
         android:paddingLeft="16dp"
-        android:text="Soal 2"
+        android:text="@string/text_soal"
         android:textColor="@color/primaryColor"
         android:textSize="17sp"
         android:fontFamily="@font/roboto_bold"
@@ -161,7 +161,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:paddingBottom="32dp">
 
             <TextView
                 android:id="@+id/tv_soal"
@@ -399,12 +400,72 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_pembahasan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:backgroundTint="@color/white"
+                    app:cardBackgroundColor="@drawable/card_background_selector">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tv_title_pembahasan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/pembahasan"
+                            android:fontFamily="@font/roboto_bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <ImageView
+                            android:id="@+id/iv_divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:contentDescription="@string/divider"
+                            android:src="@drawable/underline"
+                            app:layout_constraintTop_toBottomOf="@id/tv_title_pembahasan" />
+
+                        <TextView
+                            android:id="@+id/tv_right_answer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/right_answer"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/iv_divider"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_right_answer_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/lorem_description"
+                            app:layout_constraintTop_toBottomOf="@id/tv_right_answer"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_time"
@@ -435,21 +496,10 @@
                 android:layout_marginStart="16dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="Soal 1"
+                android:text="@string/text_soal"
                 android:drawableLeft="@drawable/baseline_arrow_circle_left_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_time"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:text="03:23:05"
-                android:textSize="25sp"
-                app:layout_constraintTop_toTopOf="@id/btn_next"
-                app:layout_constraintBottom_toBottomOf="@id/btn_next"
-                app:layout_constraintStart_toEndOf="@id/btn_previous"
-                app:layout_constraintEnd_toStartOf="@id/btn_next"/>
 
             <Button
                 android:id="@+id/btn_next"
@@ -459,7 +509,7 @@
                 android:layout_marginEnd="16dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="Soal 3"
+                android:text="@string/text_soal"
                 android:drawableRight="@drawable/baseline_arrow_circle_right_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_time"/>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.dialog.LogoutDialogFragment">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/gambar_kertas"
+        android:src="@drawable/ic_validation"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/are_you_sure_logout"
+        android:textColor="@color/primaryColor"
+        android:textSize="25sp"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="@string/saving_activity_desc" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout_text"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no"
+        android:textStyle="bold"
+        style="@style/CustomOutlinedButton"/>
+
+
+</LinearLayout>

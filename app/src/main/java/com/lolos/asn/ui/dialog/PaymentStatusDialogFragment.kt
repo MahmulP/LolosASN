@@ -1,6 +1,7 @@
 package com.lolos.asn.ui.dialog
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,33 +10,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.lolos.asn.R
 import com.lolos.asn.databinding.FragmentNumberDialogBinding
+import com.lolos.asn.databinding.FragmentPaymentStatusDialogBinding
+import com.lolos.asn.ui.activity.HistoryActivity
 
-class NumberDialogFragment : DialogFragment() {
-    private lateinit var binding: FragmentNumberDialogBinding
+class PaymentStatusDialogFragment : DialogFragment() {
+    private lateinit var binding: FragmentPaymentStatusDialogBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNumberDialogBinding.inflate(inflater, container, false)
+        binding = FragmentPaymentStatusDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar = binding.toolbar
-        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        toolbar.setNavigationOnClickListener {
-            dismiss()
-        }
-
-        binding.btnDone.setOnClickListener {
-            val dialog = ValidationDialogFragment()
-            dialog.show(parentFragmentManager, "ValidationDialogFragment")
+        binding.btnNext.setOnClickListener {
+            startActivity(Intent(requireActivity(), HistoryActivity::class.java))
         }
     }
 

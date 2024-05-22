@@ -7,16 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.lolos.asn.R
-import com.lolos.asn.databinding.ActivityResultBinding
+import com.lolos.asn.databinding.ActivityHistoryBinding
 
-class ResultActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityResultBinding
+class HistoryActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHistoryBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityResultBinding.inflate(layoutInflater)
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -31,21 +29,9 @@ class ResultActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.tvDetailRank.setOnClickListener {
-            startActivity(Intent(this, LeaderboardActivity::class.java))
-        }
-
-        binding.tvDetailPembahasan.setOnClickListener {
-            startActivity(Intent(this, ResultDiscussionActivity::class.java))
-        }
-
-        binding.tvDetailAi.setOnClickListener {
-            startActivity(Intent(this, AnalysisActivity::class.java))
-        }
-
         binding.btnDone.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("navigate_to", "learning")
+            intent.putExtra("navigate_to", "main")
             startActivity(intent)
         }
     }
@@ -54,7 +40,7 @@ class ResultActivity : AppCompatActivity() {
         return when (item.itemId) {
             android.R.id.home -> {
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("navigate_to", "learning")
+                intent.putExtra("navigate_to", "main")
                 startActivity(intent)
                 true
             }

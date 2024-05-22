@@ -124,4 +124,91 @@
     <string name="description_pembahasan">Pelajari keselahan anda saya menjawab soal ujian tryout serta lihat penyelesaian \nsoal</string>
     <string name="ranking_text">Perangkingan</string>
     <string name="description_rank">Lihat peringkat nilai anda dibandingkan dengan peserta lainnya dari\nseluruh Indonesia</string>
+    <string name="premium_member">Premium Member</string>
+    <string name="email_example">melitha@gmail.com</string>
+    <string name="other_info">Informasi Lainnya</string>
+    <string name="privacy_term">Kebijakan privasi</string>
+    <string name="term_and_condition">Syarat dan ketentuan layanan</string>
+    <string name="account_setting">Pengaturan akun</string>
+    <string name="edit_profile">Edit Profil</string>
+    <string name="logout_text">Keluar</string>
+    <string name="title_term_and_condition">Syarat dan Ketentuan Layanan</string>
+    <string name="title_privacy_term">Kebijakan Privasi</string>
+    <string name="are_you_sure_logout">Anda Yakin Ingin Keluar?</string>
+    <string name="saving_activity_desc">Apakah Anda yakin ingin keluar? Progres Anda akan disimpan.</string>
+    <string name="no">Tidak</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="alphabet_a">A</string>
+    <string name="alphabet_b">B</string>
+    <string name="alphabet_c">C</string>
+    <string name="alphabet_e">E</string>
+    <string name="alphabet_d">D</string>
+    <string name="text_soal"><![CDATA[Soal &d]]></string>
+    <string name="right_answer">Jawaban B</string>
+    <string name="tab_all">Keseluruhan</string>
+    <string name="analysis_all">Analisis Keseluruhan</string>
+    <string name="purchase">Pembelian</string>
+    <string name="subscribe_package">Paket Langganan</string>
+    <string name="popular">Paling Populer</string>
+    <string name="tryout_package">PAKET TRYOUT</string>
+    <string name="total_package_with_title">3 PAKET TRYOUT CPNS 2024</string>
+    <string name="price">Rp. 30.000</string>
+    <string name="buy_now">Beli Sekarang</string>
+    <string name="detail_payment">Detail Pembayaran</string>
+    <string name="product">Produk</string>
+    <string name="payment_method">Pilih Metode Pembayaran</string>
+    <string name="bank_bni">Bank BNI</string>
+    <string name="bank_number">No. Rekening: 082741842</string>
+    <string name="bank_holder">A.n Ucok Santoso</string>
+    <string name="payment_info">Informasi Pembayaran</string>
+    <string name="price_text">Harga</string>
+    <string name="admin_text">Biaya Admin</string>
+    <string name="total">Total</string>
+    <string name="upload">Unggah Bukti Pembayaran</string>
+    <string name="send">Kirim</string>
+    <string name="note">Note: Silahkan melakukan pembayaran sesuai dengan\nnominal yang di tentukan kemudian upload bukti \ntransfer/pembayaran</string>
+    <string name="payment_status">Pembayaran Sukses</string>
+    <string name="total_payment">Total Pembayaran</string>
+    <string name="transaction_status">Transaksi Sukses</string>
 </resources>

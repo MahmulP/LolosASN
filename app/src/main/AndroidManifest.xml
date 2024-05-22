@@ -13,6 +13,22 @@
         android:theme="@style/Theme.LolosASN"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.DetailPurchaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.PurchaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.AnalysisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.ResultDiscussionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.LolosASN" />
+        <activity
             android:name=".ui.activity.ArticleActivity"
             android:exported="false" />
         <activity

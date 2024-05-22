@@ -11,7 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lolos.asn.R
-import com.lolos.asn.adapter.SectionsPagerAdapter
+import com.lolos.asn.adapter.LearningSectionsPagerAdapter
 import com.lolos.asn.databinding.FragmentLearningBinding
 
 class LearningFragment : Fragment() {
@@ -21,9 +21,9 @@ class LearningFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this@LearningFragment)
+        val learningSectionsPagerAdapter = LearningSectionsPagerAdapter(this@LearningFragment)
         val viewPager: ViewPager2 = binding.viewPager
-        viewPager.adapter = sectionsPagerAdapter
+        viewPager.adapter = learningSectionsPagerAdapter
 
         val tabs: TabLayout = binding.tabs
         TabLayoutMediator(tabs, viewPager) { tab, position ->

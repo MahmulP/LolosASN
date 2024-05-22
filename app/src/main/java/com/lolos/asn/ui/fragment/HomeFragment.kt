@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.lolos.asn.R
 import com.lolos.asn.databinding.FragmentHomeBinding
 import com.lolos.asn.ui.activity.ArticleActivity
+import com.lolos.asn.ui.activity.PurchaseActivity
 import com.lolos.asn.ui.activity.ResultActivity
 import com.lolos.asn.ui.dialog.TryoutDialogFragment
 
@@ -35,6 +36,10 @@ class HomeFragment : Fragment() {
 
         binding.ibArtikel.setOnClickListener {
             startActivity(Intent(requireActivity(), ArticleActivity::class.java))
+        }
+
+        binding.ibCart.setOnClickListener {
+            startActivity(Intent(requireActivity(), PurchaseActivity::class.java))
         }
     }
     override fun onCreateView(

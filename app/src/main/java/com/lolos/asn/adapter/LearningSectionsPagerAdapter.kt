@@ -6,7 +6,7 @@ import com.lolos.asn.ui.fragment.TIUFragment
 import com.lolos.asn.ui.fragment.TKPFragment
 import com.lolos.asn.ui.fragment.TWKFragment
 
-class SectionsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class LearningSectionsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
         return 3
     }

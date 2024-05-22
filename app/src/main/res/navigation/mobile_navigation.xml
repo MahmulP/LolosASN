@@ -32,7 +32,19 @@
         android:id="@+id/menu_profil"
         android:name="com.lolos.asn.ui.fragment.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_termPrivacyFragment"
+            app:destination="@id/termPrivacyFragment">
+            <argument
+                android:name="type"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/termPrivacyFragment"
+        android:name="com.lolos.asn.ui.fragment.TermPrivacyFragment"
+        android:label="TermPrivacyFragment" />
 
     <action
         android:id="@+id/action_global_to_tryout"
