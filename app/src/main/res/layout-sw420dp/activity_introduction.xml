@@ -12,6 +12,7 @@
         android:id="@+id/tv_logo_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="@string/app_name"
         android:textSize="45sp"
         android:textStyle="bold"
@@ -196,7 +197,7 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_description"
         app:srcCompat="@drawable/outline_circle_24"
-        app:tint="@color/black" />
+        app:tint="@color/primaryColor" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/menu2"
@@ -209,7 +210,7 @@
         app:layout_constraintStart_toEndOf="@+id/menu1"
         app:layout_constraintTop_toTopOf="@+id/menu1"
         app:srcCompat="@drawable/outline_circle_24"
-        app:tint="@color/black" />
+        app:tint="@color/primaryColor" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/menu3"
@@ -222,7 +223,7 @@
         app:layout_constraintStart_toEndOf="@+id/menu2"
         app:layout_constraintTop_toTopOf="@+id/menu2"
         app:srcCompat="@drawable/outline_circle_24"
-        app:tint="@color/black" />
+        app:tint="@color/primaryColor" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/menu4"
@@ -234,7 +235,7 @@
         app:layout_constraintStart_toEndOf="@+id/menu3"
         app:layout_constraintTop_toTopOf="@+id/menu3"
         app:srcCompat="@drawable/outline_circle_24"
-        app:tint="@color/black"
+        app:tint="@color/primaryColor"
         android:layout_marginEnd="150dp"/>
 
     <TextView

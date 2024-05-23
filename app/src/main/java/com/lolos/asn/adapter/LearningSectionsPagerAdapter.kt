@@ -1,10 +1,9 @@
 package com.lolos.asn.adapter
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.lolos.asn.ui.fragment.TIUFragment
-import com.lolos.asn.ui.fragment.TKPFragment
-import com.lolos.asn.ui.fragment.TWKFragment
+import com.lolos.asn.ui.fragment.LearningItemFragment
 
 class LearningSectionsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
@@ -14,9 +13,18 @@ class LearningSectionsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fr
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {
-            0 -> fragment = TWKFragment()
-            1 -> fragment = TIUFragment()
-            2 -> fragment = TKPFragment()
+            0 -> {
+                fragment = LearningItemFragment()
+                fragment.arguments = bundleOf("type" to "twk")
+            }
+            1 -> {
+                fragment = LearningItemFragment()
+                fragment.arguments = bundleOf("type" to "tiu")
+            }
+            2 -> {
+                fragment = LearningItemFragment()
+                fragment.arguments = bundleOf("type" to "tkp")
+            }
         }
         return fragment as Fragment
     }

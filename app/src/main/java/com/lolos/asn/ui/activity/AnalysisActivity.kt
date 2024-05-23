@@ -1,6 +1,7 @@
 package com.lolos.asn.ui.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -20,13 +21,7 @@ class AnalysisActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnalysisBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val analysisSectionsPagerAdapter = AnalysisSectionsPageAdapter(this)
         val viewPager: ViewPager2 = binding.viewPager
@@ -37,9 +32,25 @@ class AnalysisActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
+        val toolbar = binding.toolbar
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.btnNext.setOnClickListener {
             val currentItem = viewPager.currentItem
             viewPager.setCurrentItem(currentItem + 1, true)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

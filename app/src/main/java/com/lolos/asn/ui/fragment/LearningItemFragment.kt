@@ -7,17 +7,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lolos.asn.R
-import com.lolos.asn.databinding.FragmentLearningBinding
-import com.lolos.asn.databinding.FragmentTwkBinding
+import com.lolos.asn.databinding.FragmentLearningItemBinding
 import com.lolos.asn.ui.activity.LearningDetailActivity
 
-class TWKFragment : Fragment() {
+class LearningItemFragment : Fragment() {
 
-    private var _binding: FragmentTwkBinding? = null
+    private var _binding: FragmentLearningItemBinding? = null
     private val binding get() = _binding!!
+    private var type: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            type = it.getString("type")
+        }
+
+        when (type) {
+            "twk" -> {
+                binding.tvCategory.text = getString(R.string.twk)
+            }
+            "tiu" -> {
+                binding.tvCategory.text = getString(R.string.tiu)
+            }
+            "tkp" -> {
+                binding.tvCategory.text = getString(R.string.tkp)
+            }
+        }
 
         val bookButton = binding.tvBook
 
@@ -29,8 +45,7 @@ class TWKFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentTwkBinding.inflate(inflater, container, false)
+        _binding = FragmentLearningItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 

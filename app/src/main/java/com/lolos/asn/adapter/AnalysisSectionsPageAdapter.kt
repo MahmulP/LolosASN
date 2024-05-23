@@ -5,9 +5,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lolos.asn.ui.fragment.AnalysisFragment
-import com.lolos.asn.ui.fragment.TIUFragment
-import com.lolos.asn.ui.fragment.TKPFragment
-import com.lolos.asn.ui.fragment.TWKFragment
 
 class AnalysisSectionsPageAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {

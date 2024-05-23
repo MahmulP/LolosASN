@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.ProfileFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="?attr/colorPrimary"
+            app:title="@string/title_profil"
+            app:titleTextAppearance="@style/CustomToolbarTitleTextAppearance"
+            android:background="@color/white" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/divider"
+            android:src="@drawable/underline" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <View
+        android:id="@+id/waves"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_home"
+        app:layout_constraintTop_toBottomOf="@id/appbar"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/avatar"
+        app:layout_constraintTop_toTopOf="@id/waves"
+        app:layout_constraintBottom_toTopOf="@id/tv_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/premium_member"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_bold"
+        android:background="@drawable/orange_border"
+        app:layout_constraintTop_toBottomOf="@id/iv_avatar"
+        app:layout_constraintBottom_toTopOf="@id/tv_username"
+        app:layout_constraintStart_toStartOf="@id/iv_avatar"
+        app:layout_constraintEnd_toEndOf="@id/iv_avatar" />
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/username"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto_bold"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_type"
+        app:layout_constraintBottom_toTopOf="@id/tv_email"
+        app:layout_constraintStart_toStartOf="@id/iv_avatar"
+        app:layout_constraintEnd_toEndOf="@id/iv_avatar" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/email_example"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_username"
+        app:layout_constraintBottom_toBottomOf="@id/waves"
+        app:layout_constraintStart_toStartOf="@id/tv_username"
+        app:layout_constraintEnd_toEndOf="@id/tv_username" />
+
+    <TextView
+        android:id="@+id/tv_other_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/other_info"
+        app:layout_constraintTop_toBottomOf="@id/waves"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/tv_other_info">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_info"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/icon"
+                android:src="@drawable/ic_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/privacy_term"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/iv_info"
+                app:layout_constraintTop_toTopOf="@id/iv_info"
+                app:layout_constraintBottom_toBottomOf="@id/iv_info" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:focusable="true"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/cv_privacy">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_term"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/icon"
+                android:src="@drawable/ic_term"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/term_and_condition"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/iv_term"
+                app:layout_constraintTop_toTopOf="@id/iv_term"
+                app:layout_constraintBottom_toBottomOf="@id/iv_term" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_account_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/account_setting"
+        app:layout_constraintTop_toBottomOf="@id/cv_terms"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/tv_account_setting">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_edit_profile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/icon"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/edit_profile"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/iv_edit_profile"
+                app:layout_constraintTop_toTopOf="@id/iv_edit_profile"
+                app:layout_constraintBottom_toBottomOf="@id/iv_edit_profile" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:focusable="true"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/cv_edit_profile">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_logout"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/icon"
+                android:src="@drawable/ic_logout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/logout_text"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/iv_logout"
+                app:layout_constraintTop_toTopOf="@id/iv_logout"
+                app:layout_constraintBottom_toBottomOf="@id/iv_logout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,13 +5,12 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/thirdPrimary"
-    tools:context=".ui.fragment.HomeFragment"
-    android:paddingBottom="32dp">
+    tools:context=".ui.fragment.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp">
+        android:paddingBottom="64dp">
 
         <View
             android:id="@+id/waves"
@@ -146,14 +145,12 @@
             android:id="@+id/ib_tryout"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
             android:padding="5dp"
             android:contentDescription="@string/tryout_text"
             android:background="@drawable/shape_border"
             app:layout_constraintTop_toBottomOf="@id/cv_user"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_result"
+            app:layout_constraintStart_toStartOf="@id/cv_user"
             android:src="@drawable/ic_pen"
             android:backgroundTint="?attr/colorPrimary"
             app:tint="@color/white" />
@@ -171,7 +168,6 @@
             android:id="@+id/ib_result"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
             android:padding="5dp"
             android:contentDescription="@string/tryout_text"
@@ -196,7 +192,6 @@
             android:id="@+id/ib_materi"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
             android:padding="5dp"
             android:contentDescription="@string/tryout_text"
@@ -221,15 +216,12 @@
             android:id="@+id/ib_artikel"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
             android:layout_marginTop="16dp"
             android:padding="5dp"
             android:contentDescription="@string/tryout_text"
             android:background="@drawable/shape_border"
             app:layout_constraintTop_toBottomOf="@id/cv_user"
-            app:layout_constraintStart_toEndOf="@id/ib_materi"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/cv_user"
             android:src="@drawable/ic_notes_no_pen"
             android:backgroundTint="?attr/colorPrimary"
             app:tint="@color/white" />
@@ -246,38 +238,41 @@
 
         <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/ads_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layoutDescription="@xml/fragment_home_xml_constraintlayout_scene"
-            app:layout_constraintTop_toBottomOf="@id/tv_artikel"
-            tools:layout_editor_absoluteX="32dp">
+            app:layoutDescription="@xml/fragment_home_xml_ads_layout_scene"
+            app:layout_constraintBottom_toTopOf="@id/tv_newest_tryout"
+            app:layout_constraintEnd_toEndOf="@id/cv_user"
+            app:layout_constraintStart_toStartOf="@id/cv_user"
+            app:layout_constraintTop_toBottomOf="@id/tv_artikel">
 
             <ImageView
                 android:id="@+id/iv_invisible"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_ads1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_ads2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
                 app:layout_constraintStart_toEndOf="parent"
@@ -285,8 +280,8 @@
 
             <ImageView
                 android:id="@+id/iv_ads3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
                 app:layout_constraintStart_toEndOf="parent"
@@ -294,8 +289,8 @@
 
             <ImageView
                 android:id="@+id/iv_ads4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
                 app:layout_constraintStart_toEndOf="parent"
@@ -345,14 +340,14 @@
                 android:id="@+id/menu4"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:layout_marginEnd="140dp"
                 app:altSrc="@drawable/baseline_circle_24"
                 app:layout_constraintBottom_toBottomOf="@+id/menu3"
                 app:layout_constraintEnd_toEndOf="@id/iv_invisible"
                 app:layout_constraintStart_toEndOf="@+id/menu3"
                 app:layout_constraintTop_toTopOf="@+id/menu3"
                 app:srcCompat="@drawable/outline_circle_24"
-                app:tint="@color/primaryColor"
-                android:layout_marginEnd="140dp"/>
+                app:tint="@color/primaryColor" />
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
 
@@ -481,7 +476,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginStart="32dp"
-            android:text="@string/newest_tryout"
+            android:text="@string/popular_article"
             android:textStyle="bold"
             android:fontFamily="@font/roboto_bold"
             app:layout_constraintTop_toBottomOf="@id/rv_tryout"
@@ -517,10 +512,11 @@
 
                 <ImageView
                     android:id="@+id/iv_article"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
                     android:contentDescription="@string/article_image"
                     android:src="@drawable/dummy_article"
+                    android:scaleType="centerCrop"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>

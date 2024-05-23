@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="?attr/colorPrimary"
-            app:title="@string/detail_payment"
+            app:title="@string/transaction_history"
             app:titleTextAppearance="@style/CustomToolbarTitleTextAppearance"
             android:background="@color/white"/>
 
