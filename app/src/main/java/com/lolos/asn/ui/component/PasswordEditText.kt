@@ -40,7 +40,6 @@ class PasswordEditText @JvmOverloads constructor(
                 if (error != null) {
                     setPadding(paddingLeft, paddingTop, 40.dpToPx(context), paddingBottom)
                 } else {
-                    // Reset padding if there's no error
                     setPadding(paddingLeft, paddingTop, 0, paddingBottom)
                 }
             }

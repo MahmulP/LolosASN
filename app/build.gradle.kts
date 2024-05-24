@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -15,9 +17,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"http://localhost:8080/\"")
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     buildTypes {
         release {
@@ -55,4 +60,12 @@ dependencies {
     implementation(libs.circleimageview) //Circle View Image
     implementation(libs.androidx.cardview) // cardview
     implementation(libs.androidx.viewpager2) // viewpager
+    implementation(libs.glide) //glide
+    implementation(libs.retrofit) //retrofit
+    implementation(libs.retrofit2.converter.gson) //converter gson
+    implementation(libs.logging.interceptor) //logging interceptor
+
+    implementation(libs.androidx.datastore.preferences) //datastore
+    implementation(libs.kotlinx.coroutines.core) //coroutine
+    implementation(libs.kotlinx.coroutines.android) //coroutines android
 }

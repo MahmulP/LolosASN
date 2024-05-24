@@ -1,19 +1,36 @@
 package com.lolos.asn.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lolos.asn.R
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.databinding.ActivityMainBinding
 import com.lolos.asn.ui.dialog.TryoutDialogFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(application.userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        authViewModel.getAuthUser().observe(this) { authUser ->
+            if (authUser.isNullOrBlank() && authUser == "") {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

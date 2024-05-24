@@ -50,7 +50,9 @@
             android:id="@+id/ed_register_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="text"
+            android:digits="@string/alphabet"
+            android:maxLength="15" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

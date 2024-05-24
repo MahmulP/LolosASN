@@ -6,7 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.databinding.FragmentLogoutDialogBinding
 import com.lolos.asn.databinding.FragmentStartDialogBinding
 import com.lolos.asn.ui.activity.ExaminationActivity
@@ -14,6 +20,10 @@ import com.lolos.asn.ui.activity.LoginActivity
 
 class LogoutDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentLogoutDialogBinding
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(requireContext().userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +36,7 @@ class LogoutDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnLogout.setOnClickListener {
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            authViewModel.destroyUserToken()
             Toast.makeText(requireContext(), "Anda berhasil keluar", Toast.LENGTH_SHORT).show()
             dismiss()
         }
