@@ -1,5 +1,6 @@
 package com.lolos.asn.data.retrofit
 
+import com.lolos.asn.data.response.CourseDetailResponse
 import com.lolos.asn.data.response.CourseResponse
 import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
@@ -42,5 +43,11 @@ interface ApiService {
         @Path("account_id") userId: String?,
         @Path("category_id") categoryId: String
     ): Call<CourseResponse>
+
+    @GET("courses/{course_id}/account/{account_id}")
+    fun getDetailCourse(
+        @Path("course_id") courseId: String?,
+        @Path("account_id") userId: String?
+    ): Call<CourseDetailResponse>
 
 }

@@ -98,7 +98,7 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
                         val name = responseBody.data.name
                         val role = responseBody.data.role
                         val email = responseBody.data.email
-                        val avatar = responseBody.data.avatar ?: "getDrawable(R.drawable.avatar)"
+                        val avatar = responseBody.data.avatar
 
                         saveUserData(
                             username = name,

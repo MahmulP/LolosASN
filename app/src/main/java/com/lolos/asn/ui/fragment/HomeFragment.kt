@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.lolos.asn.R
 import com.lolos.asn.adapter.TryoutAdapter
 import com.lolos.asn.data.preference.UserPreferences
@@ -63,6 +64,13 @@ class HomeFragment : Fragment() {
             }
             binding.tvName.text = it.name
             binding.tvGreet.text = "Hai ${it.name}"
+
+            val avatar = it.avatar
+
+            Glide.with(this)
+                .load(avatar)
+                .error(R.drawable.avatar)
+                .into(binding.ivUser)
         }
 
         tryoutViewModel.getNewestTryout()

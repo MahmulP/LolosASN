@@ -35,7 +35,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/list_material"
+        tools:text="@string/list_material"
         android:paddingTop="16dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
@@ -68,12 +68,21 @@
         app:layout_constraintBottom_toTopOf="@id/btn_done">
 
         <TextView
+            android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/divider"
-            android:text="@string/lorem_long" />
+            tools:text="@string/lorem_long" />
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintBottom_toTopOf="@id/btn_done"
+        android:visibility="gone" />
     
     <Button
         android:id="@+id/btn_done"

@@ -1,26 +1,21 @@
 package com.lolos.asn.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lolos.asn.R
 import com.lolos.asn.adapter.CourseAdapter
-import com.lolos.asn.adapter.TryoutAdapter
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.response.CourseResponse
-import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.CourseViewModel
 import com.lolos.asn.databinding.FragmentLearningItemBinding
-import com.lolos.asn.ui.activity.LearningDetailActivity
-import com.lolos.asn.utils.MarginItemDecoration
 
 class LearningItemFragment : Fragment() {
 
@@ -52,6 +47,10 @@ class LearningItemFragment : Fragment() {
                 courseViewModel.courses.observe(viewLifecycleOwner) {
                     setupRecyclerView(it)
                 }
+
+                courseViewModel.isLoading.observe(viewLifecycleOwner) {
+                    showLoading(it)
+                }
             }
             "tiu" -> {
                 binding.tvCategory.text = getString(R.string.tiu)
@@ -62,6 +61,10 @@ class LearningItemFragment : Fragment() {
 
                 courseViewModel.courses.observe(viewLifecycleOwner) {
                     setupRecyclerView(it)
+                }
+
+                courseViewModel.isLoading.observe(viewLifecycleOwner) {
+                    showLoading(it)
                 }
             }
             "tkp" -> {
@@ -74,9 +77,22 @@ class LearningItemFragment : Fragment() {
                 courseViewModel.courses.observe(viewLifecycleOwner) {
                     setupRecyclerView(it)
                 }
+
+                courseViewModel.isLoading.observe(viewLifecycleOwner) {
+                    showLoading(it)
+                }
             }
         }
     }
+
+    private fun showLoading(status: Boolean) {
+        if (status) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

@@ -14,18 +14,24 @@ class CourseViewModel: ViewModel() {
     private val _courses = MutableLiveData<CourseResponse>()
     val courses : LiveData<CourseResponse> = _courses
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun getCourses(userId: String, categoryId: String) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().getCourses(userId, categoryId)
         client.enqueue(object : retrofit2.Callback<CourseResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<CourseResponse>, response: Response<CourseResponse>) {
                 if (response.isSuccessful) {
+                    _isLoading.value = false
                     val responseBody = response.body()
                     _courses.value = responseBody
                 }
             }
 
             override fun onFailure(call: Call<CourseResponse>, t: Throwable) {
+                _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
