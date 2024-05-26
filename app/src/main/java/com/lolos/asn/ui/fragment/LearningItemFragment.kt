@@ -119,6 +119,5 @@ class LearningItemFragment : Fragment() {
         }
     }
 
-    companion object {
-    }
+    companion object
 }
