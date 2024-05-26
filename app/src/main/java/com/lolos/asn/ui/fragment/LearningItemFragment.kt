@@ -6,15 +6,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lolos.asn.R
+import com.lolos.asn.adapter.CourseAdapter
+import com.lolos.asn.adapter.TryoutAdapter
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.response.CourseResponse
+import com.lolos.asn.data.response.TryoutResponse
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
+import com.lolos.asn.data.viewmodel.model.CourseViewModel
 import com.lolos.asn.databinding.FragmentLearningItemBinding
 import com.lolos.asn.ui.activity.LearningDetailActivity
+import com.lolos.asn.utils.MarginItemDecoration
 
 class LearningItemFragment : Fragment() {
 
     private var _binding: FragmentLearningItemBinding? = null
     private val binding get() = _binding!!
     private var type: String? = null
+
+    private val courseViewModel by viewModels<CourseViewModel>()
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(requireContext().userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,19 +44,37 @@ class LearningItemFragment : Fragment() {
         when (type) {
             "twk" -> {
                 binding.tvCategory.text = getString(R.string.twk)
+                authViewModel.getAuthUser().observe(viewLifecycleOwner) {
+                    val userId = it.userId
+                    courseViewModel.getCourses("$userId", "1")
+                }
+
+                courseViewModel.courses.observe(viewLifecycleOwner) {
+                    setupRecyclerView(it)
+                }
             }
             "tiu" -> {
                 binding.tvCategory.text = getString(R.string.tiu)
+                authViewModel.getAuthUser().observe(viewLifecycleOwner) {
+                    val userId = it.userId
+                    courseViewModel.getCourses("$userId", "2")
+                }
+
+                courseViewModel.courses.observe(viewLifecycleOwner) {
+                    setupRecyclerView(it)
+                }
             }
             "tkp" -> {
                 binding.tvCategory.text = getString(R.string.tkp)
+                authViewModel.getAuthUser().observe(viewLifecycleOwner) {
+                    val userId = it.userId
+                    courseViewModel.getCourses("$userId", "3")
+                }
+
+                courseViewModel.courses.observe(viewLifecycleOwner) {
+                    setupRecyclerView(it)
+                }
             }
-        }
-
-        val bookButton = binding.tvBook
-
-        bookButton.setOnClickListener {
-            startActivity(Intent(requireContext(), LearningDetailActivity::class.java))
         }
     }
     override fun onCreateView(
@@ -52,6 +88,19 @@ class LearningItemFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupRecyclerView(courseResponse: CourseResponse) {
+        binding.rvCourses.layoutManager = LinearLayoutManager(requireContext())
+
+        // Set up the adapter
+        val adapter = CourseAdapter(requireContext())
+        binding.rvCourses.adapter = adapter
+
+        // Submit the list to the adapter
+        courseResponse.data.let {
+            adapter.submitList(it)
+        }
     }
 
     companion object {

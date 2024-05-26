@@ -379,101 +379,15 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_newest_tryout"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.cardview.widget.CardView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_tryout"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/white"
-            app:cardCornerRadius="4dp"
             app:layout_constraintTop_toBottomOf="@id/tv_all_tryout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="164dp">
-
-                <TextView
-                    android:id="@+id/tv_cpns"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="@string/cpns"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/primaryColor"/>
-
-                <TextView
-                    android:id="@+id/tv_title_tryout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/title_tryout_cpns"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_cpns" />
-
-                <ImageView
-                    android:id="@+id/iv_ic_calendar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:contentDescription="@string/calendar_icon"
-                    android:src="@drawable/baseline_calendar_today_24"
-                    app:tint="@color/black"
-                    app:layout_constraintStart_toStartOf="@id/tv_title_tryout"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title_tryout" />
-
-                <TextView
-                    android:id="@+id/tv_date_range"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/date_range"
-                    app:layout_constraintStart_toEndOf="@id/iv_ic_calendar"
-                    app:layout_constraintTop_toTopOf="@id/iv_ic_calendar"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_ic_calendar" />
-
-                <ImageView
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:contentDescription="@string/divider"
-                    android:src="@drawable/underline"
-                    app:layout_constraintTop_toBottomOf="@id/iv_ic_calendar"
-                    app:tint="@color/black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/detail"
-                    android:textColor="@color/primaryColor"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/rv_tryout"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:paddingStart="16dp"-->
-<!--            android:paddingEnd="16dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/tv_all_tryout"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"/>-->
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/list_newest_tryout"/>
 
         <TextView
             android:id="@+id/tv_popular_article"

@@ -6,7 +6,6 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000"
         motion:autoTransition="animateToEnd">
        <KeyFrameSet>
        </KeyFrameSet>
@@ -169,8 +168,7 @@
     <Transition
         motion:constraintSetStart="@+id/end"
         motion:constraintSetEnd="@+id/slide2"
-        motion:autoTransition="animateToEnd"
-        motion:duration="2000">
+        motion:autoTransition="none">
         <OnSwipe motion:dragDirection="dragLeft" />
     </Transition>
     <ConstraintSet
@@ -250,8 +248,7 @@
     <Transition
         motion:constraintSetStart="@+id/slide2"
         motion:constraintSetEnd="@+id/slide3"
-        motion:duration="2000"
-        motion:autoTransition="animateToEnd">
+        motion:autoTransition="none">
         <OnSwipe motion:dragDirection="dragLeft" />
     </Transition>
     <ConstraintSet
@@ -331,8 +328,7 @@
     <Transition
         motion:constraintSetStart="@+id/slide3"
         motion:constraintSetEnd="@+id/slide4"
-        motion:duration="2000"
-        motion:autoTransition="animateToEnd">
+        motion:autoTransition="none">
         <OnSwipe motion:dragDirection="dragLeft" />
     </Transition>
 </MotionScene>

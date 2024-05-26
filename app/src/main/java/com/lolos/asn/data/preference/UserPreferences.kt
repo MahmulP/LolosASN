@@ -6,29 +6,71 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.LiveData
+import com.lolos.asn.data.data.UserData
+import com.lolos.asn.data.response.UserDataResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 
 val Context.userPreferencesDataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>) {
-    private val Token = stringPreferencesKey("user")
+    private val Token = stringPreferencesKey("token")
+    private val Username = stringPreferencesKey("username")
+    private val UserId = stringPreferencesKey("userid")
+    private val Avatar = stringPreferencesKey("avatar")
+    private val Role = stringPreferencesKey("role")
+    private val Email = stringPreferencesKey("email")
 
-    fun getUser(): Flow<String?> {
+    fun getAuthUser(): Flow<UserData> {
         return dataStore.data.map { preferences ->
-            preferences[Token]
+            UserData(
+                token = preferences[Token],
+                userId = preferences[UserId]
+            )
         }
     }
 
-    suspend fun saveUser(token: String) {
+    suspend fun saveUser(token: String, userId: String) {
         dataStore.edit { preferences ->
             preferences[Token] = token
+            preferences[UserId] = userId
         }
     }
 
-    suspend fun destroyUser() {
+    suspend fun clearUser() {
         dataStore.edit { preferences ->
             preferences[Token] = ""
+            preferences[UserId] = ""
+        }
+    }
+
+    fun getUserData(): Flow<UserDataResponse> {
+        return dataStore.data.map { preferences ->
+            UserDataResponse(
+                name = preferences[Username],
+                email = preferences[Email],
+                role = preferences[Role],
+                avatar = preferences[Avatar]
+            )
+        }
+    }
+
+    suspend fun saveUserData(username: String, email: String, role: String, avatar: String) {
+        dataStore.edit { preferences ->
+            preferences[Username] = username
+            preferences[Email] = email
+            preferences[Role] = role
+            preferences[Avatar] = avatar
+        }
+    }
+
+    suspend fun clearUserData() {
+        dataStore.edit { preferences ->
+            preferences[Username] = ""
+            preferences[Email] = ""
+            preferences[Role] = ""
+            preferences[Avatar] = ""
         }
     }
 
@@ -44,5 +86,4 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             }
         }
     }
-
 }

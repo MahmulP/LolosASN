@@ -6,11 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.lolos.asn.data.data.UserData
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
+import com.lolos.asn.data.response.UserDataResponse
+import com.lolos.asn.data.response.UserResponse
 import com.lolos.asn.data.retrofit.ApiConfig
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -35,7 +38,8 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         val token = responseBody.data
-                        saveUserToken(token)
+                        val userId = responseBody.userId
+                        saveUser(token, userId)
                     }
                 } else {
                     val error = response.errorBody()?.string() ?: "Unknown error"
@@ -84,19 +88,58 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
         })
     }
 
-    fun getAuthUser(): LiveData<String?> {
-        return pref.getUser().asLiveData()
+    fun getAUthUserData(userId: String?) {
+        val client = ApiConfig.getApiService().getAuthUserData(userId)
+        client.enqueue(object: Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val name = responseBody.data.name
+                        val role = responseBody.data.role
+                        val email = responseBody.data.email
+                        val avatar = responseBody.data.avatar ?: "getDrawable(R.drawable.avatar)"
+
+                        saveUserData(
+                            username = name,
+                            role = role,
+                            email = email,
+                            avatar = avatar)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                _errorMessage.value = t.message
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
     }
 
-    fun saveUserToken(token: String) {
+    fun getAuthUser(): LiveData<UserData> {
+        return pref.getAuthUser().asLiveData()
+    }
+
+    fun getUserData(): LiveData<UserDataResponse> {
+        return pref.getUserData().asLiveData()
+    }
+
+    fun saveUser(token: String, userId: String) {
         viewModelScope.launch {
-            pref.saveUser(token)
+            pref.saveUser(token, userId)
+        }
+    }
+
+    fun saveUserData(username: String, email: String, role: String, avatar: String) {
+        viewModelScope.launch {
+            pref.saveUserData(username, email, role, avatar)
         }
     }
 
     fun destroyUserToken() {
         viewModelScope.launch {
-            pref.destroyUser()
+            pref.clearUser()
+            pref.clearUserData()
         }
     }
 

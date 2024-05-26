@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authViewModel.getAuthUser().observe(this) { authUser ->
-            if (authUser.isNullOrBlank() && authUser == "") {
+            if (authUser.token.isNullOrBlank() || authUser.token == "") {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
