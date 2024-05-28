@@ -23,13 +23,29 @@ class StartDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val tryoutId = arguments?.getString(TRYOUT_ID)
+
         binding.btnStart.setOnClickListener {
-            startActivity(Intent(requireContext(), ExaminationActivity::class.java))
+            val intent = Intent(requireContext(), ExaminationActivity::class.java)
+            intent.putExtra("tryout_id", tryoutId)
+            startActivity(intent)
             dismiss()
         }
 
         binding.btnCancel.setOnClickListener {
             dismiss()
+        }
+    }
+
+    companion object {
+        private const val TRYOUT_ID = "arg_data"
+
+        fun newInstance(tryoutId: String?): StartDialogFragment {
+            val fragment = StartDialogFragment()
+            val args = Bundle()
+            args.putString(TRYOUT_ID, tryoutId)
+            fragment.arguments = args
+            return fragment
         }
     }
 }

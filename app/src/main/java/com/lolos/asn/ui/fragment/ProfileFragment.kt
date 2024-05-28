@@ -7,13 +7,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.lolos.asn.R
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.databinding.FragmentProfileBinding
 import com.lolos.asn.ui.dialog.LogoutDialogFragment
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(requireContext().userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +43,31 @@ class ProfileFragment : Fragment() {
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+
+        authViewModel.getAuthUser().observe(viewLifecycleOwner) {
+
+            if (it.userId != "") {
+                val userId = it.userId
+                authViewModel.getAUthUserData(userId)
+            }
+        }
+
+        authViewModel.getUserData().observe(viewLifecycleOwner) {
+            binding.tvEmail.text = it.email
+            binding.tvUsername.text = it.name
+            if (it.role == "MEMBER") {
+                binding.tvType.text = getString(R.string.premium_member)
+            } else {
+                binding.tvType.text = it.role
+            }
+
+            val avatar = it.avatar
+
+            Glide.with(this)
+                .load(avatar)
+                .error(R.drawable.avatar)
+                .into(binding.ivAvatar)
         }
 
         binding.cvPrivacy.setOnClickListener {

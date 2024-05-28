@@ -118,6 +118,4 @@ class LearningItemFragment : Fragment() {
             adapter.submitList(it)
         }
     }
-
-    companion object
 }

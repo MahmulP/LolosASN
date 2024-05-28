@@ -98,7 +98,7 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
                         val name = responseBody.data.name
                         val role = responseBody.data.role
                         val email = responseBody.data.email
-                        val avatar = responseBody.data.avatar
+                        val avatar = responseBody.data.avatar ?: "https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
 
                         saveUserData(
                             username = name,

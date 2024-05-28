@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.lolos.asn.R
 import com.lolos.asn.data.response.Course
 import com.lolos.asn.databinding.ListCourseBinding
 import com.lolos.asn.ui.activity.LearningDetailActivity
@@ -30,7 +32,12 @@ class CourseAdapter(private val context: Context): ListAdapter<Course, CourseAda
         fun bind(course: Course, position: Int, context: Context) {
             binding.tvTitle.text = "${position + 1}. ${course.courseName}"
 
-            println(course.courseName)
+            val thumbnail = "https://storage.googleapis.com/lidm_211/${course.courseImage}"
+
+            Glide.with(itemView)
+                .load(thumbnail)
+                .error(R.drawable.no_image)
+                .into(binding.ivPicture)
 
             binding.tvBook.setOnClickListener {
                 val intent = Intent(context, LearningDetailActivity::class.java)

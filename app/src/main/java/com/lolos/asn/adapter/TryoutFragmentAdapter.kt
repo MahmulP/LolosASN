@@ -5,20 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.lolos.asn.R
 import com.lolos.asn.data.response.DataItem
-import com.lolos.asn.databinding.ListNewestTryoutBinding
+import com.lolos.asn.databinding.ListTryoutBinding
+import com.lolos.asn.ui.activity.ResultActivity
 import com.lolos.asn.ui.activity.TryoutDetailActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TryoutAdapter(private val context: Context): ListAdapter<DataItem, TryoutAdapter.MyViewHolder>(
+class TryoutFragmentAdapter(private val context: Context): ListAdapter<DataItem, TryoutFragmentAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ListNewestTryoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListTryoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -26,7 +29,7 @@ class TryoutAdapter(private val context: Context): ListAdapter<DataItem, TryoutA
         val tryout = getItem(position)
         holder.bind(tryout, context)
     }
-    class MyViewHolder(val binding: ListNewestTryoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(val binding: ListTryoutBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(tryout: DataItem, context: Context) {
             val createdAt = tryout.createdAt
@@ -62,17 +65,36 @@ class TryoutAdapter(private val context: Context): ListAdapter<DataItem, TryoutA
             val formattedTryoutClosed = tryoutClosedDate?.let { outputFormatWithYear.format(it) }
 
             val dateRange = "$formattedCreatedAt - $formattedTryoutClosed"
+            val isCleared = tryout.isCleared
 
             // Set the formatted dates to the TextView
             binding.tvTitleTryout.text = tryout.tryoutTitle
-            binding.tvDateRange.text = dateRange
+            binding.tvDateCpns.text = dateRange
 
-            binding.tvDetail.setOnClickListener {
-                val intent = Intent(context, TryoutDetailActivity::class.java)
-                intent.putExtra("tryout_id", tryout.tryoutId)
-                intent.putExtra("tryout_period", dateRange)
-                context.startActivity(intent)
+            if (isCleared == "0") {
+                binding.btnDetail.setOnClickListener {
+                    val intent = Intent(context, ResultActivity::class.java)
+                    intent.putExtra("tryout_id", tryout.tryoutId)
+                    intent.putExtra("tryout_period", dateRange)
+                    context.startActivity(intent)
+                }
+            } else {
+                binding.btnDetail.text = "Mulai"
+                binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
+                binding.btnDetail.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.primaryColor
+                    )
+                )
+                binding.btnDetail.setOnClickListener {
+                    val intent = Intent(context, TryoutDetailActivity::class.java)
+                    intent.putExtra("tryout_id", tryout.tryoutId)
+                    intent.putExtra("tryout_period", dateRange)
+                    context.startActivity(intent)
+                }
             }
+
         }
     }
     companion object {

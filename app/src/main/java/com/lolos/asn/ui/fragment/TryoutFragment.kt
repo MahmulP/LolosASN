@@ -8,15 +8,25 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lolos.asn.R
+import com.lolos.asn.adapter.TryoutAdapter
+import com.lolos.asn.adapter.TryoutFragmentAdapter
+import com.lolos.asn.data.response.TryoutResponse
+import com.lolos.asn.data.viewmodel.model.CourseViewModel
+import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.FragmentTryoutBinding
 import com.lolos.asn.ui.activity.TryoutDetailActivity
 import com.lolos.asn.ui.dialog.StartDialogFragment
 import com.lolos.asn.ui.dialog.TryoutDialogFragment
+import com.lolos.asn.utils.MarginItemDecoration
 
 class TryoutFragment : Fragment() {
     private var _binding: FragmentTryoutBinding? = null
     private val binding get() = _binding!!
+
+    private val tryoutViewModel by viewModels<TryoutViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,8 +34,18 @@ class TryoutFragment : Fragment() {
         val typeTryout = arguments?.getString("typeTryout")
 
         if (typeTryout == "Premium") {
+            tryoutViewModel.getPaidTryout()
+            tryoutViewModel.paidTryout.observe(viewLifecycleOwner) {
+                setupRecyclerView(it)
+            }
+
             binding.tvType.text = typeTryout
         } else {
+            tryoutViewModel.getFreeTryout()
+            tryoutViewModel.freeTryout.observe(viewLifecycleOwner) {
+                setupRecyclerView(it)
+            }
+
             binding.tvType.text = typeTryout
             binding.tvType.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
             binding.toolbar.title = "Tryout Gratis"
@@ -39,14 +59,18 @@ class TryoutFragment : Fragment() {
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
         }
+    }
 
-        binding.btnDetail.setOnClickListener {
-            startActivity(Intent(requireContext(), TryoutDetailActivity::class.java))
-        }
+    private fun setupRecyclerView(tryoutResponse: TryoutResponse) {
+        binding.rvTryout.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.btnMulai.setOnClickListener {
-            val dialog = StartDialogFragment()
-            dialog.show(parentFragmentManager, "TryoutFragment")
+        // Set up the adapter
+        val adapter = TryoutFragmentAdapter(requireContext())
+        binding.rvTryout.adapter = adapter
+
+        // Submit the list to the adapter
+        tryoutResponse.data.let {
+            adapter.submitList(it)
         }
     }
 

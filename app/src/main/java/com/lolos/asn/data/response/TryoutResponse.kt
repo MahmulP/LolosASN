@@ -17,7 +17,9 @@ data class DataItem(
 	@SerializedName("tryout_price") val tryoutPrice: Int,
 	@SerializedName("tryout_closed") val tryoutClosed: String,
 	@SerializedName("createdAt") val createdAt: String,
-	@SerializedName("updatedAt") val updatedAt: String
+	@SerializedName("updatedAt") val updatedAt: String,
+	@SerializedName("isCleared") val isCleared: String?,
+	@SerializedName("accessed") val accessed: String?
 )
 
 

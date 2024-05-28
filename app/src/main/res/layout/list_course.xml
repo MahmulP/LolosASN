@@ -39,6 +39,7 @@
                 android:layout_margin="8dp"
                 android:contentDescription="@string/cover"
                 android:src="@drawable/nasionalisme_img"
+                android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

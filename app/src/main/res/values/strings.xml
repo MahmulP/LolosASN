@@ -225,4 +225,5 @@
     <string name="greeting_afternoon">Selamat Siang</string>
     <string name="greeting_evening">Selamat Sore</string>
     <string name="greeting_night">Selamat Malam</string>
+    <string name="picture_of_quiz">Gambar Soal</string>
 </resources>
