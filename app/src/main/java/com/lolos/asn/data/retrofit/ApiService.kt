@@ -3,6 +3,7 @@ package com.lolos.asn.data.retrofit
 import com.lolos.asn.data.response.CourseDetailResponse
 import com.lolos.asn.data.response.CourseResponse
 import com.lolos.asn.data.response.ExaminationResponse
+import com.lolos.asn.data.response.LeaderboardResponse
 import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
 import com.lolos.asn.data.response.RegisterRequest
@@ -68,5 +69,10 @@ interface ApiService {
     fun startTryout(
         @Path("tryout_id") tryoutId: String?
     ): Call<ExaminationResponse>
+
+    @GET("leaderboard/{tryout_id}")
+    fun getTryoutLeaderboard(
+        @Path("tryout_id") tryoutId: String?
+    ): Call<LeaderboardResponse>
 
 }
