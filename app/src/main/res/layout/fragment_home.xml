@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="64dp">
+        android:paddingBottom="120dp">
 
         <View
             android:id="@+id/waves"
@@ -387,6 +387,8 @@
             app:layout_constraintTop_toBottomOf="@id/tv_all_tryout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             tools:listitem="@layout/list_newest_tryout"/>
 
         <TextView
@@ -414,7 +416,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_popular_article"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -422,7 +424,8 @@
             app:cardCornerRadius="15dp"
             app:layout_constraintTop_toBottomOf="@id/tv_all_article"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cardBackgroundColor="@color/white">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -467,7 +470,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 <!--        <androidx.recyclerview.widget.RecyclerView-->
 <!--            android:id="@+id/rv_article"-->

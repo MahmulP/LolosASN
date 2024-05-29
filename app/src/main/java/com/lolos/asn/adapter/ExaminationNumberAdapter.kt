@@ -57,7 +57,6 @@ class ExaminationNumberAdapter(
         fun bind(examination: TryoutContentItem, position: Int) {
             binding.tvNumber.text = (position + 1).toString()
             val isFilled = viewModel.isAnswerFilled(position)
-            Log.d("Filled Number", "bind: ${position + 1}, $isFilled")
             updateBackgroundTint(isFilled)
         }
 

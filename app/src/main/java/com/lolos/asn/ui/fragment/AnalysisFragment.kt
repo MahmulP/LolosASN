@@ -31,13 +31,13 @@ class AnalysisFragment : Fragment() {
                 binding.tvCategory.text = getString(R.string.analysis_all)
             }
             "twk" -> {
-                binding.tvCategory.text = getString(R.string.tab_twk)
+                binding.tvCategory.text = getString(R.string.twk)
             }
             "tiu" -> {
-                binding.tvCategory.text = getString(R.string.tab_tiu)
+                binding.tvCategory.text = getString(R.string.tiu)
             }
             "tkp" -> {
-                binding.tvCategory.text = getString(R.string.tab_tkp)
+                binding.tvCategory.text = getString(R.string.tkp)
             }
         }
     }

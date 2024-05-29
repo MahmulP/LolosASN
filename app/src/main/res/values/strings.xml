@@ -103,7 +103,7 @@
     <string name="info">Informasi Penting</string>
     <string name="information_description">Sistem penilaian seleksi kompetensi dasar (SKD) oleh Badan Kepegawaian Negara (BKN):\nBenar = (+5 poin)\nSalah = (0 poin)\nKosong = (0 poin)</string>
     <string name="are_you_sure">Apakah Kamu Sudah Yakin?</string>
-    <string name="end_the_test">Kamu telah menyelesaikan 5/25 soal. Apakah yakin ingin mengakhiri subtest ini?</string>
+    <string name="end_the_test">Kamu telah menyelesaikan %1$d/%2$d soal. Apakah yakin ingin mengakhiri subtest ini?</string>
     <string name="nope">Batal</string>
     <string name="check_everything">Cek Semua</string>
     <string name="soal_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum \n\nTeks diatas membahas tentang ...</string>

@@ -20,10 +20,12 @@
         android:text="@string/are_you_sure"
         android:textColor="@color/primaryColor"
         android:textSize="25sp"
+        android:gravity="center"
         android:fontFamily="@font/roboto_bold"
         android:layout_gravity="center" />
 
     <TextView
+        android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

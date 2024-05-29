@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="48dp">
 
             <TextView
                 android:id="@+id/tv_info"
@@ -92,7 +92,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/cv_tiu"
                 app:strokeColor="@color/primaryColor"
-                app:strokeWidth="2dp">
+                app:strokeWidth="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -138,7 +139,8 @@
                 app:layout_constraintStart_toEndOf="@id/cv_twk"
                 app:layout_constraintEnd_toStartOf="@id/cv_tkp"
                 app:strokeColor="@color/primaryColor"
-                app:strokeWidth="2dp">
+                app:strokeWidth="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -184,7 +186,8 @@
                 app:layout_constraintStart_toEndOf="@id/cv_tiu"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:strokeColor="@color/primaryColor"
-                app:strokeWidth="2dp">
+                app:strokeWidth="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

@@ -92,6 +92,9 @@ class ExaminationActivity : AppCompatActivity() {
         binding.btnCheckAll.setOnClickListener {
             val dialog = NumberDialogFragment()
             dialog.show(supportFragmentManager, "NumberDialogFragment")
+            examinationViewModel.examTryout.observe(this) { questions ->
+                setupNumberRecycleView(questions)
+            }
         }
     }
 

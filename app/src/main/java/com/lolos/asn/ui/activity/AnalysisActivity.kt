@@ -2,6 +2,7 @@ package com.lolos.asn.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -28,8 +29,11 @@ class AnalysisActivity : AppCompatActivity() {
         viewPager.adapter = analysisSectionsPagerAdapter
 
         val tabs: TabLayout = binding.tabs
+
         TabLayoutMediator(tabs, viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES[position])
+            tab.setCustomView(R.layout.custom_tab)
+            val tabTextView = tab.customView?.findViewById<TextView>(R.id.tabTextView)
+            tabTextView?.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
         val toolbar = binding.toolbar
