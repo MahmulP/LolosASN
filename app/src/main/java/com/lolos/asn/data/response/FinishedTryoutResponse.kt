@@ -2,13 +2,13 @@ package com.lolos.asn.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TryoutResponse(
+data class FinishedTryoutResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem?>
+	val data: List<FinishedTryout>
 )
 
-data class DataItem(
+data class FinishedTryout(
 
 	@field:SerializedName("isCleared")
 	val isCleared: String? = null,
@@ -39,6 +39,12 @@ data class DataItem(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
+
+	@field:SerializedName("tryout_score")
+	val tryoutScore: Int? = null,
+
+	@field:SerializedName("tryout_passed")
+	val tryoutPassed: String? = null,
 
 	@field:SerializedName("tryout_closed")
 	val tryoutClosed: String? = null,

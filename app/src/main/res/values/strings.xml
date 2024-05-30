@@ -111,7 +111,7 @@
     <string name="cek_jawaban_soal">Cek Jawaban Soal</string>
     <string name="passed">SELAMAT ANDA LULUS!</string>
     <string name="passed_or_no">icon lulus atau tidak</string>
-    <string name="total_point">210 Poin</string>
+    <string name="total_point">"%d Poin"</string>
     <string name="result_title">Tryout 1 Premium</string>
     <string name="point">120</string>
     <string name="keterangan">Keterangan</string>
@@ -226,4 +226,9 @@
     <string name="greeting_evening">Selamat Sore</string>
     <string name="greeting_night">Selamat Malam</string>
     <string name="picture_of_quiz">Gambar Soal</string>
+    <string name="graph_for_subtest">GRAFIK SETIAP SUBTES</string>
+    <string name="graph_for_tryout">GRAFIK SETIAP TRYOUT</string>
+    <string name="check_detail">Cek Pembahasan</string>
+    <string name="number_one">1</string>
+    <string name="failed">ANDA TIDAK LULUS!</string>
 </resources>

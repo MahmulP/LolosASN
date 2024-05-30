@@ -14,10 +14,11 @@ import com.lolos.asn.data.response.DataItem
 import com.lolos.asn.databinding.ListTryoutBinding
 import com.lolos.asn.ui.activity.ResultActivity
 import com.lolos.asn.ui.activity.TryoutDetailActivity
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TryoutFragmentAdapter(private val context: Context): ListAdapter<DataItem, TryoutFragmentAdapter.MyViewHolder>(
+class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem, TryoutFragmentAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,40 +30,18 @@ class TryoutFragmentAdapter(private val context: Context): ListAdapter<DataItem,
         val tryout = getItem(position)
         holder.bind(tryout, context)
     }
+
     class MyViewHolder(val binding: ListTryoutBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(tryout: DataItem, context: Context) {
             val createdAt = tryout.createdAt
             val tryoutClosed = tryout.tryoutClosed
 
-            // Input and output date formats
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-            val outputFormatWithYear = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-            val outputFormatWithoutYear = SimpleDateFormat("dd MMMM", Locale("id", "ID"))
-
-            // Parse the date strings
-            val createdAtDate = inputFormat.parse(createdAt)
-            val tryoutClosedDate = inputFormat.parse(tryoutClosed)
-
-            // Format the dates
-            val createdAtYear = createdAtDate?.let {
-                SimpleDateFormat("yyyy", Locale.getDefault()).format(
-                    it
-                )
-            }
-            val tryoutClosedYear = tryoutClosedDate?.let {
-                SimpleDateFormat("yyyy", Locale.getDefault()).format(
-                    it
-                )
-            }
-
-            val formattedCreatedAt = if (createdAtYear == tryoutClosedYear) {
-                createdAtDate?.let { outputFormatWithoutYear.format(it) }
-            } else {
-                createdAtDate?.let { outputFormatWithYear.format(it) }
-            }
-
-            val formattedTryoutClosed = tryoutClosedDate?.let { outputFormatWithYear.format(it) }
+            // Separate the date and time zone offset
+            val createdAtParts = createdAt?.split(" ")
+            val tryoutClosedParts = tryoutClosed?.split(" ")
+            val formattedCreatedAt = formatDate(createdAtParts?.get(0), createdAtParts?.get(1))
+            val formattedTryoutClosed = formatDate(tryoutClosedParts?.get(0), tryoutClosedParts?.get(1))
 
             val dateRange = "$formattedCreatedAt - $formattedTryoutClosed"
             val isCleared = tryout.isCleared
@@ -71,7 +50,7 @@ class TryoutFragmentAdapter(private val context: Context): ListAdapter<DataItem,
             binding.tvTitleTryout.text = tryout.tryoutTitle
             binding.tvDateCpns.text = dateRange
 
-            if (isCleared == "0") {
+            if (isCleared == "1") {
                 binding.btnDetail.setOnClickListener {
                     val intent = Intent(context, ResultActivity::class.java)
                     intent.putExtra("tryout_id", tryout.tryoutId)
@@ -94,14 +73,35 @@ class TryoutFragmentAdapter(private val context: Context): ListAdapter<DataItem,
                     context.startActivity(intent)
                 }
             }
+        }
 
+        private fun formatDate(date: String?, time: String?): String {
+            // Combine date and time parts
+            val formattedDateStr = "$date $time"
+
+            // Define the format pattern without milliseconds and time zone offset
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+            try {
+                // Parse the formatted date string
+                val createdAtDate = inputFormat.parse(formattedDateStr)
+                // Format the parsed date
+                val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                return outputFormat.format(createdAtDate)
+            } catch (e: ParseException) {
+                // Handle the parsing exception
+                e.printStackTrace()
+            }
+            return ""
         }
     }
+
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
             override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
                 return oldItem == newItem
             }
+
             override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
                 return oldItem == newItem
             }

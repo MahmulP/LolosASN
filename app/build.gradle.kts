@@ -68,4 +68,6 @@ dependencies {
     implementation(libs.androidx.datastore.preferences) //datastore
     implementation(libs.kotlinx.coroutines.core) //coroutine
     implementation(libs.kotlinx.coroutines.android) //coroutines android
+
+    implementation(libs.mpandroidchart) // android chart
 }

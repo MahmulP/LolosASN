@@ -3,6 +3,7 @@ package com.lolos.asn.data.retrofit
 import com.lolos.asn.data.response.CourseDetailResponse
 import com.lolos.asn.data.response.CourseResponse
 import com.lolos.asn.data.response.ExaminationResponse
+import com.lolos.asn.data.response.FinishedTryoutResponse
 import com.lolos.asn.data.response.LeaderboardResponse
 import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
@@ -11,6 +12,7 @@ import com.lolos.asn.data.response.RegisterResponse
 import com.lolos.asn.data.response.TestResponse
 import com.lolos.asn.data.response.TryoutDetailResponse
 import com.lolos.asn.data.response.TryoutResponse
+import com.lolos.asn.data.response.TryoutResultResponse
 import com.lolos.asn.data.response.UserDataResponse
 import com.lolos.asn.data.response.UserResponse
 import retrofit2.Call
@@ -59,16 +61,31 @@ interface ApiService {
     @GET("tryouts/newest")
     fun getNewestTryout(): Call<TryoutResponse>
 
-    @GET("tryouts/free")
-    fun getFreeTryout(): Call<TryoutResponse>
+    @GET("freeTryouts/account/{account_id}")
+    fun getFreeTryout(
+        @Path("account_id") userId: String?
+    ): Call<TryoutResponse>
 
-    @GET("tryouts/pay")
-    fun getPaidTryout(): Call<TryoutResponse>
+    @GET("payTryouts/account/{account_id}")
+    fun getPaidTryout(
+        @Path("account_id") userId: String?
+    ): Call<TryoutResponse>
 
     @GET("tryouts/{tryout_id}/start")
     fun startTryout(
         @Path("tryout_id") tryoutId: String?
     ): Call<ExaminationResponse>
+
+    @GET("tryouts/stats/{tryout_id}/{account_id}")
+    fun getTryoutResult(
+        @Path("tryout_id") tryoutId: String?,
+        @Path("account_id") userId: String?
+    ): Call<TryoutResultResponse>
+
+    @GET("tryouts/finished/{account_id}")
+    fun getFinishedTryout(
+        @Path("account_id") userId: String?
+    ): Call<FinishedTryoutResponse>
 
     @GET("leaderboard/{tryout_id}")
     fun getTryoutLeaderboard(
