@@ -248,23 +248,29 @@ class ResultActivity : AppCompatActivity() {
 
         val finishedTryouts = finishedTryoutResponse.data
 
+        // Sort finishedTryouts by createdAt and take the last 5 entries
+        val limitedTryouts = finishedTryouts.sortedByDescending { it.createdAt }.takeLast(5)
+
         val entries = mutableListOf<BarEntry>()
         val colors = mutableListOf<Int>()
 
         val primaryColor = ContextCompat.getColor(this, R.color.primaryColor)
         val redColor = ContextCompat.getColor(this, R.color.red)
 
+        // Add initial entry
         entries.add(BarEntry(0f, 0f))
         colors.add(primaryColor) // Initial color
 
-        finishedTryouts.forEachIndexed { index, finishedTryout ->
+        // Add up to 5 entries from limitedTryouts
+        limitedTryouts.forEachIndexed { index, finishedTryout ->
             entries.add(BarEntry((index + 1).toFloat(), finishedTryout.tryoutScore?.toFloat() ?: 0f))
             // Add color based on tryoutStatus
             val color = if (finishedTryout.tryoutPassed == "Passed") primaryColor else redColor
             colors.add(color)
         }
 
-        entries.add(BarEntry((finishedTryouts.size + 1).toFloat(), 0f))
+        // Add final entry if necessary
+        entries.add(BarEntry((limitedTryouts.size + 1).toFloat(), 0f))
         colors.add(primaryColor) // Final color
 
         val labels = mutableListOf<String>()
@@ -321,6 +327,7 @@ class ResultActivity : AppCompatActivity() {
 
         chart.invalidate() // Refresh the chart
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

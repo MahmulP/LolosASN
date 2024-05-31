@@ -10,9 +10,6 @@ data class ExaminationResponse(
 
 data class TryoutContentItem(
 
-	@field:SerializedName("score")
-	val score: List<Int?>? = null,
-
 	@field:SerializedName("pembahasan")
 	val pembahasan: String? = null,
 
@@ -31,11 +28,15 @@ data class TryoutContentItem(
 	@field:SerializedName("subCategory_id")
 	val subCategoryId: String? = null,
 
+//	@field:SerializedName("jawaban")
+//	val jawaban: List<Int?>? = null,
+
 	@field:SerializedName("category")
-	val category: String,
+	val category: String? = null,
 
 	@field:SerializedName("option")
 	val option: List<String?>? = null
+
 )
 
 data class TryoutData(

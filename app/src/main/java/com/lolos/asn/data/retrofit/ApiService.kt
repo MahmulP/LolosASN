@@ -9,11 +9,12 @@ import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
-import com.lolos.asn.data.response.TestResponse
+import com.lolos.asn.data.response.Tryout
+import com.lolos.asn.data.response.TryoutBundleDetailResponse
+import com.lolos.asn.data.response.TryoutBundleResponse
 import com.lolos.asn.data.response.TryoutDetailResponse
 import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.response.TryoutResultResponse
-import com.lolos.asn.data.response.UserDataResponse
 import com.lolos.asn.data.response.UserResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -22,8 +23,6 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
-    @GET("/")
-    fun fetchURL(): Call<TestResponse>
 
     @POST("login")
     fun login(
@@ -86,6 +85,17 @@ interface ApiService {
     fun getFinishedTryout(
         @Path("account_id") userId: String?
     ): Call<FinishedTryoutResponse>
+
+    @GET("tryoutBundles/account/{account_id}")
+    fun getBundle(
+        @Path("account_id") userId: String?
+    ): Call<TryoutBundleResponse>
+
+    @GET("tryoutbundles/account/{account_id}/detail/{bundle_id}")
+    fun getDetailBundle(
+        @Path("account_id") userId: String?,
+        @Path("bundle_id") bundleId: String?
+    ): Call<TryoutBundleDetailResponse>
 
     @GET("leaderboard/{tryout_id}")
     fun getTryoutLeaderboard(

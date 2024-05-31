@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/tryout_packet"
+        tools:text="@string/tryout_packet"
         android:textColor="@color/primaryColor"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -25,10 +25,29 @@
         android:id="@+id/tv_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/lorem_long"
+        tools:text="@string/lorem_description"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintBottom_toTopOf="@id/tv_price"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_package"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/include_package"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintTop_toBottomOf="@id/tv_description"
+        app:layout_constraintStart_toStartOf="@id/rv_description" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_package"
+        app:layout_constraintBottom_toTopOf="@id/tv_price"
+        tools:listitem="@layout/list_description_dialog"/>
 
     <TextView
         android:id="@+id/tv_price"
@@ -36,7 +55,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/price"
+        tools:text="@string/price"
         android:textColor="@color/primaryColor"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/btn_buy"
@@ -48,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/price"
+        tools:text="@string/price"
         android:textColor="@color/grey"
         app:layout_constraintStart_toEndOf="@id/tv_price"
         app:layout_constraintTop_toTopOf="@id/tv_price"

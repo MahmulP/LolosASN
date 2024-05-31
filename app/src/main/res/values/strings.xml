@@ -193,7 +193,7 @@
     <string name="popular">Paling Populer</string>
     <string name="tryout_package">PAKET TRYOUT</string>
     <string name="total_package_with_title">3 PAKET TRYOUT CPNS 2024</string>
-    <string name="price">Rp. 30.000</string>
+    <string name="price">Rp. %s</string>
     <string name="buy_now">Beli Sekarang</string>
     <string name="detail_payment">Detail Pembayaran</string>
     <string name="product">Produk</string>
@@ -231,4 +231,5 @@
     <string name="check_detail">Cek Pembahasan</string>
     <string name="number_one">1</string>
     <string name="failed">ANDA TIDAK LULUS!</string>
+    <string name="include_package">Paket ini termasuk:</string>
 </resources>

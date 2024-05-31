@@ -2,12 +2,28 @@ package com.lolos.asn.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lolos.asn.R
+import com.lolos.asn.adapter.PurchaseAdapter
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.response.TryoutBundleResponse
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
+import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.ActivityPurchaseBinding
 
 class PurchaseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPurchaseBinding
+
+    val tryoutViewModel by viewModels<TryoutViewModel>()
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(application.userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPurchaseBinding.inflate(layoutInflater)
@@ -19,11 +35,29 @@ class PurchaseActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        binding.cvPopular.setOnClickListener {
-//            val title = binding.tvTitle.text.toString()
-//            val dialog = ValidationPurchaseDialogFragment.newInstance(title)
-//            dialog.show(supportFragmentManager, "ValidationPurchaseDialog")
-//        }
+        authViewModel.getAuthUser().observe(this) { userData ->
+            if (userData != null) {
+                val userId = userData.userId
+                tryoutViewModel.getBundleTryout(userId)
+            }
+        }
+
+        tryoutViewModel.bundleTryout.observe(this) {
+            setupRecycleView(it)
+        }
+
+    }
+
+    private fun setupRecycleView(tryoutBundleResponse: TryoutBundleResponse) {
+        binding.rvBundle.layoutManager = LinearLayoutManager(this)
+
+        val adapter = PurchaseAdapter(this)
+
+        binding.rvBundle.adapter = adapter
+
+        tryoutBundleResponse.data.let {
+            adapter.submitList(it)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

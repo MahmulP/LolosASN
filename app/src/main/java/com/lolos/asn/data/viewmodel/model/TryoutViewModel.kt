@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lolos.asn.data.response.FinishedTryoutResponse
+import com.lolos.asn.data.response.TryoutBundleDetailResponse
+import com.lolos.asn.data.response.TryoutBundleResponse
 import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.response.TryoutResultResponse
 import com.lolos.asn.data.retrofit.ApiConfig
@@ -28,6 +30,12 @@ class TryoutViewModel: ViewModel() {
 
     private val _finishedTryout = MutableLiveData<FinishedTryoutResponse>()
     val finishedTryout: LiveData<FinishedTryoutResponse> = _finishedTryout
+
+    private val _bundleTryout = MutableLiveData<TryoutBundleResponse>()
+    val bundleTryout: LiveData<TryoutBundleResponse> = _bundleTryout
+
+    private val _bundleTryoutDetail = MutableLiveData<TryoutBundleDetailResponse>()
+    val bundleTryoutDetail: LiveData<TryoutBundleDetailResponse> = _bundleTryoutDetail
 
     fun getNewestTryout() {
         val client = ApiConfig.getApiService().getNewestTryout()
@@ -108,6 +116,40 @@ class TryoutViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<FinishedTryoutResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
+    }
+
+    fun getBundleTryout(userId: String?) {
+        val client = ApiConfig.getApiService().getBundle(userId = userId)
+        client.enqueue(object : Callback<TryoutBundleResponse> {
+            @SuppressLint("NullSafeMutableLiveData")
+            override fun onResponse(call: Call<TryoutBundleResponse>, response: Response<TryoutBundleResponse>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    _bundleTryout.value = responseBody
+                }
+            }
+
+            override fun onFailure(call: Call<TryoutBundleResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
+    }
+
+    fun getBundleTryoutDetail(userId: String?, bundleId: String?) {
+        val client = ApiConfig.getApiService().getDetailBundle(userId = userId, bundleId = bundleId)
+        client.enqueue(object : Callback<TryoutBundleDetailResponse> {
+            @SuppressLint("NullSafeMutableLiveData")
+            override fun onResponse(call: Call<TryoutBundleDetailResponse>, response: Response<TryoutBundleDetailResponse>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    _bundleTryoutDetail.value = responseBody
+                }
+            }
+
+            override fun onFailure(call: Call<TryoutBundleDetailResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
