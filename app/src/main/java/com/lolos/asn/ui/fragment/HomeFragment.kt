@@ -3,11 +3,10 @@ package com.lolos.asn.ui.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,12 +20,11 @@ import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.factory.TryoutViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
-import com.lolos.asn.data.viewmodel.model.CourseViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.FragmentHomeBinding
 import com.lolos.asn.ui.activity.ArticleActivity
 import com.lolos.asn.ui.activity.PurchaseActivity
-import com.lolos.asn.ui.activity.ResultActivity
+import com.lolos.asn.ui.activity.ResultHistoryActivity
 import com.lolos.asn.ui.dialog.TryoutDialogFragment
 import com.lolos.asn.utils.MarginItemDecoration
 import java.util.Calendar
@@ -53,6 +51,7 @@ class HomeFragment : Fragment() {
             if (it.userId != null) {
                 val userId = it.userId
                 authViewModel.getAUthUserData(userId)
+                tryoutViewModel.getAllTryout(userId)
             }
         }
 
@@ -65,11 +64,6 @@ class HomeFragment : Fragment() {
                 fullName
             }
 
-            if (it.role == "MEMBER") {
-                binding.tvMember.text = "Premium Member"
-            } else {
-                binding.tvMember.text = it.role
-            }
             binding.tvName.text = displayName
             binding.tvGreet.text = "Hai $displayName"
 
@@ -82,6 +76,19 @@ class HomeFragment : Fragment() {
         }
 
         tryoutViewModel.getNewestTryout()
+
+        tryoutViewModel.allTryout.observe(viewLifecycleOwner) { tryoutResponse ->
+            tryoutResponse?.data?.let { dataList ->
+                val isPremiumMember = dataList.any { it?.accessed == "1" }
+                if (isPremiumMember) {
+                    binding.tvMember.text = getString(R.string.premium_member)
+                } else {
+                    binding.tvMember.text = getString(R.string.freemium_member)
+                    binding.tvMember.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                }
+            }
+        }
+
 
         tryoutViewModel.tryout.observe(viewLifecycleOwner) {
             setupRecyclerView(it)
@@ -97,7 +104,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.ibResult.setOnClickListener {
-            startActivity(Intent(requireActivity(), ResultActivity::class.java))
+            startActivity(Intent(requireActivity(), ResultHistoryActivity::class.java))
         }
 
         binding.ibArtikel.setOnClickListener {
@@ -125,16 +132,19 @@ class HomeFragment : Fragment() {
         val lastItemEndMargin = (32 * density).toInt()
 
         val itemDecoration = MarginItemDecoration(firstItemStartMargin, restItemStartMargin, lastItemEndMargin)
+
+        // Remove all item decorations to avoid duplicates
+        val itemDecorationCount = binding.rvTryout.itemDecorationCount
+        for (i in 0 until itemDecorationCount) {
+            binding.rvTryout.removeItemDecorationAt(0)
+        }
+
         binding.rvTryout.addItemDecoration(itemDecoration)
         binding.rvTryout.adapter = adapter
 
         // Submit the list to the adapter
         tryoutResponse.data.let {
             adapter.submitList(it)
-        }
-
-        binding.rvTryout.post {
-            binding.rvTryout.invalidateItemDecorations()
         }
     }
 

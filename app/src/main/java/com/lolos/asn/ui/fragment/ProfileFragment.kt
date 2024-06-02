@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,7 +14,9 @@ import com.lolos.asn.R
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.factory.TryoutViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
+import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.FragmentProfileBinding
 import com.lolos.asn.ui.dialog.LogoutDialogFragment
 
@@ -23,6 +25,9 @@ class ProfileFragment : Fragment() {
     private val authViewModel: AuthViewModel by viewModels {
         val pref = UserPreferences.getInstance(requireContext().userPreferencesDataStore)
         AuthViewModelFactory(pref)
+    }
+    private val tryoutViewModel: TryoutViewModel by viewModels {
+        TryoutViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -50,6 +55,7 @@ class ProfileFragment : Fragment() {
             if (it.userId != null) {
                 val userId = it.userId
                 authViewModel.getAUthUserData(userId)
+                tryoutViewModel.getAllTryout(userId)
             }
         }
 
@@ -70,6 +76,18 @@ class ProfileFragment : Fragment() {
                 .into(binding.ivAvatar)
         }
 
+        tryoutViewModel.allTryout.observe(viewLifecycleOwner) { tryoutResponse ->
+            tryoutResponse?.data?.let { dataList ->
+                val isPremiumMember = dataList.any { it?.accessed == "1" }
+                if (isPremiumMember) {
+                    binding.tvType.text = getString(R.string.premium_member)
+                } else {
+                    binding.tvType.text = getString(R.string.freemium_member)
+                    binding.tvType.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                }
+            }
+        }
+
         binding.cvPrivacy.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("type", "Privacy")
@@ -83,7 +101,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profile_to_termPrivacyFragment, bundle)
         }
         binding.cvEditProfile.setOnClickListener {
-            Toast.makeText(requireContext(), "Under maintenance", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_profile_to_editFragment)
         }
         binding.cvLogout.setOnClickListener {
             val dialog = LogoutDialogFragment()

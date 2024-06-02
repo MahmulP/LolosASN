@@ -3,7 +3,6 @@ package com.lolos.asn.ui.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -116,9 +115,9 @@ class ResultActivity : AppCompatActivity() {
         }
 
         binding.btnDone.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("navigate_to", "learning")
+            val intent = Intent(this, ResultHistoryActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
@@ -330,13 +329,12 @@ class ResultActivity : AppCompatActivity() {
         chart.invalidate() // Refresh the chart
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("navigate_to", "learning")
+                val intent = Intent(this, ResultHistoryActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)

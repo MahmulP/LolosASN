@@ -32,7 +32,7 @@ class CourseAdapter(private val context: Context): ListAdapter<Course, CourseAda
         fun bind(course: Course, position: Int, context: Context) {
             binding.tvTitle.text = "${position + 1}. ${course.courseName}"
 
-            val thumbnail = "https://storage.googleapis.com/lidm_211/${course.courseImage}"
+            val thumbnail = course.courseImage
 
             Glide.with(itemView)
                 .load(thumbnail)

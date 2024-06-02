@@ -203,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/passing_grade"
+                        android:text="@string/passing_twk"
                         app:layout_constraintStart_toStartOf="@id/ic_note_twk"
                         app:layout_constraintTop_toBottomOf="@id/ic_note_twk" />
 
@@ -267,7 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="@string/soal"
+                        android:text="@string/soal_tiu"
                         app:layout_constraintStart_toEndOf="@id/ic_note_tiu"
                         app:layout_constraintTop_toTopOf="@id/ic_note_tiu"
                         app:layout_constraintBottom_toBottomOf="@id/ic_note_tiu" />
@@ -298,7 +298,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/passing_grade"
+                        android:text="@string/passing_tiu"
                         app:layout_constraintStart_toStartOf="@id/ic_note_tiu"
                         app:layout_constraintTop_toBottomOf="@id/ic_note_tiu" />
 
@@ -374,7 +374,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="@string/soal"
+                        android:text="@string/soal_tkp"
                         app:layout_constraintStart_toEndOf="@id/ic_note_tkp"
                         app:layout_constraintTop_toTopOf="@id/ic_note_tkp"
                         app:layout_constraintBottom_toBottomOf="@id/ic_note_tkp" />
@@ -405,7 +405,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/passing_grade"
+                        android:text="@string/passing_tkp"
                         app:layout_constraintStart_toStartOf="@id/ic_note_tkp"
                         app:layout_constraintTop_toBottomOf="@id/ic_note_tkp" />
 

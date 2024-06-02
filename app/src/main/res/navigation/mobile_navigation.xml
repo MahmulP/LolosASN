@@ -40,12 +40,20 @@
                 android:name="type"
                 app:argType="string" />
         </action>
+        <action
+            android:id="@+id/action_profile_to_editFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/termPrivacyFragment"
         android:name="com.lolos.asn.ui.fragment.TermPrivacyFragment"
         android:label="TermPrivacyFragment" />
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.lolos.asn.ui.fragment.EditProfileFragment"
+        android:label="EditProfileFragment" />
 
     <action
         android:id="@+id/action_global_to_tryout"

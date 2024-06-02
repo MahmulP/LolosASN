@@ -70,4 +70,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android) //coroutines android
 
     implementation(libs.mpandroidchart) // android chart
+    implementation(libs.autofittextview) //autofit text view
 }

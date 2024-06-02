@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lolos.asn.R
 import com.lolos.asn.data.response.DataItem
 import com.lolos.asn.databinding.ListTryoutBinding
+import com.lolos.asn.ui.activity.PurchaseActivity
 import com.lolos.asn.ui.activity.ResultActivity
 import com.lolos.asn.ui.activity.TryoutDetailActivity
 import java.text.ParseException
@@ -45,19 +46,20 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
 
             val dateRange = "$formattedCreatedAt - $formattedTryoutClosed"
             val isCleared = tryout.isCleared
+            val isAccessed = tryout.accessed
 
             // Set the formatted dates to the TextView
             binding.tvTitleTryout.text = tryout.tryoutTitle
             binding.tvDateCpns.text = dateRange
 
-            if (isCleared == "1") {
+            if (isCleared == "1" && isAccessed == "1") {
                 binding.btnDetail.setOnClickListener {
                     val intent = Intent(context, ResultActivity::class.java)
                     intent.putExtra("tryout_id", tryout.tryoutId)
                     intent.putExtra("tryout_period", dateRange)
                     context.startActivity(intent)
                 }
-            } else {
+            } else if (isAccessed == "1" || tryout.tryoutType == "FREE") {
                 binding.btnDetail.text = "Mulai"
                 binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
                 binding.btnDetail.setBackgroundColor(
@@ -70,6 +72,19 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
                     val intent = Intent(context, TryoutDetailActivity::class.java)
                     intent.putExtra("tryout_id", tryout.tryoutId)
                     intent.putExtra("tryout_period", dateRange)
+                    context.startActivity(intent)
+                }
+            } else {
+                binding.btnDetail.text = context.getString(R.string.buy_now)
+                binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
+                binding.btnDetail.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.primaryColor
+                    )
+                )
+                binding.btnDetail.setOnClickListener {
+                    val intent = Intent(context, PurchaseActivity::class.java)
                     context.startActivity(intent)
                 }
             }

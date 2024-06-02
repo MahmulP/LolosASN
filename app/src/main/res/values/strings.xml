@@ -234,4 +234,14 @@
     <string name="include_package">Paket ini termasuk:</string>
     <string name="tryout_description">Tryout Premium</string>
     <string name="freemium">Tryout Freemium</string>
+    <string name="change_avatar">Ubah Foto</string>
+    <string name="whatsapp_number">Nomor Whatsapp</string>
+    <string name="save_data">Simpan</string>
+    <string name="freemium_member">Freemium Member</string>
+    <string name="passing_twk">Passing Grade = 65 poin</string>
+    <string name="passing_tiu">Passing Grade = 80 poin</string>
+    <string name="passing_tkp">Passing Grade = 156 poin</string>
+    <string name="soal_tiu">35 Soal</string>
+    <string name="soal_tkp">45 Soal</string>
+    <string name="result_history">Riwayat Pengerjaan</string>
 </resources>

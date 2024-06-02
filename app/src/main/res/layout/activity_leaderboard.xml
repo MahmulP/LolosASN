@@ -94,6 +94,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/leaderboard_item"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/iv_underline"
+        app:layout_constraintBottom_toTopOf="@id/cv_user"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv_empty"
+        android:layout_width="133dp"
+        android:layout_height="150dp"
+        android:src="@drawable/empty_image"
+        app:layout_constraintTop_toBottomOf="@id/iv_underline"
+        app:layout_constraintBottom_toTopOf="@id/cv_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_user"
         android:layout_width="match_parent"
@@ -199,7 +219,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.cardview.widget.CardView>
 

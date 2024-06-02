@@ -9,7 +9,7 @@ import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
-import com.lolos.asn.data.response.Tryout
+import com.lolos.asn.data.response.TransactionHistoryResponse
 import com.lolos.asn.data.response.TryoutBundleDetailResponse
 import com.lolos.asn.data.response.TryoutBundleResponse
 import com.lolos.asn.data.response.TryoutDetailResponse
@@ -50,6 +50,11 @@ interface ApiService {
         @Path("course_id") courseId: String?,
         @Path("account_id") userId: String?
     ): Call<CourseDetailResponse>
+
+    @GET("tryouts/account/{account_id}")
+    fun getAllTryouts(
+        @Path("account_id") userId: String?
+    ): Call<TryoutResponse>
 
     @GET("tryouts/{tryout_id}/account/{account_id}")
     fun getDetailTryout(
@@ -102,4 +107,8 @@ interface ApiService {
         @Path("tryout_id") tryoutId: String?
     ): Call<LeaderboardResponse>
 
+    @GET("transaction/history/{account_id}")
+    fun getTransactionHistory(
+        @Path("account_id") userId: String?
+    ): Call<TransactionHistoryResponse>
 }

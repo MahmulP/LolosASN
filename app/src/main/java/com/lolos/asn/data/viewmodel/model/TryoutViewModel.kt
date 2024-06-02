@@ -16,6 +16,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TryoutViewModel: ViewModel() {
+
+    private val _allTryout = MutableLiveData<TryoutResponse>()
+    val allTryout: LiveData<TryoutResponse> = _allTryout
+
     private val _tryout = MutableLiveData<TryoutResponse>()
     val tryout: LiveData<TryoutResponse> = _tryout
 
@@ -42,6 +46,24 @@ class TryoutViewModel: ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    fun getAllTryout(userId: String?) {
+        val client = ApiConfig.getApiService().getAllTryouts(userId = userId)
+        client.enqueue(object : Callback<TryoutResponse> {
+            @SuppressLint("NullSafeMutableLiveData")
+            override fun onResponse(call: Call<TryoutResponse>, response: Response<TryoutResponse>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    _allTryout.value = responseBody
+                }
+            }
+
+            override fun onFailure(call: Call<TryoutResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
+    }
+
     fun getNewestTryout() {
         val client = ApiConfig.getApiService().getNewestTryout()
         client.enqueue(object : Callback<TryoutResponse> {

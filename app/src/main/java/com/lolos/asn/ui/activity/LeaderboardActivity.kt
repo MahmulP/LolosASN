@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -86,7 +87,29 @@ class LeaderboardActivity : AppCompatActivity() {
             }
         }
 
+        leaderboardViewModel.isEmpty.observe(this) {
+            showEmpty(it)
+        }
 
+        leaderboardViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+    }
+
+    private fun showEmpty(status: Boolean) {
+        if (status) {
+            binding.ivEmpty.visibility = View.VISIBLE
+        } else {
+            binding.ivEmpty.visibility = View.GONE
+        }
+    }
+
+    private fun showLoading(status: Boolean) {
+        if (status) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     private fun setupRecycleView(leaderboardResponse: LeaderboardResponse?){
