@@ -232,4 +232,6 @@
     <string name="number_one">1</string>
     <string name="failed">ANDA TIDAK LULUS!</string>
     <string name="include_package">Paket ini termasuk:</string>
+    <string name="tryout_description">Tryout Premium</string>
+    <string name="freemium">Tryout Freemium</string>
 </resources>

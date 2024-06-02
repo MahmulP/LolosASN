@@ -2,6 +2,7 @@ package com.lolos.asn.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,9 +44,37 @@ class PurchaseActivity : AppCompatActivity() {
         }
 
         tryoutViewModel.bundleTryout.observe(this) {
-            setupRecycleView(it)
+            if (it != null) {
+                setupRecycleView(it)
+            } else {
+                binding.ivEmpty.visibility = View.VISIBLE
+            }
         }
 
+        tryoutViewModel.isEmpty.observe(this) {
+            showEmpty(it)
+        }
+
+        tryoutViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+    }
+
+    private fun showLoading(status: Boolean) {
+        if (status) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showEmpty(status: Boolean) {
+        if (status) {
+            binding.ivEmpty.visibility = View.VISIBLE
+        } else {
+            binding.ivEmpty.visibility = View.GONE
+        }
     }
 
     private fun setupRecycleView(tryoutBundleResponse: TryoutBundleResponse) {

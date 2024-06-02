@@ -40,8 +40,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
 
     suspend fun clearUser() {
         dataStore.edit { preferences ->
-            preferences[Token] = ""
-            preferences[UserId] = ""
+            preferences.clear()
         }
     }
 
@@ -67,10 +66,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
 
     suspend fun clearUserData() {
         dataStore.edit { preferences ->
-            preferences[Username] = ""
-            preferences[Email] = ""
-            preferences[Role] = ""
-            preferences[Avatar] = ""
+            preferences.clear()
         }
     }
 

@@ -41,6 +41,7 @@
                 app:argType="string" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/termPrivacyFragment"
         android:name="com.lolos.asn.ui.fragment.TermPrivacyFragment"

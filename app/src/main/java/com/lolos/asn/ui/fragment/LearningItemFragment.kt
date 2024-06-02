@@ -45,11 +45,19 @@ class LearningItemFragment : Fragment() {
                 }
 
                 courseViewModel.courses.observe(viewLifecycleOwner) {
-                    setupRecyclerView(it)
+                    if (it.data.isNotEmpty()) {
+                        setupRecyclerView(it)
+                    } else {
+                        binding.ivEmpty.visibility = View.VISIBLE
+                    }
                 }
 
                 courseViewModel.isLoading.observe(viewLifecycleOwner) {
                     showLoading(it)
+                }
+
+                courseViewModel.isEmpty.observe(viewLifecycleOwner) {
+                    showEmpty(it)
                 }
             }
             "tiu" -> {
@@ -60,11 +68,19 @@ class LearningItemFragment : Fragment() {
                 }
 
                 courseViewModel.courses.observe(viewLifecycleOwner) {
-                    setupRecyclerView(it)
+                    if (it.data.isNotEmpty()) {
+                        setupRecyclerView(it)
+                    } else {
+                        binding.ivEmpty.visibility = View.VISIBLE
+                    }
                 }
 
                 courseViewModel.isLoading.observe(viewLifecycleOwner) {
                     showLoading(it)
+                }
+
+                courseViewModel.isEmpty.observe(viewLifecycleOwner) {
+                    showEmpty(it)
                 }
             }
             "tkp" -> {
@@ -75,13 +91,29 @@ class LearningItemFragment : Fragment() {
                 }
 
                 courseViewModel.courses.observe(viewLifecycleOwner) {
-                    setupRecyclerView(it)
+                    if (it.data.isNotEmpty()) {
+                        setupRecyclerView(it)
+                    } else {
+                        binding.ivEmpty.visibility = View.VISIBLE
+                    }
                 }
 
                 courseViewModel.isLoading.observe(viewLifecycleOwner) {
                     showLoading(it)
                 }
+
+                courseViewModel.isEmpty.observe(viewLifecycleOwner) {
+                    showEmpty(it)
+                }
             }
+        }
+    }
+
+    private fun showEmpty(status: Boolean) {
+        if (status) {
+            binding.ivEmpty.visibility = View.VISIBLE
+        } else {
+            binding.ivEmpty.visibility = View.GONE
         }
     }
 

@@ -1,9 +1,14 @@
 package com.lolos.asn.ui.activity
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -25,6 +30,8 @@ import java.util.Locale
 
 class DetailPurchaseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailPurchaseBinding
+
+    private var currentImageUri: Uri? = null
 
     val tryoutViewModel by viewModels<TryoutViewModel>()
     private val authViewModel: AuthViewModel by viewModels {
@@ -75,8 +82,15 @@ class DetailPurchaseActivity : AppCompatActivity() {
             dialog.show(supportFragmentManager, "PaymentStatusDialog")
         }
 
-        binding.cvUpload.setOnClickListener {
-            Toast.makeText(this, "TEST DONG SUKSES", Toast.LENGTH_SHORT).show()
+        binding.ibUpload.setOnClickListener {
+            startGallery()
+        }
+
+        binding.ibClose.setOnClickListener {
+            currentImageUri = null
+            binding.ivPicture.visibility = View.GONE
+            binding.ibUpload.visibility = View.VISIBLE
+            binding.ibClose.visibility = View.GONE
         }
     }
 
@@ -88,5 +102,28 @@ class DetailPurchaseActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun startGallery() {
+        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            currentImageUri = uri
+            binding.ivPicture.setImageURI(currentImageUri)
+            binding.ivPicture.visibility = View.VISIBLE
+            binding.ibUpload.visibility = View.GONE
+            binding.ibClose.visibility = View.VISIBLE
+            Log.d(TAG, currentImageUri.toString())
+        } else {
+            Log.d("Photo Picker", "No media selected")
+        }
+    }
+
+    companion object {
+        private const val TAG = "DetailPurchaseActivity"
     }
 }

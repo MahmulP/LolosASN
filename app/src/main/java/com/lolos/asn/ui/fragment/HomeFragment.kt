@@ -50,20 +50,28 @@ class HomeFragment : Fragment() {
 
         authViewModel.getAuthUser().observe(viewLifecycleOwner) {
 
-            if (it.userId != "") {
+            if (it.userId != null) {
                 val userId = it.userId
                 authViewModel.getAUthUserData(userId)
             }
         }
 
         authViewModel.getUserData().observe(viewLifecycleOwner) {
+            val fullName = it.name ?: ""
+            val nameParts = fullName.split(" ")
+            val displayName = if (nameParts.size >= 2) {
+                "${nameParts[0]} ${nameParts[1]}"
+            } else {
+                fullName
+            }
+
             if (it.role == "MEMBER") {
                 binding.tvMember.text = "Premium Member"
             } else {
                 binding.tvMember.text = it.role
             }
-            binding.tvName.text = it.name
-            binding.tvGreet.text = "Hai ${it.name}"
+            binding.tvName.text = displayName
+            binding.tvGreet.text = "Hai $displayName"
 
             val avatar = it.avatar
 
@@ -123,6 +131,10 @@ class HomeFragment : Fragment() {
         // Submit the list to the adapter
         tryoutResponse.data.let {
             adapter.submitList(it)
+        }
+
+        binding.rvTryout.post {
+            binding.rvTryout.invalidateItemDecorations()
         }
     }
 

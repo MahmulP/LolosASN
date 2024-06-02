@@ -102,7 +102,9 @@ class ResultActivity : AppCompatActivity() {
         }
 
         binding.tvDetailRank.setOnClickListener {
-            startActivity(Intent(this, LeaderboardActivity::class.java))
+            val intent = Intent(this, LeaderboardActivity::class.java)
+            intent.putExtra("tryout_id", tryoutId)
+            startActivity(intent)
         }
 
         binding.tvDetailPembahasan.setOnClickListener {

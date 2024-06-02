@@ -6,6 +6,7 @@
     <color name="grey">#D9D9D9</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EB4F45</color>
+    <color name="red_100">#FEE6E6</color>
     <color name="pink_200">#C39A9A</color>
     <color name="blue_500">#5F7DCB</color>
     <color name="green_100">#E2FEE5</color>
@@ -18,4 +19,6 @@
     <color name="blue_100">#B0EBF9</color>
     <color name="orange">#FF9F00</color>
     <color name="green">#89E219</color>
+    <color name="yellow">#FF9F04</color>
+    <color name="purple">#D9C5FF</color>
 </resources>

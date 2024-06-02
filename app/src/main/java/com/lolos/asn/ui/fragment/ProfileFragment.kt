@@ -47,7 +47,7 @@ class ProfileFragment : Fragment() {
 
         authViewModel.getAuthUser().observe(viewLifecycleOwner) {
 
-            if (it.userId != "") {
+            if (it.userId != null) {
                 val userId = it.userId
                 authViewModel.getAUthUserData(userId)
             }

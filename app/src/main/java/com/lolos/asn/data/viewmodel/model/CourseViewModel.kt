@@ -17,6 +17,9 @@ class CourseViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isEmpty = MutableLiveData<Boolean>()
+    val isEmpty: LiveData<Boolean> = _isEmpty
+
     fun getCourses(userId: String, categoryId: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getCourses(userId, categoryId)
@@ -32,6 +35,7 @@ class CourseViewModel: ViewModel() {
 
             override fun onFailure(call: Call<CourseResponse>, t: Throwable) {
                 _isLoading.value = false
+                _isEmpty.value = true
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })

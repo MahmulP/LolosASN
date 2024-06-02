@@ -65,6 +65,15 @@ class TryoutFragment : Fragment() {
             binding.tvType.text = typeTryout
             binding.tvType.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
             binding.toolbar.title = "Tryout Gratis"
+            binding.tvTryoutDescription.text = getString(R.string.freemium)
+        }
+
+        tryoutViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        tryoutViewModel.isEmpty.observe(viewLifecycleOwner) {
+            showEmpty(it)
         }
 
         val toolbar = binding.toolbar
@@ -74,6 +83,22 @@ class TryoutFragment : Fragment() {
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+    }
+
+    private fun showLoading(status: Boolean) {
+        if (status) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showEmpty(status: Boolean) {
+        if (status) {
+            binding.ivEmpty.visibility = View.VISIBLE
+        } else {
+            binding.ivEmpty.visibility = View.GONE
         }
     }
 
