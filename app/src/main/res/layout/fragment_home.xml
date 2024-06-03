@@ -238,44 +238,44 @@
 
         <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/ads_layout"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layoutDescription="@xml/fragment_home_xml_ads_layout_scene"
             app:layout_constraintBottom_toTopOf="@id/tv_newest_tryout"
-            app:layout_constraintEnd_toEndOf="@id/cv_user"
-            app:layout_constraintStart_toStartOf="@id/cv_user"
             app:layout_constraintTop_toBottomOf="@id/tv_artikel">
 
             <ImageView
                 android:id="@+id/iv_invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_ads1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:contentDescription="@string/ads"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:src="@drawable/ads"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_ads2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -283,9 +283,11 @@
                 android:id="@+id/iv_ads3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:contentDescription="@string/ads"
                 android:src="@drawable/ads"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -293,9 +295,11 @@
                 android:id="@+id/iv_ads4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:contentDescription="@string/ads"
+                android:scaleType="fitXY"
                 android:src="@drawable/ads"
-                android:scaleType="centerCrop"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

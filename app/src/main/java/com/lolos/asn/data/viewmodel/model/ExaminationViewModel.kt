@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lolos.asn.data.response.ExaminationResponse
+import com.lolos.asn.data.response.ListCategoryScoreItem
 import com.lolos.asn.data.response.TryoutContentItem
+import com.lolos.asn.data.response.TryoutRequest
 import com.lolos.asn.data.retrofit.ApiConfig
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -29,17 +31,28 @@ class ExaminationViewModel: ViewModel() {
     private val _remainingTime = MutableLiveData<String>()
     val remainingTime: LiveData<String> get() = _remainingTime
 
-    private val _score = MutableLiveData<List<String>>()
-    val score: LiveData<List<String>> = _score
-
     private val _selectedAnswers = MutableLiveData<MutableMap<Int, Int>>()
     val selectedAnswers: LiveData<MutableMap<Int, Int>> = _selectedAnswers
 
     private var countdownJob: Job? = null
 
+    private val _subCategoryScores = MutableLiveData<List<ListCategoryScoreItem>>()
+    val subCategoryScore: LiveData<List<ListCategoryScoreItem>> = _subCategoryScores
+
+    private val answeredQuestions = mutableSetOf<Int>()
+
+    private var tiuScore: Int = 0
+    private var tiuWrong: Int = 0
+    private var twkScore: Int = 0
+    private var twkWrong: Int = 0
+    private var tkpScore: Int = 0
+
+    private val previousAnswers = mutableMapOf<Int, Int>()
+
     init {
         _currentQuestionIndex.value = 0
         _selectedAnswers.value = mutableMapOf()
+        _subCategoryScores.value = mutableListOf()
     }
 
     fun startTryout(tryoutId: String?) {
@@ -55,8 +68,9 @@ class ExaminationViewModel: ViewModel() {
                         it
                     }
                     responseBody?.data?.tryoutContent?.let { content ->
-                        _examTryout.value = content.filterNotNull()
+                        _examTryout.value = content
                     }
+
                 }
             }
 
@@ -87,6 +101,90 @@ class ExaminationViewModel: ViewModel() {
 
     fun getSelectedAnswer(questionIndex: Int): Int? {
         return selectedAnswers.value?.get(questionIndex)
+    }
+
+    fun calculateScores(questionIndex: Int, optionIndex: Int): TryoutRequest {
+        val contentItem = _examTryout.value?.get(questionIndex) ?: return TryoutRequest()
+        val subCategoryId = contentItem.subCategoryId
+
+        // Get the previous answer for this question
+        val previousAnswer = previousAnswers[questionIndex]
+
+        // Update scores based on the new and previous answers
+        when (contentItem.category) {
+            1 -> { // TWK
+                if (previousAnswer != null) {
+                    if (previousAnswer == contentItem.jawaban) {
+                        twkScore -= 5
+                    } else {
+                        twkWrong -= 1
+                    }
+                }
+                if (contentItem.jawaban == optionIndex) {
+                    twkScore += 5
+                } else {
+                    twkWrong += 1
+                }
+            }
+            2 -> { // TIU
+                if (previousAnswer != null) {
+                    if (previousAnswer == contentItem.jawaban) {
+                        tiuScore -= 5
+                    } else {
+                        tiuWrong -= 1
+                    }
+                }
+                if (contentItem.jawaban == optionIndex) {
+                    tiuScore += 5
+                } else {
+                    tiuWrong += 1
+                }
+            }
+            3 -> { // TKP
+                if (previousAnswer != null) {
+                    tkpScore -= contentItem.jawabanTkp.getOrNull(previousAnswer) ?: 0
+                }
+                val tkpValue = contentItem.jawabanTkp.getOrNull(optionIndex) ?: 0
+                tkpScore += tkpValue
+            }
+        }
+
+        // Update the previous answer for this question
+        previousAnswers[questionIndex] = optionIndex
+
+        // Update the subcategory score
+        val updatedSubCategoryScores = _subCategoryScores.value?.toMutableList() ?: mutableListOf()
+        val existingItemIndex = updatedSubCategoryScores.indexOfFirst { it.subCategoryId == subCategoryId?.toInt() }
+        if (existingItemIndex != -1) {
+            val currentScore = updatedSubCategoryScores[existingItemIndex].subCategoryScore.toInt()
+            updatedSubCategoryScores[existingItemIndex] = ListCategoryScoreItem(
+                subCategoryId = subCategoryId?.toInt(),
+                subCategoryScore = (currentScore + if (contentItem.jawaban == optionIndex) 5 else 0).toString()
+            )
+        } else {
+            updatedSubCategoryScores.add(
+                ListCategoryScoreItem(
+                    subCategoryId = subCategoryId?.toInt(),
+                    subCategoryScore = if (contentItem.jawaban == optionIndex) "5" else "0"
+                )
+            )
+        }
+        _subCategoryScores.value = updatedSubCategoryScores
+
+        val tryoutRequest = TryoutRequest(
+            twkWrong = twkWrong.toString(),
+            twkScore = twkScore.toString(),
+            tiuScore = tiuScore.toString(),
+            tkpScore = tkpScore.toString(),
+            listCategoryScore = updatedSubCategoryScores,
+            tiuWrong = tiuWrong.toString()
+        )
+
+        Log.d("TryoutViewModel", "calculateScores - TryoutRequest: $tryoutRequest")
+        Log.d("TryoutViewModel", "calculateScores - TIU Score: $tiuScore, TWK Score: $twkScore, TKP Score: $tkpScore")
+        Log.d("TryoutViewModel", "calculateScores - ListCategoryScore: $updatedSubCategoryScores")
+
+        return tryoutRequest
     }
 
     fun isAnswerFilled(questionIndex: Int): Boolean {

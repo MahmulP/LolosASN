@@ -1,14 +1,10 @@
 package com.lolos.asn.adapter
 
-import android.os.Build
-import android.util.Log
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.lolos.asn.R
 import com.lolos.asn.data.viewmodel.model.ExaminationViewModel
 import com.lolos.asn.databinding.ListChoiceBinding
 import com.lolos.asn.ui.activity.ExaminationActivity
@@ -31,6 +27,7 @@ class ExaminationAnswerAdapter(
         holder.itemView.setOnClickListener {
             updateSelection(position)
             viewModel.selectAnswer(viewModel.currentQuestionIndex.value ?: 0, position)
+            viewModel.calculateScores(viewModel.currentQuestionIndex.value ?: 0, position)
         }
     }
 

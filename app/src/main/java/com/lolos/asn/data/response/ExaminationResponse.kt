@@ -20,7 +20,7 @@ data class TryoutContentItem(
 	val question: String? = null,
 
 	@field:SerializedName("option_image")
-	val optionImage: Boolean? = null,
+	val optionImage: Int? = null,
 
 	@field:SerializedName("question_image")
 	val questionImage: String? = null,
@@ -28,11 +28,14 @@ data class TryoutContentItem(
 	@field:SerializedName("subCategory_id")
 	val subCategoryId: String? = null,
 
-//	@field:SerializedName("jawaban")
-//	val jawaban: List<Int?>? = null,
+	@field:SerializedName("jawaban")
+	val jawaban: Int? = null,
+
+	@field:SerializedName("jawaban_tkp")
+	val jawabanTkp: List<Int>,
 
 	@field:SerializedName("category")
-	val category: String? = null,
+	val category: Int? = null,
 
 	@field:SerializedName("option")
 	val option: List<String?>? = null
@@ -54,5 +57,5 @@ data class TryoutData(
 	val tryoutId: String? = null,
 
 	@field:SerializedName("tryout_content")
-	val tryoutContent: List<TryoutContentItem?>? = null
+	val tryoutContent: List<TryoutContentItem>
 )

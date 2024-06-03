@@ -162,13 +162,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
     </ConstraintSet>
     <Transition
         motion:constraintSetStart="@+id/end"
         motion:constraintSetEnd="@+id/slide2"
-        motion:autoTransition="none">
+        motion:autoTransition="animateToEnd"
+        motion:duration="5000"
+        motion:transitionFlags="disableIntraAutoTransition">
         <OnSwipe motion:dragDirection="dragLeft" />
     </Transition>
     <ConstraintSet
@@ -214,7 +216,9 @@
             android:layout_height="0dp"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent" />
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
         <Constraint
             android:id="@+id/menu1"
             motion:layout_constraintEnd_toStartOf="@+id/menu2"
@@ -248,7 +252,9 @@
     <Transition
         motion:constraintSetStart="@+id/slide2"
         motion:constraintSetEnd="@+id/slide3"
-        motion:autoTransition="none">
+        motion:autoTransition="animateToEnd"
+        motion:duration="5000"
+        motion:transitionFlags="disableIntraAutoTransition">
         <OnSwipe motion:dragDirection="dragLeft" />
     </Transition>
     <ConstraintSet
@@ -323,12 +329,17 @@
             android:layout_height="0dp"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent" />
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
     </ConstraintSet>
     <Transition
         motion:constraintSetStart="@+id/slide3"
         motion:constraintSetEnd="@+id/slide4"
-        motion:autoTransition="none">
+        motion:autoTransition="animateToEnd"
+        motion:duration="5000"
+        motion:transitionFlags="disableIntraAutoTransition"
+        motion:motionInterpolator="linear">
         <OnSwipe motion:dragDirection="dragLeft" />
     </Transition>
 </MotionScene>

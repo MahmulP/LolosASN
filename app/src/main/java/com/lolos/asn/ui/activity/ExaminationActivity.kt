@@ -3,13 +3,11 @@ package com.lolos.asn.ui.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.lolos.asn.R
@@ -134,9 +132,9 @@ class ExaminationActivity : AppCompatActivity() {
             binding.tvNomorSoal.text = "Soal ${index + 1}"
             binding.btnPrevious.text = "Soal ${index}"
             binding.tvSoal.text = question.question
-            binding.toolbar.title = if (question.category == "TWK") {
+            binding.toolbar.title = if (question.category == 1) {
                 getString(R.string.twk)
-            } else if (question.category == "TIU") {
+            } else if (question.category == 2) {
                 getString(R.string.tiu)
             } else {
                 getString(R.string.tkp)

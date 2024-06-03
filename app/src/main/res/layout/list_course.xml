@@ -5,6 +5,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
+        android:id="@+id/iv_line_bottom"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginBottom="-4dp"
+        android:contentDescription="@string/divider"
+        android:src="@drawable/vertical_line"
+        app:layout_constraintTop_toBottomOf="@id/iv_dot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/iv_dot"
+        app:layout_constraintEnd_toEndOf="@id/iv_dot" />
+
+    <ImageView
+        android:id="@+id/iv_line_top"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginBottom="-4dp"
+        android:contentDescription="@string/divider"
+        android:src="@drawable/vertical_line"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_dot"
+        app:layout_constraintStart_toStartOf="@id/iv_dot"
+        app:layout_constraintEnd_toEndOf="@id/iv_dot" />
+
+    <ImageView
         android:id="@+id/iv_dot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
