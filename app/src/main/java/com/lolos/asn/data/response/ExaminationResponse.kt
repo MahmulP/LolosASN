@@ -26,7 +26,7 @@ data class TryoutContentItem(
 	val questionImage: String? = null,
 
 	@field:SerializedName("subCategory_id")
-	val subCategoryId: String? = null,
+	val subCategoryId: String,
 
 	@field:SerializedName("jawaban")
 	val jawaban: Int? = null,

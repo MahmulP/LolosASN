@@ -47,5 +47,11 @@ data class DataItem(
 	val tryoutDuration: Int? = null,
 
 	@field:SerializedName("updatedAt")
-	val updatedAt: String? = null
+	val updatedAt: String? = null,
+
+)
+
+data class FinishTryoutResponse(
+	@field:SerializedName("message")
+	val message: String? = null
 )

@@ -1,13 +1,9 @@
 package com.lolos.asn.adapter
 
-import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +12,6 @@ import com.lolos.asn.data.response.TryoutContentItem
 import com.lolos.asn.data.viewmodel.model.ExaminationViewModel
 import com.lolos.asn.databinding.ListTopNumberBinding
 import com.lolos.asn.ui.activity.ExaminationActivity
-import kotlin.math.log
 
 class ExaminationNumberAdapter(
     private val parentActivity: ExaminationActivity,

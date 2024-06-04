@@ -3,16 +3,19 @@ package com.lolos.asn.data.retrofit
 import com.lolos.asn.data.response.CourseDetailResponse
 import com.lolos.asn.data.response.CourseResponse
 import com.lolos.asn.data.response.ExaminationResponse
+import com.lolos.asn.data.response.FinishTryoutResponse
 import com.lolos.asn.data.response.FinishedTryoutResponse
 import com.lolos.asn.data.response.LeaderboardResponse
 import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
+import com.lolos.asn.data.response.NotificationResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
 import com.lolos.asn.data.response.TransactionHistoryResponse
 import com.lolos.asn.data.response.TryoutBundleDetailResponse
 import com.lolos.asn.data.response.TryoutBundleResponse
 import com.lolos.asn.data.response.TryoutDetailResponse
+import com.lolos.asn.data.response.TryoutRequest
 import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.response.TryoutResultResponse
 import com.lolos.asn.data.response.UserResponse
@@ -47,6 +50,12 @@ interface ApiService {
 
     @GET("courses/{course_id}/account/{account_id}")
     fun getDetailCourse(
+        @Path("course_id") courseId: String?,
+        @Path("account_id") userId: String?
+    ): Call<CourseDetailResponse>
+
+    @POST("clearedCourse/{account_id}/{course_id}")
+    fun finishCourse(
         @Path("course_id") courseId: String?,
         @Path("account_id") userId: String?
     ): Call<CourseDetailResponse>
@@ -102,6 +111,13 @@ interface ApiService {
         @Path("bundle_id") bundleId: String?
     ): Call<TryoutBundleDetailResponse>
 
+    @POST("tryouts/cleared/{tryout_id}/{account_id}")
+    fun clearTryout(
+        @Path("tryout_id") tryoutId: String?,
+        @Path("account_id") userId: String?,
+        @Body request: TryoutRequest
+    ): Call<FinishTryoutResponse>
+
     @GET("leaderboard/{tryout_id}")
     fun getTryoutLeaderboard(
         @Path("tryout_id") tryoutId: String?
@@ -111,4 +127,9 @@ interface ApiService {
     fun getTransactionHistory(
         @Path("account_id") userId: String?
     ): Call<TransactionHistoryResponse>
+
+    @GET("notification/{account_id}")
+    fun getNotification(
+        @Path("account_id") userId: String?
+    ): Call<NotificationResponse>
 }

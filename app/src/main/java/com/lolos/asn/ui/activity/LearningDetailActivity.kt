@@ -4,19 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
 import com.lolos.asn.R
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.CourseDetailViewModel
-import com.lolos.asn.data.viewmodel.model.CourseViewModel
 import com.lolos.asn.databinding.ActivityLearningDetailBinding
 
 class LearningDetailActivity : AppCompatActivity() {
@@ -39,7 +35,6 @@ class LearningDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val courseId = intent.getStringExtra("course_id")
-        println(courseId)
 
         authViewModel.getAuthUser().observe(this) {
             val userId = it.userId
@@ -49,14 +44,35 @@ class LearningDetailActivity : AppCompatActivity() {
         courseDetailViewModel.courseDetail.observe(this) {
             binding.tvTitle.text = it?.data?.courseName
             binding.tvContent.text = it?.data?.content?.filterNotNull()?.joinToString("\n") ?: ""
+
+            if (it?.data?.isCleared != "0") {
+                binding.btnDone.setOnClickListener {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("navigate_to", "learning")
+                    startActivity(intent)
+                }
+            } else {
+                binding.btnDone.setOnClickListener {
+                    authViewModel.getAuthUser().observe(this) {
+                        val userId = it.userId
+                        courseDetailViewModel.finishCourse(courseId = courseId, userId = userId)
+                    }
+
+                    courseDetailViewModel.finishCourse.observe(this) { isSuccess ->
+                        if (isSuccess) {
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("navigate_to", "learning")
+                            startActivity(intent)
+                        } else {
+                            showToast()
+                        }
+                    }
+                }
+            }
         }
 
         courseDetailViewModel.isLoading.observe(this) {
             showLoading(it)
-        }
-
-        binding.btnDone.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -76,5 +92,9 @@ class LearningDetailActivity : AppCompatActivity() {
         } else {
             binding.progressBar.visibility = View.GONE
         }
+    }
+
+    private fun showToast() {
+        Toast.makeText(this, "Gagal menyelesaikan materi", Toast.LENGTH_SHORT).show()
     }
 }
