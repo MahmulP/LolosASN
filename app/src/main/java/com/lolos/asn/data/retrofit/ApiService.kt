@@ -128,7 +128,7 @@ interface ApiService {
         @Path("account_id") userId: String?
     ): Call<TransactionHistoryResponse>
 
-    @GET("notification/{account_id}")
+    @GET("notifikasi/{account_id}")
     fun getNotification(
         @Path("account_id") userId: String?
     ): Call<NotificationResponse>
