@@ -14,6 +14,7 @@ In this way, LolosASN is not only an ordinary CPNS tryout application, but also 
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
+- [GITHUB Links](#github_links)
 
 ## Features
 
@@ -49,3 +50,10 @@ To run this app on your device, follow these steps:
 ### Usage
 
 Once the app is installed on your device, you can use it to practice exams and track your performance.
+
+## Github Links
+
+Here is the links for all the path of ours: 
+1. Cloud Computing: https://github.com/KenzieFu/backend-asn
+2. Mobile Development: This GITHUB
+3. Machine Learning: 
