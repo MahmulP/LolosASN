@@ -48,9 +48,6 @@ class ExaminationViewModel: ViewModel() {
     private var countdownJob: Job? = null
 
     private val _subCategoryScores = MutableLiveData<List<ListCategoryScoreItem>>()
-    val subCategoryScore: LiveData<List<ListCategoryScoreItem>> = _subCategoryScores
-
-    private val answeredQuestions = mutableSetOf<Int>()
 
     private val _tryoutRequest = MutableLiveData<TryoutRequest>()
     val tryoutRequest: LiveData<TryoutRequest> = _tryoutRequest
