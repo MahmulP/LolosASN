@@ -39,7 +39,7 @@ class WebSocketService : LifecycleService() {
             .create(NotificationViewModel::class.java)
 
         val pref = UserPreferences.getInstance(this.userPreferencesDataStore)
-        authViewModel = ViewModelProvider(ViewModelStore(), AuthViewModelFactory(pref)).get(AuthViewModel::class.java)
+        authViewModel = ViewModelProvider(ViewModelStore(), AuthViewModelFactory(pref))[AuthViewModel::class.java]
 
         // Observe LiveData using a custom lifecycle observer
         authViewModel.getAuthUser().observe(this) { authUser ->
@@ -49,8 +49,10 @@ class WebSocketService : LifecycleService() {
         notificationViewModel.notificationItem.observe(this) { item ->
             if (item?.accountId == userId) {
                 val message = item?.notifikasiMsg
-                Log.d("Notification", "Received Notification: $item")
-                sendNotification(message)
+                if (message != null && message != "Unknown") {
+                    sendNotification(message)
+                    NOTIFICATION_ID += 1
+                }
             }
         }
 
@@ -87,8 +89,8 @@ class WebSocketService : LifecycleService() {
 
     companion object {
         internal val TAG = WebSocketService::class.java.simpleName
-        private const val NOTIFICATION_ID = 1
+        private var NOTIFICATION_ID = 1
         private const val CHANNEL_ID = "channel_01"
-        private const val CHANNEL_NAME = "dicoding channel"
+        private const val CHANNEL_NAME = "LolosASN Channel"
     }
 }

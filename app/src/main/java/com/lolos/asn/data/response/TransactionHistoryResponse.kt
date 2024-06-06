@@ -29,7 +29,7 @@ data class TransactionItem(
 	val transactionPrice: Int? = null,
 
 	@field:SerializedName("listTryout")
-	val listTryout: String? = null,
+	val listTryout: List<String?>? = null,
 
 	@field:SerializedName("transactionRecord_id")
 	val transactionRecordId: String? = null,
@@ -39,4 +39,9 @@ data class TransactionItem(
 
 	@field:SerializedName("updatedAt")
 	val updatedAt: Any? = null
+)
+
+data class PurchaseResponse(
+	@field:SerializedName("message")
+	val message: String? = null
 )

@@ -6,25 +6,30 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import com.google.gson.Gson
 import com.lolos.asn.R
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.response.PurchaseResponse
+import com.lolos.asn.data.retrofit.ApiConfig
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.ActivityDetailPurchaseBinding
-import com.lolos.asn.ui.dialog.NumberDialogFragment
 import com.lolos.asn.ui.dialog.PaymentStatusDialogFragment
+import com.lolos.asn.utils.reduceFileImage
+import com.lolos.asn.utils.uriToFile
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -32,6 +37,10 @@ class DetailPurchaseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailPurchaseBinding
 
     private var currentImageUri: Uri? = null
+    private var title: String? = null
+    private var price: Int? = null
+    private var listTryout: List<String?>? = null
+    private var userId: String? = null
 
     val tryoutViewModel by viewModels<TryoutViewModel>()
     private val authViewModel: AuthViewModel by viewModels {
@@ -48,7 +57,7 @@ class DetailPurchaseActivity : AppCompatActivity() {
 
         authViewModel.getAuthUser().observe(this) {
             if (it != null) {
-                val userId = it.userId
+                userId = it.userId
                 tryoutViewModel.getBundleTryoutDetail(userId = userId, bundleId = bundleId)
             }
         }
@@ -68,6 +77,11 @@ class DetailPurchaseActivity : AppCompatActivity() {
                     tvAdminPrice.text = getString(R.string.price, "0")
                     tvTotalPrice.text = getString(R.string.price, formattedTotalPrice)
                 }
+
+                title = bundleDetail.data.tryoutBundleName
+                price = bundleDetail.data.basePrice
+                listTryout = bundleDetail.data.listTryoutId
+
             }
         }
 
@@ -78,8 +92,11 @@ class DetailPurchaseActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.btnSend.setOnClickListener {
-            val dialog = PaymentStatusDialogFragment()
-            dialog.show(supportFragmentManager, "PaymentStatusDialog")
+            if (currentImageUri != null) {
+                uploadPurchase()
+            } else {
+                showToast(getString(R.string.empty_image_warning))
+            }
         }
 
         binding.ibUpload.setOnClickListener {
@@ -106,6 +123,68 @@ class DetailPurchaseActivity : AppCompatActivity() {
 
     private fun startGallery() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private fun uploadPurchase() {
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, this).reduceFileImage()
+            Log.d("Image File", "showImage: ${imageFile.path}")
+            val transactionTitle = title
+            val basePrice = price.toString()
+            val tryoutData: List<String?>? = listTryout
+            showLoading(true)
+
+            val transactionBody = transactionTitle?.toRequestBody("text/plain".toMediaType())
+            val priceBody = basePrice.toRequestBody("text/plain".toMediaType())
+
+            // Convert list to JSON string
+            val gson = Gson()
+            val tryoutDataJson = gson.toJson(tryoutData)
+            val tryoutDataBody = tryoutDataJson.toRequestBody("application/json".toMediaType())
+
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val multipartBody = MultipartBody.Part.createFormData(
+                "bukti_transaksi",
+                imageFile.name,
+                requestImageFile
+            )
+
+            val apiService = ApiConfig.getApiService()
+            val call = apiService.sendTransaction(
+                userId,
+                multipartBody,
+                transactionBody!!,
+                priceBody,
+                tryoutDataBody
+            )
+
+            call.enqueue(object : Callback<PurchaseResponse> {
+                override fun onResponse(call: Call<PurchaseResponse>, response: Response<PurchaseResponse>) {
+                    showLoading(false)
+                    if (response.isSuccessful) {
+                        val dialog = PaymentStatusDialogFragment()
+                        dialog.show(supportFragmentManager, "PaymentStatusDialog")
+                    } else {
+                        showToast(getString(R.string.purchase_failed))
+                    }
+                }
+
+                override fun onFailure(call: Call<PurchaseResponse>, t: Throwable) {
+                    showLoading(false)
+                    showToast(getString(R.string.purchase_failed))
+                    Log.e("Upload Purchase", "onFailure: ${t.message}", t)
+                }
+            })
+        } ?: showToast(getString(R.string.empty_image_warning))
+    }
+
+
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+    private fun showToast(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private val launcherGallery = registerForActivityResult(

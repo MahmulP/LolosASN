@@ -20,8 +20,7 @@ class WebSocketClient(private val messageCallback: (String) -> Unit) : WebSocket
     }
 
     override fun onOpen(webSocket: WebSocket, response: okhttp3.Response) {
-        webSocket.send("Hello, it's Kotlin!")
-        webSocket.send("ANDA TAU KONTOL?")
+        webSocket.send("Hello, it's LolosASN!")
         Log.d("WebSocketClient", "WebSocket connection opened")
     }
 

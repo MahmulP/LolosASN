@@ -216,4 +216,6 @@
     <string name="soal_tiu">35 Soal</string>
     <string name="soal_tkp">45 Soal</string>
     <string name="result_history">Riwayat Pengerjaan</string>
+    <string name="empty_image_warning">Gambar tidak boleh kosong</string>
+    <string name="purchase_failed">Pembelian Gagal</string>
 </resources>

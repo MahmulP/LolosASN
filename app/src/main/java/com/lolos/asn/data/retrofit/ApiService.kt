@@ -9,6 +9,7 @@ import com.lolos.asn.data.response.LeaderboardResponse
 import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
 import com.lolos.asn.data.response.NotificationResponse
+import com.lolos.asn.data.response.PurchaseResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
 import com.lolos.asn.data.response.TransactionHistoryResponse
@@ -18,11 +19,17 @@ import com.lolos.asn.data.response.TryoutDetailResponse
 import com.lolos.asn.data.response.TryoutRequest
 import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.response.TryoutResultResponse
+import com.lolos.asn.data.response.UpdateUserResponse
 import com.lolos.asn.data.response.UserResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -41,6 +48,16 @@ interface ApiService {
     fun getAuthUserData(
         @Path("account_id") userId: String?
     ): Call<UserResponse>
+
+    @Multipart
+    @PUT("accounts/{account_id}")
+    fun updateUserData(
+        @Path("account_id") userId: String?,
+        @Part avatar: MultipartBody.Part?,
+        @Part("name") name: RequestBody?,
+        @Part("email") email: RequestBody?,
+        @Part("password") password: RequestBody?
+    ): Call<UpdateUserResponse>
 
     @GET("courses/account/{account_id}/category/{category_id}")
     fun getCourses(
@@ -122,6 +139,16 @@ interface ApiService {
     fun getTryoutLeaderboard(
         @Path("tryout_id") tryoutId: String?
     ): Call<LeaderboardResponse>
+
+    @Multipart
+    @POST("tryouts/transaction/{account_id}")
+    fun sendTransaction(
+        @Path("account_id") userId: String?,
+        @Part bukti_transaksi: MultipartBody.Part,
+        @Part("transaction_title") transactionTitle: RequestBody,
+        @Part("transaction_price") transactionPrice: RequestBody,
+        @Part("listTryout") listTryout: RequestBody,
+    ): Call<PurchaseResponse>
 
     @GET("transaction/history/{account_id}")
     fun getTransactionHistory(

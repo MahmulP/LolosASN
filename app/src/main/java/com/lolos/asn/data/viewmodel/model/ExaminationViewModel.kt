@@ -154,85 +154,96 @@ class ExaminationViewModel: ViewModel() {
         // Get the previous answer for this question
         val previousAnswer = previousAnswers[questionIndex]
 
-        // Update scores based on the new and previous answers
-        when (contentItem.category) {
-            1 -> { // TWK
-                if (previousAnswer != null) {
-                    if (previousAnswer == contentItem.jawaban) {
-                        twkScore -= 5
+        // Only update the score if the new answer is different from the previous answer
+        if (previousAnswer != optionIndex) {
+            when (contentItem.category) {
+                1 -> { // TWK
+                    if (previousAnswer != null) {
+                        if (previousAnswer == contentItem.jawaban) {
+                            twkScore -= 5
+                        } else {
+                            twkWrong -= 1
+                        }
+                    }
+                    if (contentItem.jawaban == optionIndex) {
+                        twkScore += 5
                     } else {
-                        twkWrong -= 1
+                        twkWrong += 1
                     }
                 }
-                if (contentItem.jawaban == optionIndex) {
-                    twkScore += 5
-                } else {
-                    twkWrong += 1
-                }
-            }
-            2 -> { // TIU
-                if (previousAnswer != null) {
-                    if (previousAnswer == contentItem.jawaban) {
-                        tiuScore -= 5
+                2 -> { // TIU
+                    if (previousAnswer != null) {
+                        if (previousAnswer == contentItem.jawaban) {
+                            tiuScore -= 5
+                        } else {
+                            tiuWrong -= 1
+                        }
+                    }
+                    if (contentItem.jawaban == optionIndex) {
+                        tiuScore += 5
                     } else {
-                        tiuWrong -= 1
+                        tiuWrong += 1
                     }
                 }
-                if (contentItem.jawaban == optionIndex) {
-                    tiuScore += 5
+                3 -> { // TKP
+                    if (previousAnswer != null) {
+                        tkpScore -= contentItem.jawabanTkp.getOrNull(previousAnswer) ?: 0
+                    }
+                    val tkpValue = contentItem.jawabanTkp.getOrNull(optionIndex) ?: 0
+                    tkpScore += tkpValue
+                }
+            }
+
+            // Update the subcategory score
+            val updatedSubCategoryScores = _subCategoryScores.value?.toMutableList() ?: mutableListOf()
+            val existingItemIndex = updatedSubCategoryScores.indexOfFirst { it.subCategoryId == subCategoryId }
+            if (existingItemIndex != -1) {
+                val currentScore = updatedSubCategoryScores[existingItemIndex].subCategoryScore
+                val scoreChange = if (previousAnswer == contentItem.jawaban) {
+                    -5
+                } else if (contentItem.jawaban == optionIndex) {
+                    5
                 } else {
-                    tiuWrong += 1
+                    0
                 }
-            }
-            3 -> { // TKP
-                if (previousAnswer != null) {
-                    tkpScore -= contentItem.jawabanTkp.getOrNull(previousAnswer) ?: 0
-                }
-                val tkpValue = contentItem.jawabanTkp.getOrNull(optionIndex) ?: 0
-                tkpScore += tkpValue
-            }
-        }
-
-        // Update the previous answer for this question
-        previousAnswers[questionIndex] = optionIndex
-
-        // Update the subcategory score
-        val updatedSubCategoryScores = _subCategoryScores.value?.toMutableList() ?: mutableListOf()
-        val existingItemIndex = updatedSubCategoryScores.indexOfFirst { it.subCategoryId == subCategoryId }
-        if (existingItemIndex != -1) {
-            val currentScore = updatedSubCategoryScores[existingItemIndex].subCategoryScore
-            updatedSubCategoryScores[existingItemIndex] = ListCategoryScoreItem(
-                subCategoryId = subCategoryId,
-                subCategoryScore = (currentScore + if (contentItem.jawaban == optionIndex) 5 else 0)
-            )
-        } else {
-            updatedSubCategoryScores.add(
-                ListCategoryScoreItem(
+                updatedSubCategoryScores[existingItemIndex] = ListCategoryScoreItem(
                     subCategoryId = subCategoryId,
-                    subCategoryScore = if (contentItem.jawaban == optionIndex) 5 else 0
+                    subCategoryScore = currentScore + scoreChange
                 )
-            )
+            } else {
+                val scoreChange = if (contentItem.jawaban == optionIndex) 5 else 0
+                updatedSubCategoryScores.add(
+                    ListCategoryScoreItem(
+                        subCategoryId = subCategoryId,
+                        subCategoryScore = scoreChange
+                    )
+                )
+            }
+            _subCategoryScores.value = updatedSubCategoryScores
+
+            // Update the previous answer for this question
+            previousAnswers[questionIndex] = optionIndex
         }
-        _subCategoryScores.value = updatedSubCategoryScores
 
         val tryoutRequestData = TryoutRequest(
             twkWrong = twkWrong,
             twkScore = twkScore,
             tiuScore = tiuScore,
             tkpScore = tkpScore,
-            listCategoryScore = updatedSubCategoryScores,
+            listCategoryScore = _subCategoryScores.value ?: emptyList(),
             tiuWrong = tiuWrong,
             tryoutScore = tiuScore + tkpScore + twkScore
         )
 
         Log.d("TryoutViewModel", "calculateScores - TryoutRequest: $tryoutRequestData")
         Log.d("TryoutViewModel", "calculateScores - TIU Score: $tiuScore, TWK Score: $twkScore, TKP Score: $tkpScore")
-        Log.d("TryoutViewModel", "calculateScores - ListCategoryScore: $updatedSubCategoryScores")
+        Log.d("TryoutViewModel", "calculateScores - ListCategoryScore: ${_subCategoryScores.value}")
 
         _tryoutRequest.value = tryoutRequestData
 
         return tryoutRequestData
     }
+
 
     fun isAnswerFilled(questionIndex: Int): Boolean {
         return selectedAnswers.value?.containsKey(questionIndex) == true

@@ -12,10 +12,13 @@ import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
+import com.lolos.asn.data.response.UpdateUserResponse
 import com.lolos.asn.data.response.UserDataResponse
 import com.lolos.asn.data.response.UserResponse
 import com.lolos.asn.data.retrofit.ApiConfig
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +26,10 @@ import retrofit2.Response
 
 class AuthViewModel(private val pref: UserPreferences): ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading = _isLoading
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isChanged = MutableLiveData<Boolean>()
+    val isChanged: LiveData<Boolean> = _isChanged
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage = _errorMessage
@@ -82,6 +88,24 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 _isLoading.value = false
+                _errorMessage.value = t.message
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
+    }
+
+    fun updateUserData(userId: String?, name: RequestBody?, email: RequestBody?, password: RequestBody?, avatar: MultipartBody.Part?) {
+        val client = ApiConfig.getApiService().updateUserData(userId = userId, name = name, email = email, password = password, avatar = avatar)
+        client.enqueue(object: Callback<UpdateUserResponse> {
+            override fun onResponse(call: Call<UpdateUserResponse>, response: Response<UpdateUserResponse>) {
+                if (response.isSuccessful) {
+                    _isChanged.value = true
+                } else {
+                    _isChanged.value = false
+                }
+            }
+
+            override fun onFailure(call: Call<UpdateUserResponse>, t: Throwable) {
                 _errorMessage.value = t.message
                 Log.e(TAG, "onFailure: ${t.message}")
             }
