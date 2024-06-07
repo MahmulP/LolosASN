@@ -38,7 +38,7 @@ data class FinishedTryout(
 	val tryoutTotal: Int? = null,
 
 	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
+	val createdAt: String,
 
 	@field:SerializedName("tryout_score")
 	val tryoutScore: Int? = null,

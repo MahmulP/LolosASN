@@ -105,6 +105,7 @@ class ExaminationViewModel: ViewModel() {
                         _isFinish.value = true
                         Log.d(TAG, "onResponse: $message")
                     }
+                    onCleared()
                 } else {
                     val error = response.errorBody()?.string() ?: "Unknown error"
                     val jsonObject = JSONObject(error)

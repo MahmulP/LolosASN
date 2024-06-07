@@ -64,7 +64,7 @@ class NotificationViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     val responseBody = response.body()
-                    if (responseBody != null) {
+                    if (responseBody?.data != null && responseBody.data.isNotEmpty()) {
                         _notificationData.value = responseBody
                     } else {
                         _isEmpty.value = true

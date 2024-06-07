@@ -1,13 +1,32 @@
 package com.lolos.asn.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lolos.asn.R
+import com.lolos.asn.adapter.TryoutHistoryAdapter
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.response.FinishedTryoutResponse
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
+import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.ActivityResultHistoryBinding
 
 class ResultHistoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultHistoryBinding
+    private val tryoutViewModel by viewModels<TryoutViewModel>()
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(application.userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
+
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,12 +38,54 @@ class ResultHistoryActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        authViewModel.getAuthUser().observe(this) {
+            if (it.userId != null) {
+                userId = it.userId
+                tryoutViewModel.getFinishedTryout(userId)
+            }
+        }
+
+        tryoutViewModel.finishedTryout.observe(this) { finishedTryout ->
+            if (finishedTryout != null) {
+                setupRecycleView(finishedTryout)
+            }
+        }
+
+        tryoutViewModel.isLoading.observe(this) { isLoading ->
+            showLoading(isLoading)
+            Log.d("CheckLoading", "onCreate: $isLoading")
+        }
+
+        tryoutViewModel.isEmpty.observe(this) { isEmpty ->
+            showEmpty(isEmpty)
+            Log.d("CheckEmpty", "onCreate: $isEmpty")
+        }
+    }
+
+    private fun showEmpty(isEmpty: Boolean) {
+        binding.ivEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun setupRecycleView(finishedTryout: FinishedTryoutResponse) {
+        binding.rvHistory.layoutManager = LinearLayoutManager(this)
+
+        val adapter = TryoutHistoryAdapter(this)
+        binding.rvHistory.adapter = adapter
+
+        finishedTryout.data.let {
+            adapter.submitList(it)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
+                startActivity(Intent(this, MainActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -120,6 +120,15 @@ class HomeFragment : Fragment() {
             startActivity(Intent(requireActivity(), NotificationActivity::class.java))
         }
 
+        binding.tvAllTryout.setOnClickListener {
+            val dialog = TryoutDialogFragment()
+            dialog.show(parentFragmentManager, "CustomDialog")
+        }
+
+        binding.tvAllArticle.setOnClickListener {
+            startActivity(Intent(requireActivity(), ArticleActivity::class.java))
+        }
+
         val greetingMessage = getGreetingMessage()
         binding.tvDateGreet.text = greetingMessage
 

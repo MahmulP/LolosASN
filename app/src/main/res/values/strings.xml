@@ -222,4 +222,7 @@
     <string name="no_notification">Tidak Ada Notifikasi</string>
     <string name="no_notification_description">Belum ada pemberitahuan. Kami akan memberi tahu jika ada yang baru.</string>
     <string name="no_date">Tidak ada tanggal</string>
+    <string name="history_status">%1$d Poin - %2$s</string>
+    <string name="passed_small">Lulus</string>
+    <string name="not_passed_small">Tidak Lulus</string>
 </resources>

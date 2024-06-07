@@ -32,8 +32,8 @@ class TryoutViewModel: ViewModel() {
     private val _resultTryout = MutableLiveData<TryoutResultResponse>()
     val resultTryout: LiveData<TryoutResultResponse> = _resultTryout
 
-    private val _finishedTryout = MutableLiveData<FinishedTryoutResponse>()
-    val finishedTryout: LiveData<FinishedTryoutResponse> = _finishedTryout
+    private val _finishedTryout = MutableLiveData<FinishedTryoutResponse?>()
+    val finishedTryout: LiveData<FinishedTryoutResponse?> = _finishedTryout
 
     private val _bundleTryout = MutableLiveData<TryoutBundleResponse>()
     val bundleTryout: LiveData<TryoutBundleResponse> = _bundleTryout
@@ -89,7 +89,7 @@ class TryoutViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     val responseBody = response.body()
-                    if (responseBody != null) {
+                    if (responseBody?.data != null && responseBody.data.isNotEmpty()) {
                         _paidTryout.value = responseBody
                     } else {
                         _isEmpty.value = true
@@ -114,7 +114,7 @@ class TryoutViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     val responseBody = response.body()
-                    if (responseBody != null) {
+                    if (responseBody?.data != null && responseBody.data.isNotEmpty()) {
                         _freeTryout.value = responseBody
                     } else {
                         _isEmpty.value = true
@@ -148,18 +148,25 @@ class TryoutViewModel: ViewModel() {
     }
 
     fun getFinishedTryout(userId: String?) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().getFinishedTryout(userId = userId)
         client.enqueue(object : Callback<FinishedTryoutResponse> {
-            @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<FinishedTryoutResponse>, response: Response<FinishedTryoutResponse>) {
                 if (response.isSuccessful) {
+                    _isLoading.value = false
                     val responseBody = response.body()
-                    _finishedTryout.value = responseBody
+                    if (responseBody?.data != null && responseBody.data.isNotEmpty()) {
+                        _finishedTryout.value = responseBody
+                    } else {
+                        _isEmpty.value = true
+                    }
                 }
             }
 
             override fun onFailure(call: Call<FinishedTryoutResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
+                _isLoading.value = false
+                _isEmpty.value = true
             }
         })
     }
@@ -173,7 +180,7 @@ class TryoutViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     val responseBody = response.body()
-                    if (responseBody != null) {
+                    if (responseBody?.data != null && responseBody.data.isNotEmpty()) {
                         _bundleTryout.value = responseBody
                     } else {
                         _isEmpty.value = true
@@ -196,7 +203,7 @@ class TryoutViewModel: ViewModel() {
             override fun onResponse(call: Call<TryoutBundleDetailResponse>, response: Response<TryoutBundleDetailResponse>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null) {
+                    if (responseBody?.data != null) {
                         _bundleTryoutDetail.value = responseBody
                     } else {
                         _isEmpty.value = true
