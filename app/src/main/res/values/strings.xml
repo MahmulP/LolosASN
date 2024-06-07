@@ -225,4 +225,7 @@
     <string name="history_status">%1$d Poin - %2$s</string>
     <string name="passed_small">Lulus</string>
     <string name="not_passed_small">Tidak Lulus</string>
+    <string name="no_connection">Tidak Ada Internet</string>
+    <string name="no_connection_description">Silakan periksa koneksi Anda atau coba lagi</string>
+    <string name="try_again">Coba Lagi</string>
 </resources>

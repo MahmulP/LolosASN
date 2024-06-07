@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +44,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun showNoInternetWarning() {
-        Toast.makeText(this, "No internet connection available", Toast.LENGTH_LONG).show()
+        startActivity(Intent(this, NoConnectionActivity::class.java))
+        finish()
     }
 }
