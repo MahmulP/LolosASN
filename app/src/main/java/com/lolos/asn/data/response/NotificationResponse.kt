@@ -11,7 +11,7 @@ data class NotificationResponse(
 data class NotificationItem(
 
 	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
+	val createdAt: String,
 
 	@field:SerializedName("account_id")
 	val accountId: String? = null,
@@ -25,3 +25,8 @@ data class NotificationItem(
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
 )
+
+sealed class NotificationDisplayItem {
+	data class Header(val title: String) : NotificationDisplayItem()
+	data class DisplayItem(val notification: NotificationItem) : NotificationDisplayItem()
+}

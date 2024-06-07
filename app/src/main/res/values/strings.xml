@@ -45,7 +45,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Notifikasi</string>
     <string name="title_tryout">Tryout</string>
     <string name="title_materi">Materi</string>
     <string name="title_profil">Profil</string>
@@ -218,4 +218,8 @@
     <string name="result_history">Riwayat Pengerjaan</string>
     <string name="empty_image_warning">Gambar tidak boleh kosong</string>
     <string name="purchase_failed">Pembelian Gagal</string>
+    <string name="empty_icon">Data Kosong</string>
+    <string name="no_notification">Tidak Ada Notifikasi</string>
+    <string name="no_notification_description">Belum ada pemberitahuan. Kami akan memberi tahu jika ada yang baru.</string>
+    <string name="no_date">Tidak ada tanggal</string>
 </resources>

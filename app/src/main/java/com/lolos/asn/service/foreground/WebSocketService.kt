@@ -70,7 +70,7 @@ class WebSocketService : LifecycleService() {
         val title = getString(R.string.app_name)
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.app_logo)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 

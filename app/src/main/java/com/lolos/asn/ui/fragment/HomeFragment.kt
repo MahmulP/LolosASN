@@ -23,6 +23,7 @@ import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.FragmentHomeBinding
 import com.lolos.asn.ui.activity.ArticleActivity
+import com.lolos.asn.ui.activity.NotificationActivity
 import com.lolos.asn.ui.activity.PurchaseActivity
 import com.lolos.asn.ui.activity.ResultHistoryActivity
 import com.lolos.asn.ui.dialog.TryoutDialogFragment
@@ -113,6 +114,10 @@ class HomeFragment : Fragment() {
 
         binding.ibCart.setOnClickListener {
             startActivity(Intent(requireActivity(), PurchaseActivity::class.java))
+        }
+
+        binding.ibNotification.setOnClickListener {
+            startActivity(Intent(requireActivity(), NotificationActivity::class.java))
         }
 
         val greetingMessage = getGreetingMessage()
