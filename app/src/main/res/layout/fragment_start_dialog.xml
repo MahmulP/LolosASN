@@ -15,8 +15,10 @@
         android:layout_gravity="center" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/tryout_one"
         android:textColor="@color/primaryColor"
         android:textSize="25sp"
@@ -29,7 +31,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="8dp"
-        android:text="Kamu akan mengerjakan Tryout ini. Sebelum memulai pastikan jaringan dan tempat sudah kondusif. Selamat mengerjakan" />
+        android:text="@string/tryout_start_warning" />
 
     <Button
         android:id="@+id/btn_start"
@@ -46,6 +48,5 @@
         android:text="@string/cancel"
         android:textStyle="bold"
         style="@style/CustomOutlinedButton"/>
-
 
 </LinearLayout>

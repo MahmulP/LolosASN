@@ -1,7 +1,7 @@
 package com.lolos.asn.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +19,7 @@ import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.FragmentTryoutBinding
+import com.lolos.asn.ui.activity.ResultHistoryActivity
 
 class TryoutFragment : Fragment() {
     private var _binding: FragmentTryoutBinding? = null
@@ -83,6 +84,12 @@ class TryoutFragment : Fragment() {
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+
+        binding.cvTryoutHistory.setOnClickListener {
+            val intent = Intent(requireActivity(), ResultHistoryActivity::class.java)
+            intent.putExtra("transactionFrom", "TryoutFragment")
+            startActivity(intent)
         }
     }
 

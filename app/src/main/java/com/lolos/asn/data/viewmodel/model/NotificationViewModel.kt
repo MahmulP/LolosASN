@@ -80,6 +80,24 @@ class NotificationViewModel: ViewModel() {
         })
     }
 
+    fun updateNotification(userId: String?, notificationId: String?) {
+        val client = ApiConfig.getApiService().updateNotification(userId = userId, notificationId = notificationId)
+        client.enqueue(object : Callback<NotificationResponse> {
+            override fun onResponse(
+                call: Call<NotificationResponse>,
+                response: Response<NotificationResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<NotificationResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
+    }
+
     override fun onCleared() {
         super.onCleared()
     }

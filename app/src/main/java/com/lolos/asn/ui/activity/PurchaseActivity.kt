@@ -1,5 +1,6 @@
 package com.lolos.asn.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -57,6 +58,10 @@ class PurchaseActivity : AppCompatActivity() {
 
         tryoutViewModel.isLoading.observe(this) {
             showLoading(it)
+        }
+
+        binding.cvPurchaseHistory.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
         }
 
     }

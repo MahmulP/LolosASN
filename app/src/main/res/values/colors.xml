@@ -16,6 +16,7 @@
     <color name="primaryColor">#0F78CB</color>
     <color name="secondPrimary">#C7F3FE</color>
     <color name="thirdPrimary">#EBF2FA</color>
+    <color name="otherPrimary">#DDEFFD</color>
     <color name="blue_100">#B0EBF9</color>
     <color name="orange">#FF9F00</color>
     <color name="green">#89E219</color>

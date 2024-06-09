@@ -58,11 +58,25 @@
             android:padding="5dp"
             android:src="@drawable/ic_notification"
             android:background="@drawable/circle_border"
-            app:tint="@color/black"
+            app:tint="@color/black_500"
             app:layout_constraintTop_toTopOf="@id/tv_greet"
             app:layout_constraintBottom_toBottomOf="@id/tv_greet"
             app:layout_constraintEnd_toEndOf="parent"/>
-        
+
+        <ImageView
+            android:id="@+id/is_active"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/baseline_circle_24"
+            app:layout_constraintTop_toTopOf="@id/ib_notification"
+            app:layout_constraintEnd_toEndOf="@id/ib_notification"
+            app:layout_constraintStart_toStartOf="@id/ib_notification"
+            app:tint="@color/red"
+            android:visibility="gone"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_user"
             android:layout_width="match_parent"

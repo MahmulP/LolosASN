@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,10 +28,8 @@ class DialogNumberAdapter(
         holder.bind(examination, position)
 
         if (position % 5 == 4) {
-            // Last item, set marginEnd to 0dp
             setMargins(holder.binding.btnNumber, 0, 32, 0, 0)
         } else {
-            // Regular item, set default marginEnd
             setMargins(holder.binding.btnNumber, 0, 32, 32, 0)
         }
     }

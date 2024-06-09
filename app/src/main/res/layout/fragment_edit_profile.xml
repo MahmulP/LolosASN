@@ -113,6 +113,7 @@
                 android:layout_marginTop="16dp"
                 android:autofillHints="Password"
                 app:layout_constraintTop_toBottomOf="@id/ed_email_field"
+                app:passwordToggleEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -124,22 +125,22 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ed_whatsapp_field"
+                android:id="@+id/ed_phone_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/whatsapp_number"
+                android:hint="@string/phone_number"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
-                android:autofillHints="Password"
+                android:autofillHints="Nomor Telepon"
                 app:layout_constraintTop_toBottomOf="@id/ed_password_field"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_whatsapp"
+                    android:id="@+id/ed_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,9 +150,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="@string/save_data"
-                app:layout_constraintStart_toStartOf="@id/ed_whatsapp_field"
-                app:layout_constraintEnd_toEndOf="@id/ed_whatsapp_field"
-                app:layout_constraintTop_toBottomOf="@id/ed_whatsapp_field" />
+                app:layout_constraintStart_toStartOf="@id/ed_phone_field"
+                app:layout_constraintEnd_toEndOf="@id/ed_phone_field"
+                app:layout_constraintTop_toBottomOf="@id/ed_phone_field" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

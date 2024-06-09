@@ -19,13 +19,15 @@ data class RegisterResponse(
 data class RegisterRequest(
 	val name: String,
 	val email: String,
-	val password: String
+	val password: String,
+	val phone: String
 )
 
 data class UserDataResponse(
 	val name: String?,
 	val email: String?,
 	val role: String?,
+	val phone: String?,
 	val avatar: String?,
 )
 

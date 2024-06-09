@@ -56,7 +56,8 @@ interface ApiService {
         @Part avatar: MultipartBody.Part?,
         @Part("name") name: RequestBody?,
         @Part("email") email: RequestBody?,
-        @Part("password") password: RequestBody?
+        @Part("password") password: RequestBody?,
+        @Part("phone") phone: RequestBody?
     ): Call<UpdateUserResponse>
 
     @GET("courses/account/{account_id}/category/{category_id}")
@@ -158,5 +159,11 @@ interface ApiService {
     @GET("notifikasi/{account_id}")
     fun getNotification(
         @Path("account_id") userId: String?
+    ): Call<NotificationResponse>
+
+    @PUT("updateNotif/{account_id}/{notifikasi_id}")
+    fun updateNotification(
+        @Path("account_id") userId: String?,
+        @Path("notifikasi_id") notificationId: String?
     ): Call<NotificationResponse>
 }

@@ -13,7 +13,14 @@ import com.bumptech.glide.Glide
 import com.lolos.asn.R
 import com.lolos.asn.adapter.ExaminationAnswerAdapter
 import com.lolos.asn.adapter.ExaminationNumberAdapter
+import com.lolos.asn.data.data.UserData
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.response.ExaminationResponse
 import com.lolos.asn.data.response.TryoutContentItem
+import com.lolos.asn.data.response.TryoutRequest
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.ExaminationViewModel
 import com.lolos.asn.databinding.ActivityExaminationBinding
 import com.lolos.asn.ui.dialog.NumberDialogFragment
@@ -21,7 +28,15 @@ import com.lolos.asn.ui.dialog.ValidationDialogFragment
 
 class ExaminationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityExaminationBinding
-    val examinationViewModel by viewModels<ExaminationViewModel>()
+    private val examinationViewModel by viewModels<ExaminationViewModel>()
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(this.userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
+
+    private var currentRequest: TryoutRequest? = null
+    private var currentTryoutData: ExaminationResponse? = null
+    private var currentUserData: UserData? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExaminationBinding.inflate(layoutInflater)
@@ -43,10 +58,35 @@ class ExaminationActivity : AppCompatActivity() {
             }
         }
 
+        examinationViewModel.tryoutRequest.observe(this) { request ->
+            currentRequest = request
+        }
+
+        examinationViewModel.tryoutData.observe(this) { tryoutData ->
+            currentTryoutData = tryoutData
+        }
+
+        authViewModel.getAuthUser().observe(this) { userData ->
+            currentUserData = userData
+        }
+
         examinationViewModel.remainingTime.observe(this) { remainingTime ->
+            val request = currentRequest
+            val userData = currentUserData
+
             if (remainingTime == "00:00:00") {
-                startActivity(Intent(this, ResultActivity::class.java))
-                finish()
+                if (request != null && tryoutId != null && userData != null) {
+                    examinationViewModel.finishTryout(userId = userData.userId, tryoutId = tryoutId, tryoutRequest = request)
+
+                    examinationViewModel.isFinish.observe(this) { result ->
+                        if (result) {
+                            val intent = Intent(this, ResultActivity::class.java).apply {
+                                putExtra("tryout_id", tryoutId)
+                            }
+                            startActivity(intent)
+                        }
+                    }
+                }
             } else {
                 binding.tvTime.text = remainingTime
             }

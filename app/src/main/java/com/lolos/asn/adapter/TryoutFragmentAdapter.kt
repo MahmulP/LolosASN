@@ -38,11 +38,34 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
             val createdAt = tryout.createdAt
             val tryoutClosed = tryout.tryoutClosed
 
-            // Separate the date and time zone offset
-            val createdAtParts = createdAt?.split(" ")
-            val tryoutClosedParts = tryoutClosed?.split(" ")
-            val formattedCreatedAt = formatDate(createdAtParts?.get(0), createdAtParts?.get(1))
-            val formattedTryoutClosed = formatDate(tryoutClosedParts?.get(0), tryoutClosedParts?.get(1))
+            // Input and output date formats
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val outputFormatWithYear = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+            val outputFormatWithoutYear = SimpleDateFormat("dd MMMM", Locale("id", "ID"))
+
+            // Parse the date strings
+            val createdAtDate = inputFormat.parse(createdAt)
+            val tryoutClosedDate = inputFormat.parse(tryoutClosed)
+
+            // Format the dates
+            val createdAtYear = createdAtDate?.let {
+                SimpleDateFormat("yyyy", Locale.getDefault()).format(
+                    it
+                )
+            }
+            val tryoutClosedYear = tryoutClosedDate?.let {
+                SimpleDateFormat("yyyy", Locale.getDefault()).format(
+                    it
+                )
+            }
+
+            val formattedCreatedAt = if (createdAtYear == tryoutClosedYear) {
+                createdAtDate?.let { outputFormatWithoutYear.format(it) }
+            } else {
+                createdAtDate?.let { outputFormatWithYear.format(it) }
+            }
+
+            val formattedTryoutClosed = tryoutClosedDate?.let { outputFormatWithYear.format(it) }
 
             val dateRange = "$formattedCreatedAt - $formattedTryoutClosed"
             val isCleared = tryout.isCleared

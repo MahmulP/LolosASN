@@ -94,8 +94,8 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
         })
     }
 
-    fun updateUserData(userId: String?, name: RequestBody?, email: RequestBody?, password: RequestBody?, avatar: MultipartBody.Part?) {
-        val client = ApiConfig.getApiService().updateUserData(userId = userId, name = name, email = email, password = password, avatar = avatar)
+    fun updateUserData(userId: String?, name: RequestBody?, email: RequestBody?, password: RequestBody?, phone: RequestBody?, avatar: MultipartBody.Part?) {
+        val client = ApiConfig.getApiService().updateUserData(userId = userId, name = name, email = email, password = password, avatar = avatar, phone = phone)
         client.enqueue(object: Callback<UpdateUserResponse> {
             override fun onResponse(call: Call<UpdateUserResponse>, response: Response<UpdateUserResponse>) {
                 if (response.isSuccessful) {
@@ -122,12 +122,14 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
                         val name = responseBody.data.name
                         val role = responseBody.data.role
                         val email = responseBody.data.email
-                        val avatar = responseBody.data.avatar ?: "https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
+                        val phone = responseBody.data.phone
+                        val avatar = responseBody.data.avatar ?: ""
 
                         saveUserData(
                             username = name,
                             role = role,
                             email = email,
+                            phone = phone,
                             avatar = avatar)
                     }
                 }
@@ -154,9 +156,9 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
         }
     }
 
-    fun saveUserData(username: String, email: String, role: String, avatar: String) {
+    fun saveUserData(username: String, email: String, role: String, avatar: String, phone: String) {
         viewModelScope.launch {
-            pref.saveUserData(username, email, role, avatar)
+            pref.saveUserData(username, email, role, avatar, phone)
         }
     }
 

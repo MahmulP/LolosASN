@@ -27,11 +27,14 @@ class ResultHistoryActivity : AppCompatActivity() {
     }
 
     private var userId: String? = null
+    private var transactionFrom: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        transactionFrom = intent.getStringExtra("transactionFrom")
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
@@ -85,7 +88,11 @@ class ResultHistoryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                startActivity(Intent(this, MainActivity::class.java))
+                if (transactionFrom == "TryoutFragment") {
+                    onBackPressedDispatcher.onBackPressed()
+                } else {
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

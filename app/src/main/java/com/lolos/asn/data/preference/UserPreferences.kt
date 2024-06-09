@@ -6,7 +6,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.LiveData
 import com.lolos.asn.data.data.UserData
 import com.lolos.asn.data.response.UserDataResponse
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +20,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     private val Avatar = stringPreferencesKey("avatar")
     private val Role = stringPreferencesKey("role")
     private val Email = stringPreferencesKey("email")
+    private val Phone = stringPreferencesKey("phone")
 
     fun getAuthUser(): Flow<UserData> {
         return dataStore.data.map { preferences ->
@@ -50,17 +50,19 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
                 name = preferences[Username],
                 email = preferences[Email],
                 role = preferences[Role],
+                phone =  preferences[Phone],
                 avatar = preferences[Avatar]
             )
         }
     }
 
-    suspend fun saveUserData(username: String, email: String, role: String, avatar: String) {
+    suspend fun saveUserData(username: String, email: String, role: String, avatar: String, phone: String) {
         dataStore.edit { preferences ->
             preferences[Username] = username
             preferences[Email] = email
             preferences[Role] = role
             preferences[Avatar] = avatar
+            preferences[Phone] = phone
         }
     }
 

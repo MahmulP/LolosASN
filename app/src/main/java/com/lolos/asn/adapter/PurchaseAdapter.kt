@@ -43,9 +43,10 @@ class PurchaseAdapter(private val context: Context) : ListAdapter<TryoutBundleIt
     class MyViewHolder(val binding: ListBundleTryoutBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(bundle: TryoutBundleItem, context: Context) {
-            val price = bundle.price?.toInt()
-            val basePrice = bundle.basePrice
+            val price = bundle.price?.toIntOrNull() ?: 0
+            val basePrice = bundle.basePrice ?: 0
             val indonesianLocale = Locale("in", "ID")
+
             val formattedPrice = NumberFormat.getNumberInstance(indonesianLocale).format(price)
             val formattedBasePrice = NumberFormat.getNumberInstance(indonesianLocale).format(basePrice)
             val priceString = context.getString(R.string.price, formattedPrice)
@@ -55,7 +56,7 @@ class PurchaseAdapter(private val context: Context) : ListAdapter<TryoutBundleIt
             binding.tvTitle.text = bundle.tryoutBundleName
             binding.tvPrice.text = basePriceString
 
-            if (bundle.basePrice.toString() == bundle.price.toString()) {
+            if (basePrice == price) {
                 binding.tvNormalPrice.visibility = View.GONE
             } else {
                 binding.tvNormalPrice.text = priceString

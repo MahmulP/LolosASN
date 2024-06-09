@@ -35,9 +35,6 @@ class EditProfileFragment : Fragment() {
 
     private var currentImageUri: Uri? = null
     private var userId: String? = null
-    private var name: String? = null
-    private var email: String? = null
-    private var password: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,6 +68,7 @@ class EditProfileFragment : Fragment() {
 
                 binding.edName.setText(userData.name)
                 binding.edEmail.setText(userData.email)
+                binding.edPhoneNumber.setText(userData.phone)
                 Glide.with(this)
                     .load(avatar)
                     .error(R.drawable.avatar)
@@ -108,13 +106,23 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun updateData() {
-        name = binding.edName.text.toString()
-        password = binding.edPassword.text.toString()
-        email = binding.edEmail.text.toString()
+        val name = binding.edName.text.toString()
+        val password = binding.edPassword.text.toString()
+        val email = binding.edEmail.text.toString()
+        val phoneInput = binding.edPhoneNumber.text.toString()
+        val formattedPhone = if (phoneInput.startsWith("0")) {
+            "62" + phoneInput.substring(1)
+        } else {
+            phoneInput
+        }
 
-        val nameBody = name?.toRequestBody("text/plain".toMediaTypeOrNull())
-        val passwordBody = password?.toRequestBody("text/plain".toMediaTypeOrNull())
-        val emailBody = email?.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val passwordBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
+        val emailBody = email.toRequestBody("text/plain".toMediaTypeOrNull())
+        val phoneBody = formattedPhone.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        println(name)
 
         if (currentImageUri != null) {
             currentImageUri?.let { uri ->
@@ -133,7 +141,8 @@ class EditProfileFragment : Fragment() {
                     name = nameBody,
                     password = passwordBody,
                     email = emailBody,
-                    avatar = multipartBody
+                    avatar = multipartBody,
+                    phone = phoneBody
                 )
             }
         } else {
@@ -142,7 +151,8 @@ class EditProfileFragment : Fragment() {
                 name = nameBody,
                 password = passwordBody,
                 email = emailBody,
-                avatar = null
+                avatar = null,
+                phone = phoneBody
             )
         }
     }

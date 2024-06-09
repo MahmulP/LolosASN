@@ -59,3 +59,9 @@ data class TryoutData(
 	@field:SerializedName("tryout_content")
 	val tryoutContent: List<TryoutContentItem>
 )
+
+
+sealed class ExaminationDisplayItem {
+	data class Header(val title: String) : ExaminationDisplayItem()
+	data class ExaminationItem(val examination: TryoutContentItem) : ExaminationDisplayItem()
+}

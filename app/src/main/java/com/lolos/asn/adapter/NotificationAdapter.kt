@@ -1,24 +1,30 @@
 package com.lolos.asn.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lolos.asn.R
 import com.lolos.asn.data.response.NotificationDisplayItem
 import com.lolos.asn.data.response.NotificationItem
+import com.lolos.asn.data.viewmodel.model.NotificationViewModel
 import com.lolos.asn.databinding.ListHeaderBinding
 import com.lolos.asn.databinding.ListNotificationBinding
+import com.lolos.asn.ui.activity.HistoryActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class NotificationAdapter(private val context: Context) : ListAdapter<NotificationDisplayItem, RecyclerView.ViewHolder>(
+class NotificationAdapter(private val context: Context, private val notificationViewModel: NotificationViewModel) : ListAdapter<NotificationDisplayItem, RecyclerView.ViewHolder>(
     DIFF_CALLBACK
 ) {
 
@@ -46,7 +52,7 @@ class NotificationAdapter(private val context: Context) : ListAdapter<Notificati
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is NotificationDisplayItem.Header -> (holder as HeaderViewHolder).bind(item.title)
-            is NotificationDisplayItem.DisplayItem -> (holder as NotificationViewHolder).bind(item.notification, context)
+            is NotificationDisplayItem.DisplayItem -> (holder as NotificationViewHolder).bind(item.notification, context, notificationViewModel)
         }
     }
 
@@ -57,9 +63,9 @@ class NotificationAdapter(private val context: Context) : ListAdapter<Notificati
     }
 
     class NotificationViewHolder(val binding: ListNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(notification: NotificationItem, context: Context) {
+        fun bind(notification: NotificationItem, context: Context, notificationViewModel: NotificationViewModel) {
             with(binding) {
-                tvTitle.text = context.getString(R.string.app_name)
+                tvTitle.text = notification.notificationTitle
                 tvContent.text = notification.notifikasiMsg
 
                 val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
@@ -79,8 +85,60 @@ class NotificationAdapter(private val context: Context) : ListAdapter<Notificati
                 }
 
                 tvDate.text = formattedDate
+
+                if (notification.isClicked == false) {
+                    val primaryColor = ContextCompat.getColor(context, R.color.primaryColor)
+                    val secondPrimary = ContextCompat.getColor(context, R.color.secondPrimary)
+                    val white = ContextCompat.getColor(context, R.color.white)
+
+                    cvNotification.setBackgroundColor(secondPrimary)
+                    icNotification.imageTintList = ColorStateList.valueOf(primaryColor)
+                    icNotification.backgroundTintList = ColorStateList.valueOf(white)
+                    divider.visibility = View.INVISIBLE
+
+                    cvNotification.setOnClickListener {
+                        notificationViewModel.updateNotification(userId = notification.accountId, notificationId = notification.notifikasiId)
+                        notificationViewModel.getNotification(userId = notification.accountId)
+
+                        if (notification.notificationTitle?.contains("Transaksi") == true) {
+                            context.startActivity(Intent(context, HistoryActivity::class.java))
+                        }
+                    }
+                } else {
+                    cvNotification.setOnClickListener {
+                        if (notification.notificationTitle?.contains("Transaksi") == true) {
+                            val intent = Intent(context, HistoryActivity::class.java)
+                            intent.putExtra("intentFrom", "notification")
+                            context.startActivity(intent)
+                        }
+                    }
+                }
+
             }
         }
+    }
+
+    fun setData(items: List<NotificationDisplayItem>) {
+        val headers = items.filterIsInstance<NotificationDisplayItem.Header>()
+        val displayItems = items.filterIsInstance<NotificationDisplayItem.DisplayItem>()
+
+        val sortedDisplayItems = displayItems.sortedWith(compareByDescending {
+            it.notification.createdAt.let { createdAt ->
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(createdAt)
+            } ?: Date(0)
+        })
+
+        val mergedList = mutableListOf<NotificationDisplayItem>()
+        var displayItemIndex = 0
+
+        items.forEach { item ->
+            when (item) {
+                is NotificationDisplayItem.Header -> mergedList.add(item)
+                is NotificationDisplayItem.DisplayItem -> mergedList.add(sortedDisplayItems[displayItemIndex++])
+            }
+        }
+
+        submitList(mergedList)
     }
 
     companion object {

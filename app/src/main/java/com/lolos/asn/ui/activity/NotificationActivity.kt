@@ -71,12 +71,12 @@ class NotificationActivity : AppCompatActivity() {
     private fun setupRecycleView(notificationResponse: NotificationResponse) {
         binding.rvNotification.layoutManager = LinearLayoutManager(this)
 
-        val adapter = NotificationAdapter(this)
+        val adapter = NotificationAdapter(this, notificationViewModel)
         binding.rvNotification.adapter = adapter
 
         val groupedNotifications = groupNotificationsByDate(notificationResponse.data)
 
-        adapter.submitList(groupedNotifications)
+        adapter.setData(groupedNotifications)
     }
 
 

@@ -20,6 +20,7 @@ import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.factory.TryoutViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
+import com.lolos.asn.data.viewmodel.model.NotificationViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.FragmentHomeBinding
 import com.lolos.asn.ui.activity.ArticleActivity
@@ -42,6 +43,7 @@ class HomeFragment : Fragment() {
     private val tryoutViewModel: TryoutViewModel by viewModels {
         TryoutViewModelFactory(requireContext())
     }
+    private val notificationViewModel by viewModels<NotificationViewModel>()
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +55,7 @@ class HomeFragment : Fragment() {
                 val userId = it.userId
                 authViewModel.getAUthUserData(userId)
                 tryoutViewModel.getAllTryout(userId)
+                notificationViewModel.getNotification(userId)
             }
         }
 
@@ -89,6 +92,18 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        notificationViewModel.notificationData.observe(viewLifecycleOwner) { notifications ->
+            notifications?.data.let { list ->
+                val hasUnclickedNotification = list?.any { it.isClicked == false }
+                if (hasUnclickedNotification == true) {
+                    binding.isActive.visibility = View.VISIBLE
+                } else {
+                    binding.isActive.visibility = View.GONE
+                }
+            }
+        }
+
 
 
         tryoutViewModel.tryout.observe(viewLifecycleOwner) {

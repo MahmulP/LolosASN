@@ -50,14 +50,26 @@ class TryoutHistoryAdapter(private val context: Context) : ListAdapter<FinishedT
                     tvStatus.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
                 }
 
-                val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-                inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+                val patterns = listOf(
+                    "yyyy-MM-dd'T'HH:mm:ss.SSS",
+                    "yyyy-MM-dd HH:mm:ss.SSSSSS",
+                    "yyyy-MM-dd HH:mm:ss.SSS"
+                )
+
                 var date: Date? = null
-                try {
-                    val createdAt = tryout.createdAt.replace("Z", "+0000").substring(0, 26)
-                    date = inputFormat.parse(createdAt)
-                } catch (e: ParseException) {
-                    Log.e("NotificationViewHolder", "Date parsing failed: ${e.message}")
+
+                for (pattern in patterns) {
+                    val inputFormat = SimpleDateFormat(pattern, Locale.getDefault())
+                    inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+                    try {
+                        val createdAt = tryout.createdAt.replace("Z", "+0000").let {
+                            if (pattern == "yyyy-MM-dd HH:mm:ss.SSS" && it.length > 23) it.substring(0, 23) else it
+                        }
+                        date = inputFormat.parse(createdAt)
+                        if (date != null) break // Exit loop if parsing was successful
+                    } catch (e: ParseException) {
+                        Log.e("NotificationViewHolder", "Date parsing failed with pattern $pattern: ${e.message}")
+                    }
                 }
 
                 val formattedDate = if (date != null) {

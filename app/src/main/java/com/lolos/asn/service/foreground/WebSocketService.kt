@@ -49,8 +49,9 @@ class WebSocketService : LifecycleService() {
         notificationViewModel.notificationItem.observe(this) { item ->
             if (item?.accountId == userId) {
                 val message = item?.notifikasiMsg
+                val title = item?.notificationTitle
                 if (message != null && message != "Unknown") {
-                    sendNotification(message)
+                    sendNotification(title, message)
                     NOTIFICATION_ID += 1
                 }
             }
@@ -65,9 +66,8 @@ class WebSocketService : LifecycleService() {
         Log.d(TAG, "onDestroy: Service dihentikan")
     }
 
-    private fun sendNotification(message: String?) {
+    private fun sendNotification(title: String?, message: String?) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val title = getString(R.string.app_name)
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setSmallIcon(R.drawable.app_logo)

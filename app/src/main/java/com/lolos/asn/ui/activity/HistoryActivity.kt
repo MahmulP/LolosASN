@@ -19,7 +19,7 @@ import com.lolos.asn.databinding.ActivityHistoryBinding
 
 class HistoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryBinding
-    val transactionViewModel by viewModels<TransactionViewModel>()
+    private val transactionViewModel by viewModels<TransactionViewModel>()
     private val authViewModel: AuthViewModel by viewModels {
         val pref = UserPreferences.getInstance(application.userPreferencesDataStore)
         AuthViewModelFactory(pref)
@@ -90,9 +90,14 @@ class HistoryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("navigate_to", "main")
-                startActivity(intent)
+                val intentFrom = intent.getStringExtra("intentFrom")
+                if (intentFrom == "notification") {
+                    onBackPressedDispatcher.onBackPressed()
+                } else {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("navigate_to", "main")
+                    startActivity(intent)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

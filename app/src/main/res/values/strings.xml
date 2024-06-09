@@ -228,4 +228,9 @@
     <string name="no_connection">Tidak Ada Internet</string>
     <string name="no_connection_description">Silakan periksa koneksi Anda atau coba lagi</string>
     <string name="try_again">Coba Lagi</string>
+    <string name="phone_number">Nomor Telepon</string>
+    <string name="tryout_history">Riwayat Tryout</string>
+    <string name="purchase_history">Riwayat Pembelian</string>
+    <string name="transaction_dynamic_status">TRANSAKSI %1s</string>
+    <string name="tryout_start_warning">Kamu akan mengerjakan Tryout ini. Sebelum memulai pastikan jaringan dan tempat sudah kondusif. Selamat mengerjakan</string>
 </resources>

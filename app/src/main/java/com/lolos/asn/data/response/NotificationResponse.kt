@@ -23,7 +23,14 @@ data class NotificationItem(
 	val notifikasiId: String? = null,
 
 	@field:SerializedName("updatedAt")
-	val updatedAt: String? = null
+	val updatedAt: String? = null,
+
+	@field:SerializedName("isClicked")
+	val isClicked: Boolean? = null,
+
+	@field:SerializedName("notifikasi_title")
+	val notificationTitle: String? = null
+
 )
 
 sealed class NotificationDisplayItem {

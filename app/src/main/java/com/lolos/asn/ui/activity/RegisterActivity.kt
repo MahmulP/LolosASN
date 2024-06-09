@@ -42,7 +42,13 @@ class RegisterActivity : AppCompatActivity() {
             val name = binding.edRegisterName.text.toString()
             val email = binding.edRegisterEmail.text.toString()
             val password = binding.edRegisterPassword.text.toString()
-            val registerRequest = RegisterRequest(name, email, password)
+            val phone = binding.edRegisterPhone.text.toString()
+            val formattedPhone = if (phone.startsWith("0")) {
+                "62" + phone.substring(1)
+            } else {
+                phone
+            }
+            val registerRequest = RegisterRequest(name, email, password, formattedPhone)
             authViewModel.register(registerRequest)
         }
 

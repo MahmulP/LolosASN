@@ -12,6 +12,7 @@ data class Data(
 	val accountId: String,
 	val role: String,
 	val name: String,
+	val phone: String,
 	val userRecap: Any,
 	val avatar: String,
 	val accessToken: Any,

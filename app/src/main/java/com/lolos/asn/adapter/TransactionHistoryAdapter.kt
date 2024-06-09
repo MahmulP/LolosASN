@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,6 @@ import com.lolos.asn.data.response.TransactionItem
 import com.lolos.asn.databinding.ListHistoryTransactionBinding
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class TransactionHistoryAdapter(private val context: Context) :
@@ -46,7 +46,13 @@ class TransactionHistoryAdapter(private val context: Context) :
             binding.tvTitle.text = item.transactionTitle
             binding.tvDate.text = formattedCreatedAt
             binding.tvPrice.text = context.getString(R.string.price, formattedPrice)
-            binding.tvStatus.text = item.transactionStatus
+            binding.tvStatus.text = context.getString(R.string.transaction_dynamic_status, item.transactionStatus)
+
+            if (item.transactionStatus == "SEDANG DIPROSES") {
+                binding.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.primaryColor))
+            } else if (item.transactionStatus == "GAGAL") {
+                binding.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
+            }
         }
     }
 
