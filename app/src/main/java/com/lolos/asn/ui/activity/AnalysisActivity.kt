@@ -2,50 +2,43 @@ package com.lolos.asn.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.annotation.StringRes
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.lolos.asn.R
-import com.lolos.asn.adapter.AnalysisSectionsPageAdapter
-import com.lolos.asn.adapter.LearningSectionsPagerAdapter
+import com.lolos.asn.data.preference.UserPreferences
+import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.databinding.ActivityAnalysisBinding
-import com.lolos.asn.ui.fragment.LearningFragment
 
 class AnalysisActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnalysisBinding
+    private val authViewModel: AuthViewModel by viewModels {
+        val pref = UserPreferences.getInstance(application.userPreferencesDataStore)
+        AuthViewModelFactory(pref)
+    }
+
+    private var username: String? = null
+    private var userId: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnalysisBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val analysisSectionsPagerAdapter = AnalysisSectionsPageAdapter(this)
-        val viewPager: ViewPager2 = binding.viewPager
-        viewPager.adapter = analysisSectionsPagerAdapter
+        authViewModel.getAuthUser().observe(this) { userData ->
+            userId = userData.userId
+        }
 
-        val tabs: TabLayout = binding.tabs
-
-        TabLayoutMediator(tabs, viewPager) { tab, position ->
-            tab.setCustomView(R.layout.custom_tab)
-            val tabTextView = tab.customView?.findViewById<TextView>(R.id.tabTextView)
-            tabTextView?.text = resources.getString(TAB_TITLES[position])
-        }.attach()
+        authViewModel.getUserData().observe(this) { userData ->
+            username = userData.name
+            binding.tvGreet.text = getString(R.string.greet, username)
+        }
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        binding.btnNext.setOnClickListener {
-            val currentItem = viewPager.currentItem
-            viewPager.setCurrentItem(currentItem + 1, true)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -56,16 +49,5 @@ class AnalysisActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    companion object {
-
-        @StringRes
-        private val TAB_TITLES = intArrayOf(
-            R.string.tab_all,
-            R.string.tab_twk,
-            R.string.tab_tiu,
-            R.string.tab_tkp
-        )
     }
 }

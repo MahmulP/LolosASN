@@ -37,78 +37,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/appbar"
-        android:background="@color/thirdPrimary"
+        android:orientation="horizontal"
         android:gravity="center"
+        android:background="@color/thirdPrimary"
         android:padding="8dp">
 
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:text="1"
-            android:textColor="@color/white"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/circle_border"
-            android:backgroundTint="@color/primaryColor"
-            android:padding="4dp"/>
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:text="2"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/circle_border"
-            android:padding="4dp"/>
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:text="3"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/circle_border"
-            android:padding="4dp"/>
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:text="4"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/circle_border"
-            android:padding="4dp"/>
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:text="5"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/circle_border"
-            android:padding="4dp"/>
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:text="6"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/circle_border"
-            android:padding="4dp"/>
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -164,6 +101,20 @@
             android:layout_height="0dp"
             android:paddingBottom="48dp">
 
+            <ImageView
+                android:id="@+id/iv_soal"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/picture_of_quiz"
+                tools:src="@drawable/no_image"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <TextView
                 android:id="@+id/tv_soal"
                 android:layout_width="match_parent"
@@ -171,297 +122,88 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/soal_text"
-                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/soal_text"
+                app:layout_constraintTop_toBottomOf="@id/iv_soal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-            <LinearLayout
-                android:id="@+id/layout_opsi"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_opsi"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/tv_soal">
+                app:layout_constraintTop_toBottomOf="@id/tv_soal"
+                app:layout_constraintBottom_toTopOf="@id/cv_pembahasan"
+                tools:listitem="@layout/list_choice_discussion" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/opsi_a"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_pembahasan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/white"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/rv_opsi"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:cardBackgroundColor="@drawable/card_background_selector">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardBackgroundColor="@drawable/card_background_selector">
+                    android:padding="16dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/tv_title_pembahasan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/pembahasan"
+                        android:fontFamily="@font/roboto_bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/iv_divider"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp">
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/divider"
+                        android:src="@drawable/underline"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title_pembahasan" />
 
-                        <TextView
-                            android:id="@+id/tv_choice_a"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="@string/alphabet_a"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_bold"
-                            android:gravity="center"
-                            android:textSize="20sp"
-                            android:background="@drawable/circle_border"
-                            android:backgroundTint="@color/primaryColor"
-                            android:padding="4dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/tv_right_answer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/right_answer"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/iv_divider"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/lorem_small"
-                            app:layout_constraintTop_toTopOf="@id/tv_choice_a"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_choice_a"
-                            app:layout_constraintStart_toEndOf="@id/tv_choice_a"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/opsi_b"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
-                    android:checkable="true"
-                    app:cardBackgroundColor="@drawable/card_background_selector">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/tv_right_answer_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp">
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/lorem_description"
+                        app:layout_constraintTop_toBottomOf="@id/tv_right_answer"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tv_choice_b"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="@string/alphabet_b"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_bold"
-                            android:gravity="center"
-                            android:textSize="20sp"
-                            android:background="@drawable/circle_border"
-                            android:backgroundTint="@color/primaryColor"
-                            android:padding="4dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/lorem_small"
-                            app:layout_constraintTop_toTopOf="@id/tv_choice_b"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_choice_b"
-                            app:layout_constraintStart_toEndOf="@id/tv_choice_b"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/opsi_c"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
-                    android:checkable="true"
-                    app:cardBackgroundColor="@drawable/card_background_selector">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_choice_c"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="@string/alphabet_c"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_bold"
-                            android:gravity="center"
-                            android:textSize="20sp"
-                            android:background="@drawable/circle_border"
-                            android:backgroundTint="@color/primaryColor"
-                            android:padding="4dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/lorem_small"
-                            app:layout_constraintTop_toTopOf="@id/tv_choice_c"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_choice_c"
-                            app:layout_constraintStart_toEndOf="@id/tv_choice_c"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/opsi_d"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardBackgroundColor="@drawable/card_background_selector">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_choice_d"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="@string/alphabet_d"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_bold"
-                            android:gravity="center"
-                            android:textSize="20sp"
-                            android:background="@drawable/circle_border"
-                            android:backgroundTint="@color/primaryColor"
-                            android:padding="4dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/lorem_small"
-                            app:layout_constraintTop_toTopOf="@id/tv_choice_d"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_choice_d"
-                            app:layout_constraintStart_toEndOf="@id/tv_choice_d"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/opsi_e"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@color/white"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardBackgroundColor="@drawable/card_background_selector">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_choice_e"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="@string/alphabet_e"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_bold"
-                            android:gravity="center"
-                            android:textSize="20sp"
-                            android:background="@drawable/circle_border"
-                            android:backgroundTint="@color/primaryColor"
-                            android:padding="4dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/lorem_small"
-                            app:layout_constraintTop_toTopOf="@id/tv_choice_e"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_choice_e"
-                            app:layout_constraintStart_toEndOf="@id/tv_choice_e"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cv_pembahasan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:backgroundTint="@color/white"
-                    app:cardBackgroundColor="@drawable/card_background_selector">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:id="@+id/tv_title_pembahasan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/pembahasan"
-                            android:fontFamily="@font/roboto_bold"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
-                        <ImageView
-                            android:id="@+id/iv_divider"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:contentDescription="@string/divider"
-                            android:src="@drawable/underline"
-                            app:layout_constraintTop_toBottomOf="@id/tv_title_pembahasan" />
-
-                        <TextView
-                            android:id="@+id/tv_right_answer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/right_answer"
-                            android:textStyle="bold"
-                            app:layout_constraintTop_toBottomOf="@id/iv_divider"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tv_right_answer_description"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/lorem_description"
-                            app:layout_constraintTop_toBottomOf="@id/tv_right_answer"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

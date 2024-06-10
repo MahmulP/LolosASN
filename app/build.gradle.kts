@@ -73,4 +73,6 @@ dependencies {
     implementation(libs.autofittextview) //autofit text view
 
     implementation(libs.androidx.lifecycle.service) // lifecycle service
+
+    implementation(libs.justifiedtextview) //justified textview
 }

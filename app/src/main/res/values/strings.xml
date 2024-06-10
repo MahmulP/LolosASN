@@ -156,8 +156,8 @@
     <string name="alphabet_c">C</string>
     <string name="alphabet_e">E</string>
     <string name="alphabet_d">D</string>
-    <string name="text_soal"><![CDATA[Soal &d]]></string>
-    <string name="right_answer">Jawaban B</string>
+    <string name="text_soal">Soal %1s</string>
+    <string name="right_answer">Jawaban %1s</string>
     <string name="tab_all">Keseluruhan</string>
     <string name="analysis_all">Analisis Keseluruhan</string>
     <string name="purchase">Pembelian</string>
@@ -236,4 +236,6 @@
     <string name="no_category">Tidak ada kategori</string>
     <string name="not_answered">Belum dijawab</string>
     <string name="answered">Sudah dijawab</string>
+    <string name="greet">Hai, %1s</string>
+    <string name="short_desc">Berikut hasil analisis tryout ke-10 kamu</string>
 </resources>

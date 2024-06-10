@@ -1,18 +1,16 @@
 package com.lolos.asn.adapter
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.lolos.asn.data.viewmodel.model.ExaminationViewModel
+import com.lolos.asn.R
 import com.lolos.asn.databinding.ListChoiceDiscussionBinding
-import com.lolos.asn.ui.activity.ExaminationActivity
 
-class ExaminationAnswerAdapter(
-    private val parentActivity: ExaminationActivity,
-    private val viewModel: ExaminationViewModel
-) : ListAdapter<String, ExaminationAnswerAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class DiscussionAnswerAdapter : ListAdapter<String, DiscussionAnswerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     private var options: List<String?> = emptyList()
     private var selectedPosition: Int = -1
@@ -23,12 +21,7 @@ class ExaminationAnswerAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(options[position], position)
-        holder.itemView.setOnClickListener {
-            updateSelection(position)
-            viewModel.selectAnswer(viewModel.currentQuestionIndex.value ?: 0, position)
-            viewModel.calculateScores(viewModel.currentQuestionIndex.value ?: 0, position)
-        }
+        holder.bind(options[position], position, selectedPosition)
     }
 
     override fun getItemCount(): Int {
@@ -38,23 +31,20 @@ class ExaminationAnswerAdapter(
     fun setOptions(newOptions: List<String?>, selectedAnswer: Int?) {
         options = newOptions
         selectedPosition = selectedAnswer ?: -1
-        notifyDataSetChanged()
-    }
-
-    private fun updateSelection(position: Int) {
-        if (position != selectedPosition) {
-            val previousPosition = selectedPosition
-            selectedPosition = position
-            notifyItemChanged(previousPosition)
-            notifyItemChanged(position)
-        }
     }
 
     inner class MyViewHolder(val binding: ListChoiceDiscussionBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(option: String?, position: Int) {
+        fun bind(option: String?, position: Int, rightAnswer: Int) {
             binding.tvChoiceText.text = option
             binding.tvChoice.text = getLetterForPosition(position)
-            binding.cvOption.isChecked = position == selectedPosition
+
+            if (position == rightAnswer) {
+                val primaryColor = ContextCompat.getColor(binding.root.context, R.color.primaryColor)
+                val white = ContextCompat.getColor(binding.root.context, R.color.white)
+                binding.cvOption.backgroundTintList = ColorStateList.valueOf(primaryColor)
+                binding.tvChoice.backgroundTintList = ColorStateList.valueOf(white)
+                binding.tvChoiceText.setTextColor(white)
+            }
         }
 
         private fun getLetterForPosition(position: Int): String {

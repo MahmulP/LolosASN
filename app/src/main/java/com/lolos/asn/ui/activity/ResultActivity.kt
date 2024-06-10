@@ -107,7 +107,9 @@ class ResultActivity : AppCompatActivity() {
         }
 
         binding.tvDetailPembahasan.setOnClickListener {
-            startActivity(Intent(this, ResultDiscussionActivity::class.java))
+            val intent = Intent(this, ResultDiscussionActivity::class.java)
+            intent.putExtra("tryout_id", tryoutId)
+            startActivity(intent)
         }
 
         binding.tvDetailAi.setOnClickListener {

@@ -59,7 +59,7 @@
         android:paddingBottom="8dp"
         android:paddingRight="16dp"
         android:paddingLeft="16dp"
-        android:text="Soal 2"
+        tools:text="Soal 2"
         android:textColor="@color/primaryColor"
         android:textSize="17sp"
         android:fontFamily="@font/roboto_bold"
@@ -141,7 +141,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_time"
