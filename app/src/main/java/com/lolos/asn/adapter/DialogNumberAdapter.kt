@@ -1,5 +1,6 @@
 package com.lolos.asn.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,19 +49,23 @@ class DialogNumberAdapter(
         private val dialogFragment: NumberDialogFragment
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private lateinit var currentExamination: TryoutContentItem
+
         init {
             binding.btnNumber.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    viewModel.updatePosition(position)
+                    viewModel.updatePosition(currentExamination.tryoutNum.toInt() - 1)
                     dialogFragment.dismiss()
                 }
             }
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(examination: TryoutContentItem, position: Int) {
+            currentExamination = examination
             binding.btnNumber.text = (position + 1).toString()
-            val isFilled = viewModel.isAnswerFilled(position)
+            val isFilled = viewModel.isAnswerFilled(examination.tryoutNum.toInt() - 1)
             updateBackgroundTint(isFilled)
         }
 
@@ -80,6 +85,7 @@ class DialogNumberAdapter(
             binding.btnNumber.backgroundTintList = backgroundColorTint
         }
     }
+
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TryoutContentItem>() {

@@ -172,7 +172,7 @@
                 android:layout_marginStart="16dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="Soal 1"
+                tools:text="Soal 1"
                 android:drawableLeft="@drawable/baseline_arrow_circle_left_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_time"/>
@@ -182,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
-                android:text="03:23:05"
+                tools:text="03:23:05"
                 android:textSize="25sp"
                 app:layout_constraintTop_toTopOf="@id/btn_next"
                 app:layout_constraintBottom_toBottomOf="@id/btn_next"
@@ -197,7 +197,7 @@
                 android:layout_marginEnd="16dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:text="Soal 3"
+                tools:text="Soal 3"
                 android:drawableEnd="@drawable/baseline_arrow_circle_right_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_time"/>

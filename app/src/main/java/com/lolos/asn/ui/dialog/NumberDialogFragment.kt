@@ -2,7 +2,6 @@ package com.lolos.asn.ui.dialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,8 +46,29 @@ class NumberDialogFragment : DialogFragment() {
         }
 
         examinationViewModel.examTryout.observe(viewLifecycleOwner) { questions ->
-            setupRecycleView(questions)
+            val twkCategory = questions.filter { it.category == 2 }
+            val tiuCategory = questions.filter { it.category == 1 }
+            val tkpCategory = questions.filter { it.category == 3 }
+
+            if (twkCategory.isNotEmpty()) {
+                setupTwkRecycleView(twkCategory)
+            } else {
+                binding.tvTwk.visibility = View.GONE
+            }
+
+            if (tiuCategory.isNotEmpty()) {
+                setupTiuRecycleView(tiuCategory)
+            } else {
+                binding.tvTiu.visibility = View.GONE
+            }
+
+            if (tkpCategory.isNotEmpty()) {
+                setupTkpRecycleView(tkpCategory)
+            } else {
+                binding.tvTkp.visibility = View.GONE
+            }
         }
+
 
         examinationViewModel.remainingTime.observe(viewLifecycleOwner) { time ->
             binding.tvTime.text = time
@@ -65,10 +85,26 @@ class NumberDialogFragment : DialogFragment() {
         setStyle(STYLE_NO_FRAME, R.style.FullScreenDialogTheme)
     }
 
-    private fun setupRecycleView(tryoutContentItems: List<TryoutContentItem>) {
-        binding.rvNumber.layoutManager = GridLayoutManager(requireContext(), 5)
+    private fun setupTwkRecycleView(tryoutContentItems: List<TryoutContentItem>) {
+        binding.rvNumberTwk.layoutManager = GridLayoutManager(requireContext(), 5)
         val adapter = DialogNumberAdapter(examinationViewModel, this)
-        binding.rvNumber.adapter = adapter
+        binding.rvNumberTwk.adapter = adapter
+
+        adapter.submitList(tryoutContentItems)
+    }
+
+    private fun setupTiuRecycleView(tryoutContentItems: List<TryoutContentItem>) {
+        binding.rvNumberTiu.layoutManager = GridLayoutManager(requireContext(), 5)
+        val adapter = DialogNumberAdapter(examinationViewModel, this)
+        binding.rvNumberTiu.adapter = adapter
+
+        adapter.submitList(tryoutContentItems)
+    }
+
+    private fun setupTkpRecycleView(tryoutContentItems: List<TryoutContentItem>) {
+        binding.rvNumberTkp.layoutManager = GridLayoutManager(requireContext(), 5)
+        val adapter = DialogNumberAdapter(examinationViewModel, this)
+        binding.rvNumberTkp.adapter = adapter
 
         adapter.submitList(tryoutContentItems)
     }

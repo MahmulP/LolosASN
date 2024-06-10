@@ -14,7 +14,7 @@ data class TryoutContentItem(
 	val pembahasan: String? = null,
 
 	@field:SerializedName("tryout_num")
-	val tryoutNum: String? = null,
+	val tryoutNum: String,
 
 	@field:SerializedName("question")
 	val question: String? = null,
@@ -32,7 +32,7 @@ data class TryoutContentItem(
 	val jawaban: Int? = null,
 
 	@field:SerializedName("jawaban_tkp")
-	val jawabanTkp: List<Int>,
+	val jawabanTkp: List<Int>? = null,
 
 	@field:SerializedName("category")
 	val category: Int? = null,
@@ -62,6 +62,6 @@ data class TryoutData(
 
 
 sealed class ExaminationDisplayItem {
-	data class Header(val title: String) : ExaminationDisplayItem()
+	data class Header(val title: String, val category: Int) : ExaminationDisplayItem()
 	data class ExaminationItem(val examination: TryoutContentItem) : ExaminationDisplayItem()
 }

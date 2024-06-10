@@ -233,4 +233,7 @@
     <string name="purchase_history">Riwayat Pembelian</string>
     <string name="transaction_dynamic_status">TRANSAKSI %1s</string>
     <string name="tryout_start_warning">Kamu akan mengerjakan Tryout ini. Sebelum memulai pastikan jaringan dan tempat sudah kondusif. Selamat mengerjakan</string>
+    <string name="no_category">Tidak ada kategori</string>
+    <string name="not_answered">Belum dijawab</string>
+    <string name="answered">Sudah dijawab</string>
 </resources>

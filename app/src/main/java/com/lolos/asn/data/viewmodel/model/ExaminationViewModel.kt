@@ -188,9 +188,9 @@ class ExaminationViewModel: ViewModel() {
                 }
                 3 -> { // TKP
                     if (previousAnswer != null) {
-                        tkpScore -= contentItem.jawabanTkp.getOrNull(previousAnswer) ?: 0
+                        tkpScore -= contentItem.jawabanTkp?.getOrNull(previousAnswer) ?: 0
                     }
-                    val tkpValue = contentItem.jawabanTkp.getOrNull(optionIndex) ?: 0
+                    val tkpValue = contentItem.jawabanTkp?.getOrNull(optionIndex) ?: 0
                     tkpScore += tkpValue
                 }
             }

@@ -99,6 +99,14 @@ class ValidationDialogFragment : DialogFragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
     private fun showToast(message: String?) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
