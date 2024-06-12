@@ -14,7 +14,7 @@ In this way, LolosASN is not only an ordinary CPNS tryout application, but also 
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
-- [GITHUB Links](#github_links)
+- [GITHUB Links](#github-links)
 
 ## Features
 
@@ -57,3 +57,4 @@ Here is the links for all the path of ours:
 1. Cloud Computing: https://github.com/KenzieFu/backend-asn
 2. Mobile Development: This GITHUB
 3. Machine Learning: https://github.com/trifine/LolosASN-ML
+4. Admin Dashboard for LolosASN: https://github.com/MahmulP/admin-lolosasn
