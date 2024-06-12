@@ -238,4 +238,5 @@
     <string name="answered">Sudah dijawab</string>
     <string name="greet">Hai, %1s</string>
     <string name="short_desc">Berikut hasil analisis tryout ke-10 kamu</string>
+    <string name="content_image">Foto Materi</string>
 </resources>

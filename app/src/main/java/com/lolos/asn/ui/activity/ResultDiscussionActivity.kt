@@ -164,9 +164,9 @@ class ResultDiscussionActivity : AppCompatActivity() {
             binding.btnPrevious.text = "Soal ${index}"
             binding.tvSoal.text = question.question
             binding.toolbar.title = if (question.category == 1) {
-                getString(R.string.twk)
-            } else if (question.category == 2) {
                 getString(R.string.tiu)
+            } else if (question.category == 2) {
+                getString(R.string.twk)
             } else {
                 getString(R.string.tkp)
             }

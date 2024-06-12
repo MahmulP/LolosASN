@@ -32,7 +32,7 @@ data class TryoutContentItem(
 	val jawaban: Int? = null,
 
 	@field:SerializedName("jawaban_tkp")
-	val jawabanTkp: List<Int>? = null,
+	val jawabanTkp: List<Int>,
 
 	@field:SerializedName("category")
 	val category: Int? = null,

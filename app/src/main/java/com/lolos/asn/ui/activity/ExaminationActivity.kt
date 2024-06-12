@@ -173,9 +173,9 @@ class ExaminationActivity : AppCompatActivity() {
             binding.btnPrevious.text = "Soal ${index}"
             binding.tvSoal.text = question.question
             binding.toolbar.title = if (question.category == 1) {
-                getString(R.string.twk)
-            } else if (question.category == 2) {
                 getString(R.string.tiu)
+            } else if (question.category == 2) {
+                getString(R.string.twk)
             } else {
                 getString(R.string.tkp)
             }
@@ -187,6 +187,12 @@ class ExaminationActivity : AppCompatActivity() {
                 binding.btnNext.text = "Soal ${index + 2}"
             } else {
                 binding.btnNext.text = getString(R.string.done_text)
+            }
+
+            if (!question.question.isNullOrEmpty()) {
+                binding.tvSoal.visibility = View.VISIBLE
+            } else {
+                binding.tvSoal.visibility = View.GONE
             }
 
             // Load question image if available

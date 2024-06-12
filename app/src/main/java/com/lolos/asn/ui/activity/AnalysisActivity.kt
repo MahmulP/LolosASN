@@ -1,6 +1,8 @@
 package com.lolos.asn.ui.activity
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Layout.JUSTIFICATION_MODE_INTER_WORD
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +41,10 @@ class AnalysisActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            binding.tvContent.justificationMode = JUSTIFICATION_MODE_INTER_WORD
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

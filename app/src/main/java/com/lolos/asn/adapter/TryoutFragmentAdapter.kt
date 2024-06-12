@@ -75,7 +75,7 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
             binding.tvTitleTryout.text = tryout.tryoutTitle
             binding.tvDateCpns.text = dateRange
 
-            if (isCleared == "1" && isAccessed == "1") {
+            if (isCleared == "1" && isAccessed == "1" || tryout.tryoutType == "FREE" && isCleared == "1") {
                 binding.btnDetail.setOnClickListener {
                     val intent = Intent(context, ResultActivity::class.java)
                     intent.putExtra("tryout_id", tryout.tryoutId)

@@ -158,21 +158,7 @@ class ExaminationViewModel: ViewModel() {
         // Only update the score if the new answer is different from the previous answer
         if (previousAnswer != optionIndex) {
             when (contentItem.category) {
-                1 -> { // TWK
-                    if (previousAnswer != null) {
-                        if (previousAnswer == contentItem.jawaban) {
-                            twkScore -= 5
-                        } else {
-                            twkWrong -= 1
-                        }
-                    }
-                    if (contentItem.jawaban == optionIndex) {
-                        twkScore += 5
-                    } else {
-                        twkWrong += 1
-                    }
-                }
-                2 -> { // TIU
+                1 -> { // TIU
                     if (previousAnswer != null) {
                         if (previousAnswer == contentItem.jawaban) {
                             tiuScore -= 5
@@ -186,11 +172,25 @@ class ExaminationViewModel: ViewModel() {
                         tiuWrong += 1
                     }
                 }
+                2 -> { // TWK
+                    if (previousAnswer != null) {
+                        if (previousAnswer == contentItem.jawaban) {
+                            twkScore -= 5
+                        } else {
+                            twkWrong -= 1
+                        }
+                    }
+                    if (contentItem.jawaban == optionIndex) {
+                        twkScore += 5
+                    } else {
+                        twkWrong += 1
+                    }
+                }
                 3 -> { // TKP
                     if (previousAnswer != null) {
-                        tkpScore -= contentItem.jawabanTkp?.getOrNull(previousAnswer) ?: 0
+                        tkpScore -= contentItem.jawabanTkp.getOrNull(previousAnswer) ?: 0
                     }
-                    val tkpValue = contentItem.jawabanTkp?.getOrNull(optionIndex) ?: 0
+                    val tkpValue = contentItem.jawabanTkp.getOrNull(optionIndex) ?: 0
                     tkpScore += tkpValue
                 }
             }
@@ -200,25 +200,44 @@ class ExaminationViewModel: ViewModel() {
             val existingItemIndex = updatedSubCategoryScores.indexOfFirst { it.subCategoryId == subCategoryId }
             if (existingItemIndex != -1) {
                 val currentScore = updatedSubCategoryScores[existingItemIndex].subCategoryScore
-                val scoreChange = if (previousAnswer == contentItem.jawaban) {
-                    -5
-                } else if (contentItem.jawaban == optionIndex) {
-                    5
+                var scoreChange: Int = 0
+                if (contentItem.category != 3) {
+                    scoreChange = if (previousAnswer == contentItem.jawaban) {
+                        -5
+                    } else if (contentItem.jawaban == optionIndex) {
+                        5
+                    } else {
+                        0
+                    }
                 } else {
-                    0
+                    val previousTkp = previousAnswer?.let { contentItem.jawabanTkp.getOrNull(it) } ?: 0
+                    if (previousAnswer != null) {
+                        scoreChange -= previousTkp
+                    }
+                    scoreChange += contentItem.jawabanTkp[optionIndex]
                 }
                 updatedSubCategoryScores[existingItemIndex] = ListCategoryScoreItem(
                     subCategoryId = subCategoryId,
                     subCategoryScore = currentScore + scoreChange
                 )
             } else {
-                val scoreChange = if (contentItem.jawaban == optionIndex) 5 else 0
-                updatedSubCategoryScores.add(
-                    ListCategoryScoreItem(
-                        subCategoryId = subCategoryId,
-                        subCategoryScore = scoreChange
+                if (contentItem.category != 3) {
+                    val scoreChange = if (contentItem.jawaban == optionIndex) 5 else 0
+                    updatedSubCategoryScores.add(
+                        ListCategoryScoreItem(
+                            subCategoryId = subCategoryId,
+                            subCategoryScore = scoreChange
+                        )
                     )
-                )
+                } else {
+                    val scoreChange = contentItem.jawabanTkp[optionIndex]
+                    updatedSubCategoryScores.add(
+                        ListCategoryScoreItem(
+                            subCategoryId = subCategoryId,
+                            subCategoryScore = scoreChange
+                        )
+                    )
+                }
             }
             _subCategoryScores.value = updatedSubCategoryScores
 
@@ -236,9 +255,9 @@ class ExaminationViewModel: ViewModel() {
             tryoutScore = tiuScore + tkpScore + twkScore
         )
 
-        Log.d("TryoutViewModel", "calculateScores - TryoutRequest: $tryoutRequestData")
-        Log.d("TryoutViewModel", "calculateScores - TIU Score: $tiuScore, TWK Score: $twkScore, TKP Score: $tkpScore")
-        Log.d("TryoutViewModel", "calculateScores - ListCategoryScore: ${_subCategoryScores.value}")
+        Log.d(TAG, "calculateScores - TryoutRequest: $tryoutRequestData")
+        Log.d(TAG, "calculateScores - TIU Score: $tiuScore, TWK Score: $twkScore, TKP Score: $tkpScore")
+        Log.d(TAG, "calculateScores - ListCategoryScore: ${_subCategoryScores.value}")
 
         _tryoutRequest.value = tryoutRequestData
 

@@ -2,6 +2,7 @@ package com.lolos.asn.service.foreground
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -17,6 +18,8 @@ import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.NotificationViewModel
+import com.lolos.asn.ui.activity.HistoryActivity
+import com.lolos.asn.ui.activity.MainActivity
 import kotlinx.coroutines.Job
 
 class WebSocketService : LifecycleService() {
@@ -67,12 +70,29 @@ class WebSocketService : LifecycleService() {
     }
 
     private fun sendNotification(title: String?, message: String?) {
+        var intent: Intent? = null
+
+        if (title?.contains("Transaksi") == true) {
+            intent = Intent(this, HistoryActivity::class.java)
+        } else {
+            intent = Intent(this, MainActivity::class.java)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+        )
+
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setSmallIcon(R.drawable.app_logo)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(

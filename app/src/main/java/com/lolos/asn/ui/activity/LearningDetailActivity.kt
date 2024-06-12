@@ -42,8 +42,8 @@ class LearningDetailActivity : AppCompatActivity() {
         }
 
         courseDetailViewModel.courseDetail.observe(this) {
-            binding.tvTitle.text = it?.data?.courseName
-            binding.tvContent.text = it?.data?.content?.filterNotNull()?.joinToString("\n") ?: ""
+            toolbar.title = it?.data?.courseName
+//            binding.tvContent.text = it?.data?.content?.filterNotNull()?.joinToString("\n") ?: ""
 
             if (it?.data?.isCleared != "0") {
                 binding.btnDone.setOnClickListener {

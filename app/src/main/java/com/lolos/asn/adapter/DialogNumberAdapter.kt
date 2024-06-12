@@ -29,9 +29,9 @@ class DialogNumberAdapter(
         holder.bind(examination, position)
 
         if (position % 5 == 4) {
-            setMargins(holder.binding.btnNumber, 0, 32, 0, 0)
+            setMargins(holder.binding.btnNumber, 0, 16, 0, 0)
         } else {
-            setMargins(holder.binding.btnNumber, 0, 32, 32, 0)
+            setMargins(holder.binding.btnNumber, 0, 16, 8, 0)
         }
     }
 

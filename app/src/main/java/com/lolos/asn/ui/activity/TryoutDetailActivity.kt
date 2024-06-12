@@ -46,27 +46,44 @@ class TryoutDetailActivity : AppCompatActivity() {
         tryoutDetailViewModel.tryout.observe(this) { tryoutResponse ->
             val isAccessed = tryoutResponse.data?.accessed
             val isCleared = tryoutResponse.data?.isCleared
+            val type = tryoutResponse.data?.tryoutType
 
             tryoutName = tryoutResponse.data?.tryoutTitle
             binding.tvTitle.text = tryoutResponse.data?.tryoutTitle
             binding.tvDateRange.text = period
 
-            if (isAccessed == "1" && isCleared == "1") {
-                binding.btnStart.text = getString(R.string.result)
-                binding.btnStart.setOnClickListener {
-                    val intent = Intent(this, ResultActivity::class.java)
-                    intent.putExtra("tryout_id", tryoutResponse.data.tryoutId)
-                    startActivity(intent)
-                }
-            } else if (isAccessed == "1") {
-                binding.btnStart.setOnClickListener {
-                    val dialog = StartDialogFragment.newInstance(tryoutId, tryoutName)
-                    dialog.show(supportFragmentManager, "CustomDialog")
+            if (type == "FREE") {
+                if (isCleared == "1") {
+                    binding.btnStart.text = getString(R.string.result)
+                    binding.btnStart.setOnClickListener {
+                        val intent = Intent(this, ResultActivity::class.java)
+                        intent.putExtra("tryout_id", tryoutResponse.data.tryoutId)
+                        startActivity(intent)
+                    }
+                } else {
+                    binding.btnStart.setOnClickListener {
+                        val dialog = StartDialogFragment.newInstance(tryoutId, tryoutName)
+                        dialog.show(supportFragmentManager, "CustomDialog")
+                    }
                 }
             } else {
-                binding.btnStart.text = getString(R.string.buy_now)
-                binding.btnStart.setOnClickListener {
-                    startActivity(Intent(this, PurchaseActivity::class.java))
+                if (isAccessed == "1" && isCleared == "1") {
+                    binding.btnStart.text = getString(R.string.result)
+                    binding.btnStart.setOnClickListener {
+                        val intent = Intent(this, ResultActivity::class.java)
+                        intent.putExtra("tryout_id", tryoutResponse.data.tryoutId)
+                        startActivity(intent)
+                    }
+                } else if (isAccessed == "1") {
+                    binding.btnStart.setOnClickListener {
+                        val dialog = StartDialogFragment.newInstance(tryoutId, tryoutName)
+                        dialog.show(supportFragmentManager, "CustomDialog")
+                    }
+                } else {
+                    binding.btnStart.text = getString(R.string.buy_now)
+                    binding.btnStart.setOnClickListener {
+                        startActivity(Intent(this, PurchaseActivity::class.java))
+                    }
                 }
             }
         }
