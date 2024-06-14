@@ -41,6 +41,10 @@ class LeaderboardActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val tryoutId = intent.getStringExtra("tryout_id")
+        authViewModel.getAuthUser().observe(this) {
+            val token = "Bearer ${it.token}"
+            leaderboardViewModel.getLeaderboardData(tryoutId, token)
+        }
 
         leaderboardViewModel.leaderboardData.observe(this) { leaderboard ->
             if (leaderboard?.data != null) {
@@ -49,12 +53,6 @@ class LeaderboardActivity : AppCompatActivity() {
                 authViewModel.getAuthUser().observe(this) { userData ->
                     if (userData.userId != null) {
                         val userId = userData.userId
-
-                        if (userData.token != null) {
-                            val token = "Bearer ${userData.token}"
-                            leaderboardViewModel.getLeaderboardData(tryoutId, token)
-                        }
-
                         leaderboard.data.forEachIndexed { index, item ->
                             if (item.accountId == userId) {
                                 val accountAvatar = item.account?.avatar
