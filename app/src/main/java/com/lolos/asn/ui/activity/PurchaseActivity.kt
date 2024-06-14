@@ -38,9 +38,10 @@ class PurchaseActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         authViewModel.getAuthUser().observe(this) { userData ->
-            if (userData != null) {
+            if (userData?.token != null) {
                 val userId = userData.userId
-                tryoutViewModel.getBundleTryout(userId)
+                val token = "Bearer ${userData.token}"
+                tryoutViewModel.getBundleTryout(userId, token)
             }
         }
 

@@ -27,6 +27,7 @@ class ResultHistoryActivity : AppCompatActivity() {
     }
 
     private var userId: String? = null
+    private var token: String = "token"
     private var transactionFrom: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +44,10 @@ class ResultHistoryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         authViewModel.getAuthUser().observe(this) {
-            if (it.userId != null) {
+            if (it.userId != null && it.token != null) {
                 userId = it.userId
-                tryoutViewModel.getFinishedTryout(userId)
+                token = "Bearer ${it.token}"
+                tryoutViewModel.getFinishedTryout(userId, token)
             }
         }
 

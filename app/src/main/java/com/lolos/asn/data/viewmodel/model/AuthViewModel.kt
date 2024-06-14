@@ -34,6 +34,9 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage = _errorMessage
 
+    private val _isRegistered = MutableLiveData<Boolean>()
+    val isRegistered: LiveData<Boolean> = _isRegistered
+
     fun login(loginRequest: LoginRequest) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().login(loginRequest)
@@ -75,6 +78,7 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
                     if (responseBody != null) {
                         val message = responseBody.message
                         _errorMessage.value = message
+                        _isRegistered.value = true
                         Log.d(TAG, "onResponse: $message")
                     }
                 } else {
@@ -94,26 +98,30 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
         })
     }
 
-    fun updateUserData(userId: String?, name: RequestBody?, email: RequestBody?, password: RequestBody?, phone: RequestBody?, avatar: MultipartBody.Part?) {
-        val client = ApiConfig.getApiService().updateUserData(userId = userId, name = name, email = email, password = password, avatar = avatar, phone = phone)
+    fun updateUserData(userId: String?, name: RequestBody?, email: RequestBody?, password: RequestBody?, phone: RequestBody?, avatar: MultipartBody.Part?, token: String) {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().updateUserData(userId = userId, name = name, email = email, password = password, avatar = avatar, phone = phone, token = token)
         client.enqueue(object: Callback<UpdateUserResponse> {
             override fun onResponse(call: Call<UpdateUserResponse>, response: Response<UpdateUserResponse>) {
                 if (response.isSuccessful) {
                     _isChanged.value = true
+                    _isLoading.value = false
                 } else {
                     _isChanged.value = false
+                    _isLoading.value = false
                 }
             }
 
             override fun onFailure(call: Call<UpdateUserResponse>, t: Throwable) {
                 _errorMessage.value = t.message
+                _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
     }
 
-    fun getAUthUserData(userId: String?) {
-        val client = ApiConfig.getApiService().getAuthUserData(userId)
+    fun getAUthUserData(userId: String?, token: String) {
+        val client = ApiConfig.getApiService().getAuthUserData(userId, token)
         client.enqueue(object: Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {

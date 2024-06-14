@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lolos.asn.R
 import com.lolos.asn.data.response.NotificationDisplayItem
 import com.lolos.asn.data.response.NotificationItem
+import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.NotificationViewModel
 import com.lolos.asn.databinding.ListHeaderBinding
 import com.lolos.asn.databinding.ListNotificationBinding
@@ -24,7 +26,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class NotificationAdapter(private val context: Context, private val notificationViewModel: NotificationViewModel) : ListAdapter<NotificationDisplayItem, RecyclerView.ViewHolder>(
+class NotificationAdapter(private val context: Context, private val notificationViewModel: NotificationViewModel, private val authViewModel: AuthViewModel, private val lifecycleOwner: LifecycleOwner,) : ListAdapter<NotificationDisplayItem, RecyclerView.ViewHolder>(
     DIFF_CALLBACK
 ) {
 
@@ -52,7 +54,7 @@ class NotificationAdapter(private val context: Context, private val notification
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is NotificationDisplayItem.Header -> (holder as HeaderViewHolder).bind(item.title)
-            is NotificationDisplayItem.DisplayItem -> (holder as NotificationViewHolder).bind(item.notification, context, notificationViewModel)
+            is NotificationDisplayItem.DisplayItem -> (holder as NotificationViewHolder).bind(item.notification, context, notificationViewModel, authViewModel, lifecycleOwner)
         }
     }
 
@@ -63,7 +65,7 @@ class NotificationAdapter(private val context: Context, private val notification
     }
 
     class NotificationViewHolder(val binding: ListNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(notification: NotificationItem, context: Context, notificationViewModel: NotificationViewModel) {
+        fun bind(notification: NotificationItem, context: Context, notificationViewModel: NotificationViewModel, authViewModel: AuthViewModel, lifecycleOwner: LifecycleOwner) {
             with(binding) {
                 tvTitle.text = notification.notificationTitle
                 tvContent.text = notification.notifikasiMsg
@@ -97,8 +99,13 @@ class NotificationAdapter(private val context: Context, private val notification
                     divider.visibility = View.INVISIBLE
 
                     cvNotification.setOnClickListener {
-                        notificationViewModel.updateNotification(userId = notification.accountId, notificationId = notification.notifikasiId)
-                        notificationViewModel.getNotification(userId = notification.accountId)
+                        authViewModel.getAuthUser().observe(lifecycleOwner) {
+                            if (it.token != null) {
+                                val token = it.token
+                                notificationViewModel.updateNotification(userId = notification.accountId, notificationId = notification.notifikasiId, token = token)
+                                notificationViewModel.getNotification(userId = notification.accountId, token = token)
+                            }
+                        }
 
                         if (notification.notificationTitle?.contains("Transaksi") == true) {
                             context.startActivity(Intent(context, HistoryActivity::class.java))

@@ -66,8 +66,8 @@ class ExaminationViewModel: ViewModel() {
         _subCategoryScores.value = mutableListOf()
     }
 
-    fun startTryout(tryoutId: String?) {
-        val client = ApiConfig.getApiService().startTryout(tryoutId)
+    fun startTryout(tryoutId: String?, token: String) {
+        val client = ApiConfig.getApiService().startTryout(tryoutId, token)
         client.enqueue(object : Callback<ExaminationResponse> {
             override fun onResponse(
                 call: Call<ExaminationResponse>,
@@ -91,9 +91,9 @@ class ExaminationViewModel: ViewModel() {
         })
     }
 
-    fun finishTryout(userId: String?, tryoutId: String?, tryoutRequest: TryoutRequest) {
+    fun finishTryout(userId: String?, tryoutId: String?, tryoutRequest: TryoutRequest, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().clearTryout(userId = userId, tryoutId = tryoutId, request = tryoutRequest)
+        val client = ApiConfig.getApiService().clearTryout(userId = userId, tryoutId = tryoutId, request = tryoutRequest, token = token)
         client.enqueue(object: Callback<FinishTryoutResponse> {
             override fun onResponse(call: Call<FinishTryoutResponse>, response: Response<FinishTryoutResponse>) {
                 _isLoading.value = false

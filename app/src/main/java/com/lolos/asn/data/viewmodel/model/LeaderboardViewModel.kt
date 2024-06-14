@@ -20,9 +20,9 @@ class LeaderboardViewModel: ViewModel() {
     private val _isEmpty = MutableLiveData<Boolean>()
     val isEmpty: LiveData<Boolean> = _isEmpty
     
-    fun getLeaderboardData(tryoutId: String?) {
+    fun getLeaderboardData(tryoutId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getTryoutLeaderboard(tryoutId)
+        val client = ApiConfig.getApiService().getTryoutLeaderboard(tryoutId, token)
         client.enqueue(object : Callback<LeaderboardResponse> {
             override fun onResponse(
                 call: Call<LeaderboardResponse>,

@@ -2,7 +2,6 @@ package com.lolos.asn.ui.dialog
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lolos.asn.R
 import com.lolos.asn.adapter.DescriptionAdapter
-import com.lolos.asn.adapter.LeaderboardAdapter
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
@@ -45,9 +43,10 @@ class ValidationPurchaseDialogFragment : BottomSheetDialogFragment() {
 
         val bundleId = arguments?.getString("bundle_id")
         authViewModel.getAuthUser().observe(viewLifecycleOwner) {
-            if (it != null) {
+            if (it?.token != null) {
                 val userId = it.userId
-                tryoutViewModel.getBundleTryoutDetail(userId = userId, bundleId = bundleId)
+                val token = "Bearer ${it.token}"
+                tryoutViewModel.getBundleTryoutDetail(userId = userId, bundleId = bundleId, token = token)
             }
         }
 

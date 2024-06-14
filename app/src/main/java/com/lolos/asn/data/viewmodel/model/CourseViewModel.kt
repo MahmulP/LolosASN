@@ -20,9 +20,9 @@ class CourseViewModel: ViewModel() {
     private val _isEmpty = MutableLiveData<Boolean>()
     val isEmpty: LiveData<Boolean> = _isEmpty
 
-    fun getCourses(userId: String, categoryId: String) {
+    fun getCourses(userId: String, categoryId: String, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getCourses(userId, categoryId)
+        val client = ApiConfig.getApiService().getCourses(userId, categoryId, token)
         client.enqueue(object : retrofit2.Callback<CourseResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<CourseResponse>, response: Response<CourseResponse>) {

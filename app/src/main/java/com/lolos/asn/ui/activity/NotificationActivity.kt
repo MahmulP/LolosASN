@@ -27,6 +27,7 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private var userId: String? = null
+    private var token: String = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationBinding.inflate(layoutInflater)
@@ -39,9 +40,10 @@ class NotificationActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         authViewModel.getAuthUser().observe(this) { userData ->
-            if (userData != null) {
+            if (userData != null && userData.token != null) {
                 userId = userData.userId
-                notificationViewModel.getNotification(userId)
+                token = "Bearer ${userData.token}"
+                notificationViewModel.getNotification(userId, token)
             }
         }
 
@@ -71,7 +73,7 @@ class NotificationActivity : AppCompatActivity() {
     private fun setupRecycleView(notificationResponse: NotificationResponse) {
         binding.rvNotification.layoutManager = LinearLayoutManager(this)
 
-        val adapter = NotificationAdapter(this, notificationViewModel)
+        val adapter = NotificationAdapter(this, notificationViewModel, authViewModel, this)
         binding.rvNotification.adapter = adapter
 
         val groupedNotifications = groupNotificationsByDate(notificationResponse.data)

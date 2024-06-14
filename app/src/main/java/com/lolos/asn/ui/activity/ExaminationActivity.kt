@@ -37,13 +37,15 @@ class ExaminationActivity : AppCompatActivity() {
     private var currentRequest: TryoutRequest? = null
     private var currentTryoutData: ExaminationResponse? = null
     private var currentUserData: UserData? = null
+    private var authToken: String = "token"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExaminationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val tryoutId = intent.getStringExtra("tryout_id")
-        examinationViewModel.startTryout(tryoutId)
+
         examinationViewModel.examTryout.observe(this) { questions ->
             if (questions.isNotEmpty()) {
                 val index = examinationViewModel.currentQuestionIndex.value ?: 0
@@ -68,15 +70,20 @@ class ExaminationActivity : AppCompatActivity() {
 
         authViewModel.getAuthUser().observe(this) { userData ->
             currentUserData = userData
+            if (userData.token != null) {
+                authToken = "Bearer ${userData.token}"
+                examinationViewModel.startTryout(tryoutId, authToken)
+            }
         }
 
         examinationViewModel.remainingTime.observe(this) { remainingTime ->
             val request = currentRequest
             val userData = currentUserData
+            val token = authToken
 
             if (remainingTime == "00:00:00") {
                 if (request != null && tryoutId != null && userData != null) {
-                    examinationViewModel.finishTryout(userId = userData.userId, tryoutId = tryoutId, tryoutRequest = request)
+                    examinationViewModel.finishTryout(userId = userData.userId, tryoutId = tryoutId, tryoutRequest = request, token)
 
                     examinationViewModel.isFinish.observe(this) { result ->
                         if (result) {
@@ -111,6 +118,8 @@ class ExaminationActivity : AppCompatActivity() {
                 examinationViewModel.examTryout.observe(this) { questions ->
                     setupAnswerRecycleView(questions, index)
                     setupNumberRecycleView(questions)
+
+                    binding.rvNumber.scrollToPosition(index)
                 }
             } else {
                 finishQuiz()
@@ -123,6 +132,8 @@ class ExaminationActivity : AppCompatActivity() {
             examinationViewModel.examTryout.observe(this) { questions ->
                 setupAnswerRecycleView(questions, index)
                 setupNumberRecycleView(questions)
+
+                binding.rvNumber.scrollToPosition(index)
             }
         }
 

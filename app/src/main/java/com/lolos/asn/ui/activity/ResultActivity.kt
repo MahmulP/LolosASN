@@ -46,10 +46,11 @@ class ResultActivity : AppCompatActivity() {
 
         val tryoutId = intent.getStringExtra("tryout_id")
         authViewModel.getAuthUser().observe(this) { userData ->
-            if (userData.userId != null) {
+            if (userData.userId != null && userData.token != null) {
                 val userId = userData.userId
-                tryoutViewModel.getResultTryout(tryoutId = tryoutId, userId = userId)
-                tryoutViewModel.getFinishedTryout(userId = userId)
+                val token = "Bearer ${userData.token}"
+                tryoutViewModel.getResultTryout(tryoutId = tryoutId, userId = userId, token = token)
+                tryoutViewModel.getFinishedTryout(userId = userId, token = token)
             }
         }
 
@@ -113,7 +114,9 @@ class ResultActivity : AppCompatActivity() {
         }
 
         binding.tvDetailAi.setOnClickListener {
-            startActivity(Intent(this, AnalysisActivity::class.java))
+            val intent = Intent(this, AnalysisActivity::class.java)
+            intent.putExtra("tryout_id", tryoutId)
+            startActivity(intent)
         }
 
         binding.btnDone.setOnClickListener {

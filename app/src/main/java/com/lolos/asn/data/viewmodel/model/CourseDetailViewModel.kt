@@ -21,8 +21,8 @@ class CourseDetailViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading = _isLoading
 
-    fun getDetailCourse(courseId: String?, userId: String?) {
-        val client = ApiConfig.getApiService().getDetailCourse(courseId, userId)
+    fun getDetailCourse(courseId: String?, userId: String?, token: String) {
+        val client = ApiConfig.getApiService().getDetailCourse(courseId, userId, token)
         _isLoading.value = true
         client.enqueue(object : Callback<CourseDetailResponse> {
             override fun onResponse(
@@ -44,9 +44,9 @@ class CourseDetailViewModel: ViewModel() {
         })
     }
 
-    fun finishCourse(courseId: String?, userId: String?) {
+    fun finishCourse(courseId: String?, userId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().finishCourse(courseId = courseId, userId = userId)
+        val client = ApiConfig.getApiService().finishCourse(courseId = courseId, userId = userId, token = token)
         client.enqueue(object : Callback<CourseDetailResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<CourseDetailResponse>, response: Response<CourseDetailResponse>) {

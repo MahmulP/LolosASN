@@ -18,7 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"http://localhost:8080/\"")
+        buildConfigField("String", "BASE_URL", "\"https://backend-asn-jchtbiuxra-et.a.run.app/\"")
     }
     buildFeatures {
         viewBinding = true
@@ -73,8 +73,4 @@ dependencies {
     implementation(libs.autofittextview) //autofit text view
 
     implementation(libs.androidx.lifecycle.service) // lifecycle service
-
-    implementation(libs.justifiedtextview) //justified textview
-
-    implementation("me.biubiubiu.justifytext:library:1.1")
 }

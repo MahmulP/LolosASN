@@ -47,8 +47,8 @@ class TryoutViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getAllTryout(userId: String?) {
-        val client = ApiConfig.getApiService().getAllTryouts(userId = userId)
+    fun getAllTryout(userId: String?, token: String) {
+        val client = ApiConfig.getApiService().getAllTryouts(userId = userId, token = token)
         client.enqueue(object : Callback<TryoutResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutResponse>, response: Response<TryoutResponse>) {
@@ -64,8 +64,8 @@ class TryoutViewModel: ViewModel() {
         })
     }
 
-    fun getNewestTryout() {
-        val client = ApiConfig.getApiService().getNewestTryout()
+    fun getNewestTryout(token: String) {
+        val client = ApiConfig.getApiService().getNewestTryout(token)
         client.enqueue(object : Callback<TryoutResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutResponse>, response: Response<TryoutResponse>) {
@@ -81,9 +81,9 @@ class TryoutViewModel: ViewModel() {
         })
     }
 
-    fun getPaidTryout(userId: String?) {
+    fun getPaidTryout(userId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getPaidTryout(userId)
+        val client = ApiConfig.getApiService().getPaidTryout(userId, token)
         client.enqueue(object : Callback<TryoutResponse> {
             override fun onResponse(call: Call<TryoutResponse>, response: Response<TryoutResponse>) {
                 if (response.isSuccessful) {
@@ -105,9 +105,9 @@ class TryoutViewModel: ViewModel() {
         })
     }
 
-    fun getFreeTryout(userId: String?) {
+    fun getFreeTryout(userId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getFreeTryout(userId)
+        val client = ApiConfig.getApiService().getFreeTryout(userId, token)
         client.enqueue(object : Callback<TryoutResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutResponse>, response: Response<TryoutResponse>) {
@@ -130,8 +130,8 @@ class TryoutViewModel: ViewModel() {
         })
     }
 
-    fun getResultTryout(tryoutId: String?, userId: String?) {
-        val client = ApiConfig.getApiService().getTryoutResult(tryoutId = tryoutId, userId = userId)
+    fun getResultTryout(tryoutId: String?, userId: String?, token: String) {
+        val client = ApiConfig.getApiService().getTryoutResult(tryoutId = tryoutId, userId = userId, token = token)
         client.enqueue(object : Callback<TryoutResultResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutResultResponse>, response: Response<TryoutResultResponse>) {
@@ -147,9 +147,9 @@ class TryoutViewModel: ViewModel() {
         })
     }
 
-    fun getFinishedTryout(userId: String?) {
+    fun getFinishedTryout(userId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getFinishedTryout(userId = userId)
+        val client = ApiConfig.getApiService().getFinishedTryout(userId = userId, token = token)
         client.enqueue(object : Callback<FinishedTryoutResponse> {
             override fun onResponse(call: Call<FinishedTryoutResponse>, response: Response<FinishedTryoutResponse>) {
                 if (response.isSuccessful) {
@@ -171,9 +171,9 @@ class TryoutViewModel: ViewModel() {
         })
     }
 
-    fun getBundleTryout(userId: String?) {
+    fun getBundleTryout(userId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getBundle(userId = userId)
+        val client = ApiConfig.getApiService().getBundle(userId = userId, token = token)
         client.enqueue(object : Callback<TryoutBundleResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutBundleResponse>, response: Response<TryoutBundleResponse>) {
@@ -196,8 +196,8 @@ class TryoutViewModel: ViewModel() {
         })
     }
 
-    fun getBundleTryoutDetail(userId: String?, bundleId: String?) {
-        val client = ApiConfig.getApiService().getDetailBundle(userId = userId, bundleId = bundleId)
+    fun getBundleTryoutDetail(userId: String?, bundleId: String?, token: String) {
+        val client = ApiConfig.getApiService().getDetailBundle(userId = userId, bundleId = bundleId, token = token)
         client.enqueue(object : Callback<TryoutBundleDetailResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutBundleDetailResponse>, response: Response<TryoutBundleDetailResponse>) {

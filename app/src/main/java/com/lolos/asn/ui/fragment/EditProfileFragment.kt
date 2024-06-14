@@ -35,6 +35,7 @@ class EditProfileFragment : Fragment() {
 
     private var currentImageUri: Uri? = null
     private var userId: String? = null
+    private var token: String = "token"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,8 +58,9 @@ class EditProfileFragment : Fragment() {
         }
 
         authViewModel.getAuthUser().observe(viewLifecycleOwner) {
-            if (it.userId != null) {
+            if (it.userId != null && it.token != null) {
                 userId = it.userId
+                token = "Bearer ${it.token}"
             }
         }
 
@@ -77,9 +79,7 @@ class EditProfileFragment : Fragment() {
         }
 
         authViewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it != null) {
-                showLoading(it)
-            }
+            showLoading(it)
         }
 
         authViewModel.isChanged.observe(viewLifecycleOwner) { isChanged ->
@@ -142,7 +142,8 @@ class EditProfileFragment : Fragment() {
                     password = passwordBody,
                     email = emailBody,
                     avatar = multipartBody,
-                    phone = phoneBody
+                    phone = phoneBody,
+                    token = token
                 )
             }
         } else {
@@ -152,7 +153,8 @@ class EditProfileFragment : Fragment() {
                 password = passwordBody,
                 email = emailBody,
                 avatar = null,
-                phone = phoneBody
+                phone = phoneBody,
+                token = token
             )
         }
     }

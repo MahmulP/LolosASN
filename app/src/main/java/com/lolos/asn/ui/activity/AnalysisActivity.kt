@@ -1,8 +1,6 @@
 package com.lolos.asn.ui.activity
 
-import android.os.Build
 import android.os.Bundle
-import android.text.Layout.JUSTIFICATION_MODE_INTER_WORD
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +8,7 @@ import com.lolos.asn.R
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.AnalysisViewModel
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.databinding.ActivityAnalysisBinding
 
@@ -19,21 +18,31 @@ class AnalysisActivity : AppCompatActivity() {
         val pref = UserPreferences.getInstance(application.userPreferencesDataStore)
         AuthViewModelFactory(pref)
     }
+    private val analysisViewModel by viewModels<AnalysisViewModel>()
 
     private var username: String? = null
     private var userId: String? = null
+    private var token: String = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnalysisBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val tryoutId = intent.getStringExtra("tryout_id")
+
         authViewModel.getAuthUser().observe(this) { userData ->
             userId = userData.userId
+            token = "Bearer ${userData.token}"
+            analysisViewModel.getAnalysis(tryoutId = tryoutId, userId = userId, token = token)
         }
 
         authViewModel.getUserData().observe(this) { userData ->
             username = userData.name
             binding.tvGreet.text = getString(R.string.greet, username)
+        }
+
+        analysisViewModel.analysisAi.observe(this) { analysis ->
+            binding.tvContent.text = analysis.feedback?.twk
         }
 
         val toolbar = binding.toolbar
@@ -42,9 +51,9 @@ class AnalysisActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.tvContent.justificationMode = JUSTIFICATION_MODE_INTER_WORD
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            binding.tvContent.justificationMode = JUSTIFICATION_MODE_INTER_WORD
+//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

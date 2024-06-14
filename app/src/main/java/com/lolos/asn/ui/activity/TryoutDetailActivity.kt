@@ -40,7 +40,8 @@ class TryoutDetailActivity : AppCompatActivity() {
 
         authViewModel.getAuthUser().observe(this) {
             val userId = it.userId
-            tryoutDetailViewModel.getTryoutDetail(tryoutId, userId)
+            val token = "Bearer ${it.token}"
+            tryoutDetailViewModel.getTryoutDetail(tryoutId, userId, token)
         }
 
         tryoutDetailViewModel.tryout.observe(this) { tryoutResponse ->

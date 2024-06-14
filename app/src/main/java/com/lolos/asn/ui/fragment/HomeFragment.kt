@@ -51,11 +51,13 @@ class HomeFragment : Fragment() {
 
         authViewModel.getAuthUser().observe(viewLifecycleOwner) {
 
-            if (it.userId != null) {
+            if (it.userId != null && it.token != null) {
                 val userId = it.userId
-                authViewModel.getAUthUserData(userId)
-                tryoutViewModel.getAllTryout(userId)
-                notificationViewModel.getNotification(userId)
+                val token = "Bearer ${it.token}"
+                authViewModel.getAUthUserData(userId, token)
+                tryoutViewModel.getAllTryout(userId, token)
+                notificationViewModel.getNotification(userId, token)
+                tryoutViewModel.getNewestTryout(token)
             }
         }
 
@@ -79,16 +81,16 @@ class HomeFragment : Fragment() {
                 .into(binding.ivUser)
         }
 
-        tryoutViewModel.getNewestTryout()
-
         tryoutViewModel.allTryout.observe(viewLifecycleOwner) { tryoutResponse ->
             tryoutResponse?.data?.let { dataList ->
                 val isPremiumMember = dataList.any { it?.accessed == "1" }
                 if (isPremiumMember) {
                     binding.tvMember.text = getString(R.string.premium_member)
+                    binding.tvMember.visibility = View.VISIBLE
                 } else {
                     binding.tvMember.text = getString(R.string.freemium_member)
                     binding.tvMember.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                    binding.tvMember.visibility = View.VISIBLE
                 }
             }
         }

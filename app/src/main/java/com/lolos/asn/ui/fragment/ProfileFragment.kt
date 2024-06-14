@@ -52,21 +52,17 @@ class ProfileFragment : Fragment() {
 
         authViewModel.getAuthUser().observe(viewLifecycleOwner) {
 
-            if (it.userId != null) {
+            if (it.userId != null && it.token != null) {
                 val userId = it.userId
-                authViewModel.getAUthUserData(userId)
-                tryoutViewModel.getAllTryout(userId)
+                val token = "Bearer ${it.token}"
+                authViewModel.getAUthUserData(userId, token)
+                tryoutViewModel.getAllTryout(userId, token)
             }
         }
 
         authViewModel.getUserData().observe(viewLifecycleOwner) {
             binding.tvEmail.text = it.email
             binding.tvUsername.text = it.name
-            if (it.role == "MEMBER") {
-                binding.tvType.text = getString(R.string.premium_member)
-            } else {
-                binding.tvType.text = it.role
-            }
 
             val avatar = it.avatar
 
@@ -81,9 +77,11 @@ class ProfileFragment : Fragment() {
                 val isPremiumMember = dataList.any { it?.accessed == "1" }
                 if (isPremiumMember) {
                     binding.tvType.text = getString(R.string.premium_member)
+                    binding.tvType.visibility = View.VISIBLE
                 } else {
                     binding.tvType.text = getString(R.string.freemium_member)
                     binding.tvType.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                    binding.tvType.visibility = View.VISIBLE
                 }
             }
         }

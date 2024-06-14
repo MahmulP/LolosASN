@@ -41,7 +41,8 @@ class LearningItemFragment : Fragment() {
                 binding.tvCategory.text = getString(R.string.twk)
                 authViewModel.getAuthUser().observe(viewLifecycleOwner) {
                     val userId = it.userId
-                    courseViewModel.getCourses("$userId", "1")
+                    val token = "Bearer ${it.token}"
+                    courseViewModel.getCourses("$userId", "2", token)
                 }
 
                 courseViewModel.courses.observe(viewLifecycleOwner) {
@@ -64,7 +65,8 @@ class LearningItemFragment : Fragment() {
                 binding.tvCategory.text = getString(R.string.tiu)
                 authViewModel.getAuthUser().observe(viewLifecycleOwner) {
                     val userId = it.userId
-                    courseViewModel.getCourses("$userId", "2")
+                    val token = "Bearer ${it.token}"
+                    courseViewModel.getCourses("$userId", "1", token)
                 }
 
                 courseViewModel.courses.observe(viewLifecycleOwner) {
@@ -87,7 +89,8 @@ class LearningItemFragment : Fragment() {
                 binding.tvCategory.text = getString(R.string.tkp)
                 authViewModel.getAuthUser().observe(viewLifecycleOwner) {
                     val userId = it.userId
-                    courseViewModel.getCourses("$userId", "3")
+                    val token = "Bearer ${it.token}"
+                    courseViewModel.getCourses("$userId", "3", token)
                 }
 
                 courseViewModel.courses.observe(viewLifecycleOwner) {

@@ -53,9 +53,9 @@ class NotificationViewModel: ViewModel() {
         }
     }
     
-    fun getNotification(userId: String?) {
+    fun getNotification(userId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getNotification(userId)
+        val client = ApiConfig.getApiService().getNotification(userId, token)
         client.enqueue(object : Callback<NotificationResponse> {
             override fun onResponse(
                 call: Call<NotificationResponse>,
@@ -80,8 +80,8 @@ class NotificationViewModel: ViewModel() {
         })
     }
 
-    fun updateNotification(userId: String?, notificationId: String?) {
-        val client = ApiConfig.getApiService().updateNotification(userId = userId, notificationId = notificationId)
+    fun updateNotification(userId: String?, notificationId: String?, token: String) {
+        val client = ApiConfig.getApiService().updateNotification(userId = userId, notificationId = notificationId, token = token)
         client.enqueue(object : Callback<NotificationResponse> {
             override fun onResponse(
                 call: Call<NotificationResponse>,

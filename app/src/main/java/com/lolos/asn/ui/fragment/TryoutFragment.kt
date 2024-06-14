@@ -33,6 +33,7 @@ class TryoutFragment : Fragment() {
     }
 
     private var userId: String? = null
+    private var token: String = "token"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,7 +44,8 @@ class TryoutFragment : Fragment() {
             authViewModel.getAuthUser().observe(viewLifecycleOwner) {userData ->
                 if (userData.userId != null) {
                     userId = userData.userId
-                    tryoutViewModel.getPaidTryout(userId)
+                    token = "Bearer ${userData.token}"
+                    tryoutViewModel.getPaidTryout(userId, token)
                 }
             }
 
@@ -56,7 +58,8 @@ class TryoutFragment : Fragment() {
             authViewModel.getAuthUser().observe(viewLifecycleOwner) {userData ->
                 if (userData.userId != null) {
                     userId = userData.userId
-                    tryoutViewModel.getFreeTryout(userId)
+                    token = "Bearer ${userData.token}"
+                    tryoutViewModel.getFreeTryout(userId, token)
                 }
             }
             tryoutViewModel.freeTryout.observe(viewLifecycleOwner) {

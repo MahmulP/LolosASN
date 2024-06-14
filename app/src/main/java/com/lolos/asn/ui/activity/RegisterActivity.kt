@@ -50,6 +50,14 @@ class RegisterActivity : AppCompatActivity() {
             }
             val registerRequest = RegisterRequest(name, email, password, formattedPhone)
             authViewModel.register(registerRequest)
+
+            authViewModel.isRegistered.observe(this) {
+                if (it) {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.putExtra("email", email)
+                    startActivity(intent)
+                }
+            }
         }
 
         authViewModel.errorMessage.observe(this) { message ->

@@ -40,19 +40,14 @@
         app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/content_image"
             android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:src="@drawable/long_image" />
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_content"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/divider"-->
-        <!--            tools:text="@string/lorem_long" />-->
 
     </ScrollView>
 

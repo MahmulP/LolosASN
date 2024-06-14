@@ -41,6 +41,7 @@ class DetailPurchaseActivity : AppCompatActivity() {
     private var price: Int? = null
     private var listTryout: List<String?>? = null
     private var userId: String? = null
+    private var token: String = "token"
 
     val tryoutViewModel by viewModels<TryoutViewModel>()
     private val authViewModel: AuthViewModel by viewModels {
@@ -56,9 +57,10 @@ class DetailPurchaseActivity : AppCompatActivity() {
         val bundleId = intent.getStringExtra("bundle_id")
 
         authViewModel.getAuthUser().observe(this) {
-            if (it != null) {
+            if (it?.token != null) {
                 userId = it.userId
-                tryoutViewModel.getBundleTryoutDetail(userId = userId, bundleId = bundleId)
+                token = "Bearer ${it.token}"
+                tryoutViewModel.getBundleTryoutDetail(userId = userId, bundleId = bundleId, token = token)
             }
         }
 
@@ -155,7 +157,8 @@ class DetailPurchaseActivity : AppCompatActivity() {
                 multipartBody,
                 transactionBody!!,
                 priceBody,
-                tryoutDataBody
+                tryoutDataBody,
+                token
             )
 
             call.enqueue(object : Callback<PurchaseResponse> {

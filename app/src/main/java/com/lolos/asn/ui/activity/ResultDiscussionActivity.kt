@@ -48,7 +48,6 @@ class ResultDiscussionActivity : AppCompatActivity() {
 
         val tryoutId = intent.getStringExtra("tryout_id")
 
-        examinationViewModel.startTryout(tryoutId)
         examinationViewModel.examTryout.observe(this) { questions ->
             if (questions.isNotEmpty()) {
                 val index = examinationViewModel.currentQuestionIndex.value ?: 0
@@ -70,6 +69,10 @@ class ResultDiscussionActivity : AppCompatActivity() {
 
         authViewModel.getAuthUser().observe(this) { userData ->
             currentUserData = userData
+            if (userData.token != null) {
+                val token = "Bearer ${userData.token}"
+                examinationViewModel.startTryout(tryoutId, token)
+            }
         }
 
         examinationViewModel.currentQuestionIndex.observe(this) { index ->
@@ -84,6 +87,8 @@ class ResultDiscussionActivity : AppCompatActivity() {
                 examinationViewModel.examTryout.observe(this) { questions ->
                     setupAnswerRecycleView(questions, index)
                     setupNumberRecycleView(questions)
+
+                    binding.rvNumber.scrollToPosition(index)
                 }
             }
         }
@@ -94,6 +99,8 @@ class ResultDiscussionActivity : AppCompatActivity() {
             examinationViewModel.examTryout.observe(this) { questions ->
                 setupAnswerRecycleView(questions, index)
                 setupNumberRecycleView(questions)
+
+                binding.rvNumber.scrollToPosition(index)
             }
         }
 

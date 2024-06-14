@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.lolos.asn.R
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
@@ -38,12 +40,21 @@ class LearningDetailActivity : AppCompatActivity() {
 
         authViewModel.getAuthUser().observe(this) {
             val userId = it.userId
-            courseDetailViewModel.getDetailCourse(courseId, userId)
+            val token = "Bearer ${it.token}"
+            if (userId != null) {
+                courseDetailViewModel.getDetailCourse(courseId, userId, token)
+            }
         }
 
         courseDetailViewModel.courseDetail.observe(this) {
             toolbar.title = it?.data?.courseName
-//            binding.tvContent.text = it?.data?.content?.filterNotNull()?.joinToString("\n") ?: ""
+            val itemPicture = it?.data?.courseImage
+            val imageView: ImageView = binding.ivContent
+
+            Glide.with(this)
+                .load(itemPicture)
+                .error(R.drawable.no_image)
+                .into(imageView)
 
             if (it?.data?.isCleared != "0") {
                 binding.btnDone.setOnClickListener {
@@ -55,7 +66,10 @@ class LearningDetailActivity : AppCompatActivity() {
                 binding.btnDone.setOnClickListener {
                     authViewModel.getAuthUser().observe(this) {
                         val userId = it.userId
-                        courseDetailViewModel.finishCourse(courseId = courseId, userId = userId)
+                        val token = "Bearer ${it.token}"
+                        if (userId != null) {
+                            courseDetailViewModel.finishCourse(courseId = courseId, userId = userId, token = token)
+                        }
                     }
 
                     courseDetailViewModel.finishCourse.observe(this) { isSuccess ->

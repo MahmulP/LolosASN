@@ -38,10 +38,10 @@ data class DataItem(
 	val tryoutTotal: Int? = null,
 
 	@field:SerializedName("createdAt")
-	val createdAt: String,
+	val createdAt: String? = null,
 
 	@field:SerializedName("tryout_closed")
-	val tryoutClosed: String,
+	val tryoutClosed: String? = null,
 
 	@field:SerializedName("tryout_duration")
 	val tryoutDuration: Int? = null,

@@ -8,7 +8,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.lolos.asn.R
@@ -42,7 +41,6 @@ class LeaderboardActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val tryoutId = intent.getStringExtra("tryout_id")
-        leaderboardViewModel.getLeaderboardData(tryoutId)
 
         leaderboardViewModel.leaderboardData.observe(this) { leaderboard ->
             if (leaderboard?.data != null) {
@@ -51,6 +49,12 @@ class LeaderboardActivity : AppCompatActivity() {
                 authViewModel.getAuthUser().observe(this) { userData ->
                     if (userData.userId != null) {
                         val userId = userData.userId
+
+                        if (userData.token != null) {
+                            val token = "Bearer ${userData.token}"
+                            leaderboardViewModel.getLeaderboardData(tryoutId, token)
+                        }
+
                         leaderboard.data.forEachIndexed { index, item ->
                             if (item.accountId == userId) {
                                 val accountAvatar = item.account?.avatar

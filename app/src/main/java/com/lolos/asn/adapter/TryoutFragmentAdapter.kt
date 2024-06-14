@@ -17,6 +17,7 @@ import com.lolos.asn.ui.activity.ResultActivity
 import com.lolos.asn.ui.activity.TryoutDetailActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem, TryoutFragmentAdapter.MyViewHolder>(
@@ -38,34 +39,43 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
             val createdAt = tryout.createdAt
             val tryoutClosed = tryout.tryoutClosed
 
-            // Input and output date formats
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
             val outputFormatWithYear = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
             val outputFormatWithoutYear = SimpleDateFormat("dd MMMM", Locale("id", "ID"))
 
-            // Parse the date strings
-            val createdAtDate = inputFormat.parse(createdAt)
-            val tryoutClosedDate = inputFormat.parse(tryoutClosed)
+            var createdAtDate: Date? = null
+            var tryoutClosedDate: Date? = null
 
-            // Format the dates
+            if (createdAt != null) {
+                createdAtDate = try {
+                    inputFormat.parse(createdAt)
+                } catch (e: ParseException) {
+                    null
+                }
+            }
+
+            if (tryoutClosed != null) {
+                tryoutClosedDate = try {
+                    inputFormat.parse(tryoutClosed)
+                } catch (e: ParseException) {
+                    null
+                }
+            }
+
             val createdAtYear = createdAtDate?.let {
-                SimpleDateFormat("yyyy", Locale.getDefault()).format(
-                    it
-                )
+                SimpleDateFormat("yyyy", Locale.getDefault()).format(it)
             }
             val tryoutClosedYear = tryoutClosedDate?.let {
-                SimpleDateFormat("yyyy", Locale.getDefault()).format(
-                    it
-                )
+                SimpleDateFormat("yyyy", Locale.getDefault()).format(it)
             }
 
             val formattedCreatedAt = if (createdAtYear == tryoutClosedYear) {
-                createdAtDate?.let { outputFormatWithoutYear.format(it) }
+                createdAtDate?.let { outputFormatWithoutYear.format(it) } ?: "invalid date"
             } else {
-                createdAtDate?.let { outputFormatWithYear.format(it) }
+                createdAtDate?.let { outputFormatWithYear.format(it) } ?: "invalid date"
             }
 
-            val formattedTryoutClosed = tryoutClosedDate?.let { outputFormatWithYear.format(it) }
+            val formattedTryoutClosed = tryoutClosedDate?.let { outputFormatWithYear.format(it) } ?: "invalid date"
 
             val dateRange = "$formattedCreatedAt - $formattedTryoutClosed"
             val isCleared = tryout.isCleared

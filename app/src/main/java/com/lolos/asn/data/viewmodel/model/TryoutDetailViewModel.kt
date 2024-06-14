@@ -15,8 +15,8 @@ class TryoutDetailViewModel: ViewModel() {
     private val _tryout = MutableLiveData<TryoutDetailResponse>()
     val tryout: LiveData<TryoutDetailResponse> = _tryout
 
-    fun getTryoutDetail(tryoutId: String?, userId: String?) {
-        val client = ApiConfig.getApiService().getDetailTryout(tryoutId, userId)
+    fun getTryoutDetail(tryoutId: String?, userId: String?, token: String) {
+        val client = ApiConfig.getApiService().getDetailTryout(tryoutId, userId, token)
         client.enqueue(object : Callback<TryoutDetailResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutDetailResponse>, response: Response<TryoutDetailResponse>) {

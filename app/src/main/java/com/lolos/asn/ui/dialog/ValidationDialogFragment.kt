@@ -81,7 +81,8 @@ class ValidationDialogFragment : DialogFragment() {
 
         if (request != null && tryoutData != null && userData != null) {
             val tryoutId = tryoutData.data.tryoutId
-            examinationViewModel.finishTryout(userId = userData.userId, tryoutId = tryoutId, tryoutRequest = request)
+            val token = "Bearer ${userData.token}"
+            examinationViewModel.finishTryout(userId = userData.userId, tryoutId = tryoutId, tryoutRequest = request, token)
 
             examinationViewModel.isFinish.observe(viewLifecycleOwner) { result ->
                 if (result) {

@@ -42,8 +42,9 @@ class HistoryActivity : AppCompatActivity() {
         }
 
         authViewModel.getAuthUser().observe(this) { userData ->
-            if (userData != null) {
-                transactionViewModel.getTransactionHistory(userData.userId)
+            if (userData?.token != null) {
+                val token = "Bearer ${userData.token}"
+                transactionViewModel.getTransactionHistory(userData.userId, token)
             }
         }
 

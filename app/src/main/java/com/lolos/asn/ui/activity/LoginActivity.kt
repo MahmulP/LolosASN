@@ -38,6 +38,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val email = intent.getStringExtra("email")
+        binding.edLoginEmail.setText(email)
+
         binding.tvAskToLogin.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }

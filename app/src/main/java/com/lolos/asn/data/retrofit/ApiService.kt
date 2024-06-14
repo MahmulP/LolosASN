@@ -1,5 +1,6 @@
 package com.lolos.asn.data.retrofit
 
+import com.lolos.asn.data.response.AnalysisResponse
 import com.lolos.asn.data.response.CourseDetailResponse
 import com.lolos.asn.data.response.CourseResponse
 import com.lolos.asn.data.response.ExaminationResponse
@@ -26,6 +27,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -33,7 +35,6 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
-
     @POST("login")
     fun login(
         @Body request: LoginRequest
@@ -46,7 +47,8 @@ interface ApiService {
 
     @GET("accounts/{account_id}")
     fun getAuthUserData(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<UserResponse>
 
     @Multipart
@@ -57,88 +59,105 @@ interface ApiService {
         @Part("name") name: RequestBody?,
         @Part("email") email: RequestBody?,
         @Part("password") password: RequestBody?,
-        @Part("phone") phone: RequestBody?
+        @Part("phone") phone: RequestBody?,
+        @Header("Authorization") token: String
     ): Call<UpdateUserResponse>
 
     @GET("courses/account/{account_id}/category/{category_id}")
     fun getCourses(
         @Path("account_id") userId: String?,
-        @Path("category_id") categoryId: String
+        @Path("category_id") categoryId: String,
+        @Header("Authorization") token: String
     ): Call<CourseResponse>
 
     @GET("courses/{course_id}/account/{account_id}")
     fun getDetailCourse(
         @Path("course_id") courseId: String?,
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<CourseDetailResponse>
 
     @POST("clearedCourse/{account_id}/{course_id}")
     fun finishCourse(
         @Path("course_id") courseId: String?,
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<CourseDetailResponse>
 
     @GET("tryouts/account/{account_id}")
     fun getAllTryouts(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<TryoutResponse>
 
     @GET("tryouts/{tryout_id}/account/{account_id}")
     fun getDetailTryout(
         @Path("tryout_id") tryoutId: String?,
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<TryoutDetailResponse>
 
     @GET("tryouts/newest")
-    fun getNewestTryout(): Call<TryoutResponse>
+    fun getNewestTryout(
+        @Header("Authorization") token: String
+    ): Call<TryoutResponse>
 
     @GET("freeTryouts/account/{account_id}")
     fun getFreeTryout(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<TryoutResponse>
 
     @GET("payTryouts/account/{account_id}")
     fun getPaidTryout(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<TryoutResponse>
 
     @GET("tryouts/{tryout_id}/start")
     fun startTryout(
-        @Path("tryout_id") tryoutId: String?
+        @Path("tryout_id") tryoutId: String?,
+        @Header("Authorization") token: String
     ): Call<ExaminationResponse>
 
     @GET("tryouts/stats/{tryout_id}/{account_id}")
     fun getTryoutResult(
         @Path("tryout_id") tryoutId: String?,
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<TryoutResultResponse>
 
     @GET("tryouts/finished/{account_id}")
     fun getFinishedTryout(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<FinishedTryoutResponse>
 
     @GET("tryoutBundles/account/{account_id}")
     fun getBundle(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<TryoutBundleResponse>
 
     @GET("tryoutbundles/account/{account_id}/detail/{bundle_id}")
     fun getDetailBundle(
         @Path("account_id") userId: String?,
-        @Path("bundle_id") bundleId: String?
+        @Path("bundle_id") bundleId: String?,
+        @Header("Authorization") token: String
     ): Call<TryoutBundleDetailResponse>
 
     @POST("tryouts/cleared/{tryout_id}/{account_id}")
     fun clearTryout(
         @Path("tryout_id") tryoutId: String?,
         @Path("account_id") userId: String?,
-        @Body request: TryoutRequest
+        @Body request: TryoutRequest,
+        @Header("Authorization") token: String
     ): Call<FinishTryoutResponse>
 
     @GET("leaderboard/{tryout_id}")
     fun getTryoutLeaderboard(
-        @Path("tryout_id") tryoutId: String?
+        @Path("tryout_id") tryoutId: String?,
+        @Header("Authorization") token: String
     ): Call<LeaderboardResponse>
 
     @Multipart
@@ -149,21 +168,32 @@ interface ApiService {
         @Part("transaction_title") transactionTitle: RequestBody,
         @Part("transaction_price") transactionPrice: RequestBody,
         @Part("listTryout") listTryout: RequestBody,
+        @Header("Authorization") token: String
     ): Call<PurchaseResponse>
 
     @GET("transaction/history/{account_id}")
     fun getTransactionHistory(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<TransactionHistoryResponse>
 
     @GET("notifikasi/{account_id}")
     fun getNotification(
-        @Path("account_id") userId: String?
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
     ): Call<NotificationResponse>
 
     @PUT("updateNotif/{account_id}/{notifikasi_id}")
     fun updateNotification(
         @Path("account_id") userId: String?,
-        @Path("notifikasi_id") notificationId: String?
+        @Path("notifikasi_id") notificationId: String?,
+        @Header("Authorization") token: String
     ): Call<NotificationResponse>
+
+    @GET("skd_analysis/{tryout_id}/{account_id}")
+    fun getAnalysis(
+        @Path("tryout_id") tryoutId: String?,
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
+    ): Call<AnalysisResponse>
 }

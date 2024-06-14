@@ -20,9 +20,9 @@ class TransactionViewModel: ViewModel() {
     private val _isEmpty = MutableLiveData<Boolean>()
     val isEmpty: LiveData<Boolean> = _isEmpty
 
-    fun getTransactionHistory(userId: String?) {
+    fun getTransactionHistory(userId: String?, token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getTransactionHistory(userId = userId)
+        val client = ApiConfig.getApiService().getTransactionHistory(userId = userId, token = token)
         client.enqueue(object : Callback<TransactionHistoryResponse> {
             override fun onResponse(
                 call: Call<TransactionHistoryResponse>,
@@ -31,10 +31,10 @@ class TransactionViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     val responseBody = response.body()
-                    if (responseBody != null) {
-                        _transactionHistory.value = responseBody
-                    } else {
+                    if (responseBody?.data?.isEmpty() == true) {
                         _isEmpty.value = true
+                    } else {
+                        _transactionHistory.value = responseBody
                     }
                 }
             }

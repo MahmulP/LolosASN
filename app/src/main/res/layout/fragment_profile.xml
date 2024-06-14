@@ -74,6 +74,7 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/roboto_bold"
                 android:background="@drawable/orange_border"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/iv_avatar"
                 app:layout_constraintBottom_toTopOf="@id/tv_username"
                 app:layout_constraintStart_toStartOf="@id/iv_avatar"

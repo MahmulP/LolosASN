@@ -32,9 +32,10 @@ class TryoutDialogFragment : BottomSheetDialogFragment() {
         binding = FragmentTryoutDialogBinding.inflate(inflater, container, false)
 
         authViewModel.getAuthUser().observe(viewLifecycleOwner) { userData ->
-            if (userData.userId != null) {
-                tryoutViewModel.getPaidTryout(userData.userId)
-                tryoutViewModel.getFreeTryout(userData.userId)
+            if (userData.userId != null && userData.token != null) {
+                val token = "Bearer ${userData.token}"
+                tryoutViewModel.getPaidTryout(userData.userId, token)
+                tryoutViewModel.getFreeTryout(userData.userId, token)
             }
         }
 
