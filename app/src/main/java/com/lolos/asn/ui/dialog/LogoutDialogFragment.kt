@@ -1,12 +1,10 @@
 package com.lolos.asn.ui.dialog
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.lolos.asn.data.preference.UserPreferences
@@ -14,9 +12,6 @@ import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.databinding.FragmentLogoutDialogBinding
-import com.lolos.asn.databinding.FragmentStartDialogBinding
-import com.lolos.asn.ui.activity.ExaminationActivity
-import com.lolos.asn.ui.activity.LoginActivity
 
 class LogoutDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentLogoutDialogBinding

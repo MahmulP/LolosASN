@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,6 +67,17 @@ class ResultHistoryActivity : AppCompatActivity() {
             showEmpty(isEmpty)
             Log.d("CheckEmpty", "onCreate: $isEmpty")
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (transactionFrom == "TryoutFragment") {
+                    onBackPressedDispatcher.onBackPressed()
+                } else {
+                    startActivity(Intent(this@ResultHistoryActivity, MainActivity::class.java))
+                    finish()
+                }
+            }
+        })
     }
 
     private fun showEmpty(isEmpty: Boolean) {

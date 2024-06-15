@@ -26,7 +26,6 @@ import com.lolos.asn.databinding.FragmentHomeBinding
 import com.lolos.asn.ui.activity.ArticleActivity
 import com.lolos.asn.ui.activity.NotificationActivity
 import com.lolos.asn.ui.activity.PurchaseActivity
-import com.lolos.asn.ui.activity.ResultHistoryActivity
 import com.lolos.asn.ui.dialog.TryoutDialogFragment
 import com.lolos.asn.utils.MarginItemDecoration
 import java.util.Calendar
@@ -65,7 +64,7 @@ class HomeFragment : Fragment() {
             val fullName = it.name ?: ""
             val nameParts = fullName.split(" ")
             val displayName = if (nameParts.size >= 2) {
-                "${nameParts[0]} ${nameParts[1]}"
+                nameParts[0]
             } else {
                 fullName
             }
@@ -121,8 +120,8 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_home_to_learning)
         }
 
-        binding.ibResult.setOnClickListener {
-            startActivity(Intent(requireActivity(), ResultHistoryActivity::class.java))
+        binding.ibDrilling.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_drilling)
         }
 
         binding.ibArtikel.setOnClickListener {
@@ -148,8 +147,6 @@ class HomeFragment : Fragment() {
 
         val greetingMessage = getGreetingMessage()
         binding.tvDateGreet.text = greetingMessage
-
-
     }
 
     private fun setupRecyclerView(tryoutResponse: TryoutResponse) {
@@ -158,9 +155,22 @@ class HomeFragment : Fragment() {
         // Set up the adapter
         val adapter = TryoutAdapter(requireContext())
         val density = requireContext().resources.displayMetrics.density
-        val firstItemStartMargin = (32 * density).toInt()
-        val restItemStartMargin = (16 * density).toInt()
-        val lastItemEndMargin = (32 * density).toInt()
+        val smallestScreenWidthDp = resources.configuration.smallestScreenWidthDp
+
+        val firstItemStartMargin: Int
+        val lastItemEndMargin: Int
+        val restItemStartMargin = (16 * density).toInt() // This remains constant
+
+        if (smallestScreenWidthDp >= 420) {
+            firstItemStartMargin = (32 * density).toInt()
+            lastItemEndMargin = (32 * density).toInt()
+        } else if (smallestScreenWidthDp >= 320) {
+            firstItemStartMargin = (16 * density).toInt()
+            lastItemEndMargin = (16 * density).toInt()
+        } else {
+            firstItemStartMargin = (32 * density).toInt()
+            lastItemEndMargin = (32 * density).toInt()
+        }
 
         val itemDecoration = MarginItemDecoration(firstItemStartMargin, restItemStartMargin, lastItemEndMargin)
 

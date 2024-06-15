@@ -50,7 +50,22 @@ class ExaminationNumberAdapter(
         }
 
         fun bind(examination: TryoutContentItem, position: Int) {
-            binding.tvNumber.text = (position + 1).toString()
+            val twkPosition = position + 1
+            val tiuPosition = position + 1
+            val tkpPosition = position + 1
+
+            if (examination.category == 1) {
+                binding.tvNumber.text = tiuPosition.toString()
+            }
+
+            if (examination.category == 2) {
+                binding.tvNumber.text = twkPosition.toString()
+            }
+
+            if (examination.category == 3) {
+                binding.tvNumber.text = tkpPosition.toString()
+            }
+
             val isFilled = viewModel.isAnswerFilled(position)
             updateBackgroundTint(isFilled)
         }

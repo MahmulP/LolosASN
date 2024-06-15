@@ -71,7 +71,7 @@
             android:contentDescription="@string/divider"
             android:src="@drawable/underline"
             card_view:layout_constraintTop_toBottomOf="@id/iv_ic_calendar"
-            card_view:tint="@color/black" />
+            card_view:tint="@color/grey" />
 
         <TextView
             android:id="@+id/tv_detail"

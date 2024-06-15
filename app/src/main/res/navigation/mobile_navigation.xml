@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_home_to_learning"
             app:destination="@id/menu_materi" />
+        <action
+            android:id="@+id/action_home_to_drilling"
+            app:destination="@id/drillingFragment" />
     </fragment>
     <fragment
         android:id="@+id/menu_tryout"
@@ -54,6 +57,24 @@
         android:id="@+id/editProfileFragment"
         android:name="com.lolos.asn.ui.fragment.EditProfileFragment"
         android:label="EditProfileFragment" />
+
+    <fragment
+        android:id="@+id/drillingFragment"
+        android:name="com.lolos.asn.ui.fragment.DrillingFragment"
+        android:label="DrillingFragment">
+        <action
+            android:id="@+id/action_drilling_to_detail"
+            app:destination="@id/drillingDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/drillingDetailFragment"
+        android:name="com.lolos.asn.ui.fragment.DrillingDetailFragment"
+        android:label="DrillingDetailFragment">
+        <argument
+            android:name="latsol_id"
+            app:argType="string" />
+    </fragment>
 
     <action
         android:id="@+id/action_global_to_tryout"

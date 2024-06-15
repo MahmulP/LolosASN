@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.dialog.ValidationDrillingStartFragment">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/gambar_kertas"
+        android:src="@drawable/ic_validation_test"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/drilling_soal"
+        android:textColor="@color/primaryColor"
+        android:textSize="25sp"
+        android:gravity="center"
+        app:minTextSize="12sp"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_gravity="center"
+        android:textAllCaps="true"/>
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="@string/start_the_drill_warning" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_list"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_note"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_soal"/>
+
+        <TextView
+            android:id="@+id/tv_total_soal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            tools:text="@string/total_soal"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/iv_list"
+            app:layout_constraintTop_toTopOf="@id/iv_list"
+            app:layout_constraintBottom_toBottomOf="@id/iv_list" />
+
+        <ImageView
+            android:id="@+id/iv_time"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_clock"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_total_soal"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_time"/>
+
+        <TextView
+            android:id="@+id/tv_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/total_time"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/iv_time"
+            app:layout_constraintTop_toTopOf="@id/iv_time"
+            app:layout_constraintBottom_toBottomOf="@id/iv_time" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nope"
+        android:textStyle="bold"
+        style="@style/CustomOutlinedButton"/>
+
+</LinearLayout>

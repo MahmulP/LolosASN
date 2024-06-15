@@ -36,6 +36,12 @@ class CourseAdapter(private val context: Context) : ListAdapter<Course, CourseAd
                 holder.binding.ivLineTop.imageTintList = ColorStateList.valueOf(primaryColor)
             }
         }
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, LearningDetailActivity::class.java)
+            intent.putExtra("course_id", course.courseId)
+            context.startActivity(intent)
+        }
     }
 
     class MyViewHolder(val binding: ListCourseBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -67,13 +73,6 @@ class CourseAdapter(private val context: Context) : ListAdapter<Course, CourseAd
                 binding.ivDot.imageTintList = ColorStateList.valueOf(primaryColor)
                 binding.ivLineBottom.imageTintList = ColorStateList.valueOf(primaryColor)
             }
-
-            binding.tvBook.setOnClickListener {
-                val intent = Intent(context, LearningDetailActivity::class.java)
-                intent.putExtra("course_id", course.courseId)
-                context.startActivity(intent)
-            }
-
         }
     }
 

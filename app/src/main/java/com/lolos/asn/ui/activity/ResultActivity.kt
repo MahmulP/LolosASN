@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -124,6 +125,14 @@ class ResultActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@ResultActivity, ResultHistoryActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
     private fun showChartSubtest(tryoutResult: TryoutResultResponse) {

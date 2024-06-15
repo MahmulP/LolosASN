@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -29,12 +30,16 @@ class PurchaseAdapter(private val context: Context) : ListAdapter<TryoutBundleIt
         holder.bind(bundle, context)
 
         holder.itemView.setOnClickListener {
-            val bundleId = bundle.tryoutBundleId
+            if (bundle.boolBought != true) {
+                val bundleId = bundle.tryoutBundleId
 
-            val dialog = ValidationPurchaseDialogFragment.newInstance(bundleId)
-            val activity = context as? AppCompatActivity
-            activity?.supportFragmentManager?.let { fragmentManager ->
-                dialog.show(fragmentManager, "ValidationPurchaseDialog")
+                val dialog = ValidationPurchaseDialogFragment.newInstance(bundleId)
+                val activity = context as? AppCompatActivity
+                activity?.supportFragmentManager?.let { fragmentManager ->
+                    dialog.show(fragmentManager, "ValidationPurchaseDialog")
+                }
+            } else {
+                Toast.makeText(context, context.getString(R.string.owned), Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -52,9 +57,16 @@ class PurchaseAdapter(private val context: Context) : ListAdapter<TryoutBundleIt
             val priceString = context.getString(R.string.price, formattedPrice)
             val basePriceString = context.getString(R.string.price, formattedBasePrice)
 
-            binding.tvTotalPackage.text = bundle.listTryoutId?.size.toString()
+            if (bundle.boolBought == true) {
+                binding.tvTotalPackage.text = bundle.userBought?.size.toString()
+                binding.tvNormalPrice.visibility = View.GONE
+                binding.tvPrice.text = context.getString(R.string.owned_bundle)
+            } else {
+                binding.tvTotalPackage.text = bundle.listTryoutId?.size.toString()
+                binding.tvPrice.text = basePriceString
+            }
+
             binding.tvTitle.text = bundle.tryoutBundleName
-            binding.tvPrice.text = basePriceString
 
             if (basePrice == price) {
                 binding.tvNormalPrice.visibility = View.GONE

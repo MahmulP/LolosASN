@@ -3,6 +3,10 @@ package com.lolos.asn.data.retrofit
 import com.lolos.asn.data.response.AnalysisResponse
 import com.lolos.asn.data.response.CourseDetailResponse
 import com.lolos.asn.data.response.CourseResponse
+import com.lolos.asn.data.response.DrillingDetailResponse
+import com.lolos.asn.data.response.DrillingHistoryResponse
+import com.lolos.asn.data.response.DrillingResponse
+import com.lolos.asn.data.response.DrillingStartResponse
 import com.lolos.asn.data.response.ExaminationResponse
 import com.lolos.asn.data.response.FinishTryoutResponse
 import com.lolos.asn.data.response.FinishedTryoutResponse
@@ -196,4 +200,28 @@ interface ApiService {
         @Path("account_id") userId: String?,
         @Header("Authorization") token: String
     ): Call<AnalysisResponse>
+
+    @GET("latsol")
+    fun getAllDrilling(
+        @Header("Authorization") token: String
+    ): Call<DrillingResponse>
+
+    @GET("latsol/{latsol_id}")
+    fun getDetailDrilling(
+        @Path("latsol_id") latsolId: String?,
+        @Header("Authorization") token: String
+    ): Call<DrillingDetailResponse>
+
+    @GET("latsol/{latsol_id}/account/{account_id}")
+    fun getHistoryDrilling(
+        @Path("latsol_id") latsolId: String?,
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
+    ): Call<DrillingHistoryResponse>
+
+    @GET("latsol/{latsol_id}/start")
+    fun startDrilling(
+        @Path("latsol_id") latsolId: String?,
+        @Header("Authorization") token: String
+    ): Call<DrillingStartResponse>
 }

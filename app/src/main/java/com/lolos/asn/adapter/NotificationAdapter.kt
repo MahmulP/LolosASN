@@ -101,7 +101,7 @@ class NotificationAdapter(private val context: Context, private val notification
                     cvNotification.setOnClickListener {
                         authViewModel.getAuthUser().observe(lifecycleOwner) {
                             if (it.token != null) {
-                                val token = it.token
+                                val token = "Bearer ${it.token}"
                                 notificationViewModel.updateNotification(userId = notification.accountId, notificationId = notification.notifikasiId, token = token)
                                 notificationViewModel.getNotification(userId = notification.accountId, token = token)
                             }

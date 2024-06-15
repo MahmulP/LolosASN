@@ -27,6 +27,9 @@ class NotificationViewModel: ViewModel() {
     private val _isEmpty = MutableLiveData<Boolean>()
     val isEmpty: LiveData<Boolean> = _isEmpty
 
+    private val _isLoaded = MutableLiveData<Boolean>()
+    val isLoaded: LiveData<Boolean> = _isLoaded
+
     private val webSocketClient: WebSocketClient
 
     init {
@@ -63,6 +66,7 @@ class NotificationViewModel: ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     _isLoading.value = false
+                    _isLoaded.value = true
                     val responseBody = response.body()
                     if (responseBody?.data != null && responseBody.data.isNotEmpty()) {
                         _notificationData.value = responseBody

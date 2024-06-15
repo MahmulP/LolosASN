@@ -124,6 +124,8 @@ class ExaminationActivity : AppCompatActivity() {
             } else {
                 finishQuiz()
             }
+
+            binding.scrollviewLayout.scrollTo(0, 0)
         }
 
         binding.btnPrevious.setOnClickListener {
@@ -135,10 +137,16 @@ class ExaminationActivity : AppCompatActivity() {
 
                 binding.rvNumber.scrollToPosition(index)
             }
+
+            binding.scrollviewLayout.scrollTo(0, 0)
         }
 
 
         binding.btnCheckAll.setOnClickListener {
+            binding.rvNumber.scrollToPosition(0)
+            binding.scrollviewLayout.scrollTo(0, 0)
+            updateQuestion(0)
+
             val dialog = NumberDialogFragment()
             dialog.show(supportFragmentManager, "NumberDialogFragment")
             examinationViewModel.examTryout.observe(this) { questions ->
