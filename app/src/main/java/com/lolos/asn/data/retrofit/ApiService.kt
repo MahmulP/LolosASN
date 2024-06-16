@@ -4,7 +4,9 @@ import com.lolos.asn.data.response.AnalysisResponse
 import com.lolos.asn.data.response.CourseDetailResponse
 import com.lolos.asn.data.response.CourseResponse
 import com.lolos.asn.data.response.DrillingDetailResponse
+import com.lolos.asn.data.response.DrillingFinishResponse
 import com.lolos.asn.data.response.DrillingHistoryResponse
+import com.lolos.asn.data.response.DrillingRequest
 import com.lolos.asn.data.response.DrillingResponse
 import com.lolos.asn.data.response.DrillingStartResponse
 import com.lolos.asn.data.response.ExaminationResponse
@@ -224,4 +226,12 @@ interface ApiService {
         @Path("latsol_id") latsolId: String?,
         @Header("Authorization") token: String
     ): Call<DrillingStartResponse>
+
+    @POST("latsol/{latsol_id}/account/{account_id}")
+    fun finishDrilling(
+        @Path("latsol_id") latsolId: String?,
+        @Path("account_id") userId: String?,
+        @Body request: DrillingRequest,
+        @Header("Authorization") token: String
+    ): Call<DrillingFinishResponse>
 }

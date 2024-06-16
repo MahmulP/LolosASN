@@ -256,4 +256,17 @@
     <string name="test_history">Riwayat Pengerjaan</string>
     <string name="drilling_soal">Drilling Soal</string>
     <string name="start_the_drill_warning">Sebelum memulai pastikan jaringan dan tempat sudah kondusif. Selamat mengerjakan.</string>
+    <string name="level_soal">Tingkat Kesulitan Soal</string>
+    <string name="info_desc">Soal yang ditampilkan disesuaikan dengan performa kamu dalam menjawab drilling soal</string>
+    <string name="oke">Oke</string>
+    <string name="easy">Mudah</string>
+    <string name="medium">Sedang</string>
+    <string name="score_medium">+7</string>
+    <string name="score_easy">+3</string>
+    <string name="hard">Sulit</string>
+    <string name="score_hard">+10</string>
+    <string name="finish_the_drill_warning">Kamu akan menyelesaikan Drilling \nSoal ini</string>
+    <string name="drilling_analysis">Analisis Drilling Soal</string>
+    <string name="drilling_desc_analysis">Berikut adalah detail hasil pengerjaan drilling soal yang anda kerjakan</string>
+    <string name="detail_hasil">Detail Hasil</string>
 </resources>

@@ -163,7 +163,7 @@ class ExaminationActivity : AppCompatActivity() {
         adapter.submitList(tryoutContentItems)
     }
 
-    fun setupAnswerRecycleView(tryoutContentItems: List<TryoutContentItem>, currentQuestionIndex: Int) {
+    private fun setupAnswerRecycleView(tryoutContentItems: List<TryoutContentItem>, currentQuestionIndex: Int) {
         val selectedAnswer = examinationViewModel.getSelectedAnswer(currentQuestionIndex)
         val adapter = ExaminationAnswerAdapter(this, examinationViewModel)
 

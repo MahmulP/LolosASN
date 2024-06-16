@@ -23,7 +23,7 @@ data class CategoryStartItem(
 data class DataStartItem(
 
 	@field:SerializedName("lat_content")
-	val latContent: List<List<LatContentItemItem?>?>? = null,
+	val latContent: List<List<LatContentItemItem>>,
 
 	@field:SerializedName("lat_file")
 	val latFile: String? = null,

@@ -17,8 +17,8 @@ import com.lolos.asn.ui.activity.ResultActivity
 import com.lolos.asn.ui.activity.TryoutDetailActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem, TryoutFragmentAdapter.MyViewHolder>(
     DIFF_CALLBACK
@@ -36,48 +36,26 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
     class MyViewHolder(val binding: ListTryoutBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(tryout: DataItem, context: Context) {
+            val createdAtFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+            val tryoutClosedFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+            val createdAtOutputFormat = SimpleDateFormat("dd MMMM", Locale("id", "ID"))
+            val tryoutClosedOutputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+
+            createdAtOutputFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+            tryoutClosedOutputFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+
             val createdAt = tryout.createdAt
             val tryoutClosed = tryout.tryoutClosed
 
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-            val outputFormatWithYear = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-            val outputFormatWithoutYear = SimpleDateFormat("dd MMMM", Locale("id", "ID"))
+            val createdAtDate = createdAt?.let { createdAtFormat.parse(it) }
+            val tryoutClosedDate = tryoutClosed?.let { tryoutClosedFormat.parse(it) }
 
-            var createdAtDate: Date? = null
-            var tryoutClosedDate: Date? = null
-
-            if (createdAt != null) {
-                createdAtDate = try {
-                    inputFormat.parse(createdAt)
-                } catch (e: ParseException) {
-                    null
-                }
-            }
-
-            if (tryoutClosed != null) {
-                tryoutClosedDate = try {
-                    inputFormat.parse(tryoutClosed)
-                } catch (e: ParseException) {
-                    null
-                }
-            }
-
-            val createdAtYear = createdAtDate?.let {
-                SimpleDateFormat("yyyy", Locale.getDefault()).format(it)
-            }
-            val tryoutClosedYear = tryoutClosedDate?.let {
-                SimpleDateFormat("yyyy", Locale.getDefault()).format(it)
-            }
-
-            val formattedCreatedAt = if (createdAtYear == tryoutClosedYear) {
-                createdAtDate?.let { outputFormatWithoutYear.format(it) } ?: "invalid date"
-            } else {
-                createdAtDate?.let { outputFormatWithYear.format(it) } ?: "invalid date"
-            }
-
-            val formattedTryoutClosed = tryoutClosedDate?.let { outputFormatWithYear.format(it) } ?: "invalid date"
+            val formattedCreatedAt = createdAtDate?.let { createdAtOutputFormat.format(it) } ?: "invalid date"
+            val formattedTryoutClosed = tryoutClosedDate?.let { tryoutClosedOutputFormat.format(it) } ?: "invalid date"
 
             val dateRange = "$formattedCreatedAt - $formattedTryoutClosed"
+
             val isCleared = tryout.isCleared
             val isAccessed = tryout.accessed
 

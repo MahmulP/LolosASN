@@ -19,6 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BASE_URL", "\"https://backend-asn-jchtbiuxra-et.a.run.app/\"")
+        buildConfigField("String", "AI_URL", "\"https://sdk-analysis-jchtbiuxra-et.a.run.app\"")
     }
     buildFeatures {
         viewBinding = true
