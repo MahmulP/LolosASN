@@ -10,7 +10,6 @@ import com.lolos.asn.data.response.DrillingFinishResponse
 import com.lolos.asn.data.response.DrillingRequest
 import com.lolos.asn.data.response.DrillingStartResponse
 import com.lolos.asn.data.response.LatContentItemItem
-import com.lolos.asn.data.response.ListCategoryScoreItem
 import com.lolos.asn.data.retrofit.ApiConfig
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -55,8 +54,6 @@ class DrillingStartViewModel: ViewModel() {
 
     private var countdownJob: Job? = null
 
-    private val _subCategoryScores = MutableLiveData<List<ListCategoryScoreItem>>()
-
     private val _drillingRequest = MutableLiveData<DrillingRequest>()
     val drillingRequest: LiveData<DrillingRequest> = _drillingRequest
 
@@ -71,7 +68,21 @@ class DrillingStartViewModel: ViewModel() {
         _currentQuestionIndex.value = 0
         _questionHandicapIndex.value = 0
         _selectedAnswers.value = mutableMapOf()
-        _subCategoryScores.value = mutableListOf()
+        initializeDrillingRequest()
+    }
+
+    private fun initializeDrillingRequest() {
+        val initialDrillingRequest = DrillingRequest(
+            totalMudah = 0,
+            totalSedang = 0,
+            totalSusah = 0,
+            totalKosong = 10,
+            totalSalah = 0,
+            totalBenar = 0,
+            totalPengerjaan = 0
+        )
+
+        _drillingRequest.value = initialDrillingRequest
     }
 
     fun startDrilling(latsolId: String?, token: String) {

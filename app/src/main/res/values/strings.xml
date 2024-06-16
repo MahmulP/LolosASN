@@ -269,4 +269,10 @@
     <string name="drilling_analysis">Analisis Drilling Soal</string>
     <string name="drilling_desc_analysis">Berikut adalah detail hasil pengerjaan drilling soal yang anda kerjakan</string>
     <string name="detail_hasil">Detail Hasil</string>
+    <string name="total_point_text">Total Poin</string>
+    <string name="right">Benar</string>
+    <string name="empty">Kosong</string>
+    <string name="waktu_pengerjaan">Waktu Pengerjaan</string>
+    <string name="minute">Menit</string>
+    <string name="second">Detik</string>
 </resources>

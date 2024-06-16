@@ -1,5 +1,6 @@
 package com.lolos.asn.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -129,4 +130,11 @@ private fun parseDate(dateStr: String): Date? {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     inputFormat.timeZone = TimeZone.getTimeZone("UTC")
     return inputFormat.parse(dateStr)
+}
+
+@SuppressLint("DefaultLocale")
+fun formatSecondsToMinutesSeconds(seconds: Int): String {
+    val minutes = seconds / 60
+    val remainingSeconds = seconds % 60
+    return String.format("%02d:%02d", minutes, remainingSeconds)
 }

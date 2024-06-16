@@ -81,7 +81,6 @@ class ExaminationViewModel: ViewModel() {
                     responseBody?.data?.tryoutContent?.let { content ->
                         _examTryout.value = content
                     }
-
                 }
             }
 

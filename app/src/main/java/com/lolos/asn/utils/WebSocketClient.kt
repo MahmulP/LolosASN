@@ -13,7 +13,7 @@ class WebSocketClient(private val messageCallback: (String) -> Unit) : WebSocket
     fun start() {
         val client = OkHttpClient()
 
-        val request = Request.Builder().url("ws://10.0.2.2:8081").build()
+        val request = Request.Builder().url("ws://backend-asn-jchtbiuxra-et.a.run.app").build()
         client.newWebSocket(request, this)
         client.dispatcher.executorService.shutdown()
         Log.d("WebSocketClient", "WebSocket connection started")

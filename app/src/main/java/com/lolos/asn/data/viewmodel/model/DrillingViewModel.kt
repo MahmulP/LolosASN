@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.lolos.asn.data.response.DrillingDetailResponse
 import com.lolos.asn.data.response.DrillingHistoryResponse
 import com.lolos.asn.data.response.DrillingResponse
+import com.lolos.asn.data.response.DrillingScoreDetailResponse
 import com.lolos.asn.data.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,6 +22,9 @@ class DrillingViewModel: ViewModel() {
 
     private val _drillingHistory = MutableLiveData<DrillingHistoryResponse?>()
     val drillingHistory: LiveData<DrillingHistoryResponse?> = _drillingHistory
+
+    private val _drillingHistoryDetail = MutableLiveData<DrillingScoreDetailResponse?>()
+    val drillingHistoryDetai: LiveData<DrillingScoreDetailResponse?> = _drillingHistoryDetail
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -102,6 +106,33 @@ class DrillingViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<DrillingHistoryResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}")
+                _isLoading.value = false
+                _isEmpty.value = true
+            }
+        })
+    }
+
+    fun getHistoryDetailDrilling(historyLatId: String?, userId: String, token: String) {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getDetailScore(historyLatId = historyLatId, userId = userId, token = token)
+        client.enqueue(object : Callback<DrillingScoreDetailResponse> {
+            override fun onResponse(
+                call: Call<DrillingScoreDetailResponse>,
+                response: Response<DrillingScoreDetailResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _isLoading.value = false
+                    val responseBody = response.body()
+                    if (responseBody?.data != null) {
+                        _drillingHistoryDetail.value = responseBody
+                    } else {
+                        _isEmpty.value = true
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<DrillingScoreDetailResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message}")
                 _isLoading.value = false
                 _isEmpty.value = true

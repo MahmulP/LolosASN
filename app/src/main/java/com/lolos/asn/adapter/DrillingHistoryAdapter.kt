@@ -29,6 +29,7 @@ class DrillingHistoryAdapter(private val context: Context) : ListAdapter<History
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DrillingResultActivity::class.java)
+            intent.putExtra("latHistory_id", item.historyLatId)
             context.startActivity(intent)
         }
     }

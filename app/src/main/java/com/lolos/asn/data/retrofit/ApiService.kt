@@ -8,6 +8,7 @@ import com.lolos.asn.data.response.DrillingFinishResponse
 import com.lolos.asn.data.response.DrillingHistoryResponse
 import com.lolos.asn.data.response.DrillingRequest
 import com.lolos.asn.data.response.DrillingResponse
+import com.lolos.asn.data.response.DrillingScoreDetailResponse
 import com.lolos.asn.data.response.DrillingStartResponse
 import com.lolos.asn.data.response.ExaminationResponse
 import com.lolos.asn.data.response.FinishTryoutResponse
@@ -234,4 +235,11 @@ interface ApiService {
         @Body request: DrillingRequest,
         @Header("Authorization") token: String
     ): Call<DrillingFinishResponse>
+
+    @GET("historyLat/{historyLat_id}/account/{account_id}")
+    fun getDetailScore(
+        @Path("historyLat_id") historyLatId: String?,
+        @Path("account_id") userId: String?,
+        @Header("Authorization") token: String
+    ): Call<DrillingScoreDetailResponse>
 }

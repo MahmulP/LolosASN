@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
@@ -22,6 +23,7 @@ import com.lolos.asn.data.response.LatContentItemItem
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.DrillingStartViewModel
+import com.lolos.asn.data.viewmodel.model.DrillingViewModel
 import com.lolos.asn.databinding.ActivityDrillingExamBinding
 import com.lolos.asn.ui.dialog.InfoDialogFragment
 import com.lolos.asn.ui.dialog.ValidationDrillingFinishFragment
@@ -30,6 +32,7 @@ class DrillingExamActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrillingExamBinding
 
     private val drillingStartViewModel by viewModels<DrillingStartViewModel>()
+    private val drillingViewModel by viewModels<DrillingViewModel>()
     private val authViewModel: AuthViewModel by viewModels {
         val pref = UserPreferences.getInstance(this.userPreferencesDataStore)
         AuthViewModelFactory(pref)
@@ -64,7 +67,9 @@ class DrillingExamActivity : AppCompatActivity() {
         }
 
         drillingStartViewModel.drillingRequest.observe(this) { request ->
-            currentRequest = request
+            if (request != null) {
+                currentRequest = request
+            }
         }
 
         drillingStartViewModel.drillingData.observe(this) { drillingData ->
@@ -73,10 +78,20 @@ class DrillingExamActivity : AppCompatActivity() {
 
         drillingStartViewModel.isFinish.observe(this) { result ->
             if (result) {
-                val intent = Intent(this, DrillingResultActivity::class.java).apply {
-                    putExtra("latsol_id", latsolId)
+                var historyLatId: String?
+                drillingViewModel.getHistoryDrilling(latsolId = latsolId, userId = currentUserData?.userId, token = "Bearer ${currentUserData?.token}")
+
+                drillingViewModel.drillingHistory.observe(this) { response ->
+                    val lastHistoryLatId = response?.data?.filterNotNull()?.lastOrNull()?.historyLatId
+                    historyLatId = lastHistoryLatId
+
+                    val intent = Intent(this, DrillingResultActivity::class.java).apply {
+                        putExtra("latHistory_id", historyLatId)
+                        putExtra("navigate_from", "exam")
+                    }
+
+                    startActivity(intent)
                 }
-                startActivity(intent)
             }
         }
 
@@ -96,15 +111,6 @@ class DrillingExamActivity : AppCompatActivity() {
             if (remainingTime == "00:00:01") {
                 if (request != null && latsolId != null && userData != null) {
                     drillingStartViewModel.finishDrilling(userId = userData.userId, latsolId = latsolId, drillingRequest = request, token = token)
-
-                    drillingStartViewModel.isFinish.observe(this) { result ->
-                        if (result) {
-                            val intent = Intent(this, ResultActivity::class.java).apply {
-                                putExtra("latsol_id", latsolId)
-                            }
-                            startActivity(intent)
-                        }
-                    }
                 }
             } else {
                 binding.tvTime.text = remainingTime
@@ -157,6 +163,13 @@ class DrillingExamActivity : AppCompatActivity() {
 
             binding.scrollviewLayout.scrollTo(0, 0)
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val dialog = ValidationDrillingFinishFragment.newInstance(latsolId)
+                dialog.show(supportFragmentManager, "ValidationDialogFragment")
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")
@@ -220,11 +233,11 @@ class DrillingExamActivity : AppCompatActivity() {
         val question = drillingStartViewModel.examDrilling.value?.getOrNull(index)?.getOrNull(handicapIndex)
         if (question != null) {
             if (question.handicap == 1) {
-                binding.tvScore.text = "+3"
+                binding.tvScore.text = getString(R.string.score_easy)
             } else if (question.handicap == 2) {
-                binding.tvScore.text = "+7"
+                binding.tvScore.text = getString(R.string.score_medium)
             } else {
-                binding.tvScore.text = "+10"
+                binding.tvScore.text = getString(R.string.score_hard)
             }
         }
     }
