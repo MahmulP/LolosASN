@@ -76,7 +76,7 @@
     <string name="tab_tkp">TKP</string>
     <string name="twk">Tes Wawasan Kebangsaan</string>
     <string name="cover">sampul foto</string>
-    <string name="ebook">Ebook</string>
+    <string name="ebook">Ebook CPNS</string>
     <string name="list_material">1. Nasionalisme</string>
     <string name="dot">Titik</string>
     <string name="button_materi">button materi</string>
@@ -281,4 +281,11 @@
     <string name="success">Sukses</string>
     <string name="wrong">Salah</string>
     <string name="fail">Gagal</string>
+    <string name="important_information">Informasi Penting</string>
+    <string name="info_desc_tryout">Tryout sudah menggunakan sistem penilaian seleksi kompetensi dasar (SKD) Oleh Badan Kepegawaian Negara (BKN)</string>
+    <string name="wrong_point">+0 Poin</string>
+    <string name="right_point">+5 Poin</string>
+    <string name="reminder_logo">Logo Reminder</string>
+    <string name="group_discussion">Grup Diskusi</string>
+    <string name="two_packet">2 Paket Tryout</string>
 </resources>

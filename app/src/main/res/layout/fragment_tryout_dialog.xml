@@ -59,9 +59,10 @@
             <ImageView
                 android:id="@+id/iv_packet"
                 android:layout_width="20dp"
-                android:layout_height="24dp"
+                android:layout_height="20dp"
+                android:adjustViewBounds="true"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/ic_notes_outline"
+                android:src="@drawable/ic_packet"
                 app:layout_constraintStart_toStartOf="@id/tv_premium"
                 app:layout_constraintTop_toBottomOf="@id/tv_premium"
                 app:tint="@color/orange" />
@@ -71,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/three_packet"
+                android:text="@string/two_packet"
                 android:textSize="12sp"
                 android:textColor="@color/orange"
                 app:layout_constraintStart_toEndOf="@id/iv_packet"
@@ -80,12 +81,14 @@
 
             <ImageView
                 android:id="@+id/iv_materi"
-                android:layout_width="20dp"
-                android:layout_height="24dp"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/ic_notes_outline"
+                android:src="@drawable/ic_paper"
+                android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="@id/iv_packet"
                 app:layout_constraintTop_toBottomOf="@id/iv_packet"
+                app:layout_constraintEnd_toEndOf="@id/iv_packet"
                 app:tint="@color/orange" />
 
             <TextView
@@ -93,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="3 Paket Tryout"
+                android:text="@string/learning_material"
                 android:textSize="12sp"
                 android:textColor="@color/orange"
                 app:layout_constraintStart_toEndOf="@id/iv_materi"
@@ -103,10 +106,11 @@
             <ImageView
                 android:id="@+id/iv_grup"
                 android:layout_width="20dp"
-                android:layout_height="24dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="32dp"
-                android:src="@drawable/ic_notes_outline"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_group"
                 app:layout_constraintStart_toEndOf="@id/tv_packet"
                 app:layout_constraintTop_toBottomOf="@id/tv_premium"
                 app:tint="@color/orange" />
@@ -116,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="3 Paket Tryout"
+                android:text="@string/group_discussion"
                 android:textSize="12sp"
                 android:textColor="@color/orange"
                 app:layout_constraintStart_toEndOf="@id/iv_grup"
@@ -126,11 +130,10 @@
             <ImageView
                 android:id="@+id/iv_ebook"
                 android:layout_width="20dp"
-                android:layout_height="24dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginStart="32dp"
-                android:src="@drawable/ic_notes_outline"
-                app:layout_constraintStart_toEndOf="@id/tv_materi"
+                android:src="@drawable/ic_book"
+                app:layout_constraintStart_toStartOf="@id/iv_grup"
                 app:layout_constraintTop_toBottomOf="@id/iv_grup"
                 app:tint="@color/orange" />
 
@@ -139,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="3 Paket Tryout"
+                android:text="@string/ebook"
                 android:textSize="12sp"
                 android:textColor="@color/orange"
                 app:layout_constraintStart_toEndOf="@id/iv_ebook"
@@ -182,9 +185,10 @@
             <ImageView
                 android:id="@+id/iv_free_packet"
                 android:layout_width="20dp"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/ic_notes_outline"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_packet"
                 app:layout_constraintStart_toStartOf="@id/tv_free"
                 app:layout_constraintTop_toBottomOf="@id/tv_free"
                 app:tint="@color/green" />

@@ -13,6 +13,7 @@ import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutDetailViewModel
 import com.lolos.asn.databinding.ActivityTryoutDetailBinding
 import com.lolos.asn.ui.dialog.StartDialogFragment
+import com.lolos.asn.ui.dialog.TryoutInfoDialogFragment
 
 class TryoutDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTryoutDetailBinding
@@ -91,6 +92,11 @@ class TryoutDetailActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        binding.cvInfo.setOnClickListener {
+            val dialog = TryoutInfoDialogFragment()
+            dialog.show(supportFragmentManager, "TryoutDialogFragment")
         }
     }
 
