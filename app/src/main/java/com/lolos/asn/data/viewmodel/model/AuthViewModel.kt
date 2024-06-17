@@ -131,14 +131,15 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
                         val role = responseBody.data.role
                         val email = responseBody.data.email
                         val phone = responseBody.data.phone
-                        val avatar = responseBody.data.avatar ?: ""
+                        val avatar = responseBody.data.avatar
 
                         saveUserData(
                             username = name,
                             role = role,
                             email = email,
                             phone = phone,
-                            avatar = avatar)
+                            avatar = avatar
+                        )
                     }
                 }
             }
@@ -164,7 +165,7 @@ class AuthViewModel(private val pref: UserPreferences): ViewModel() {
         }
     }
 
-    fun saveUserData(username: String, email: String, role: String, avatar: String, phone: String) {
+    fun saveUserData(username: String, email: String, role: String, avatar: String?, phone: String) {
         viewModelScope.launch {
             pref.saveUserData(username, email, role, avatar, phone)
         }

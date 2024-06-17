@@ -48,7 +48,7 @@ class LearningDetailActivity : AppCompatActivity() {
 
         courseDetailViewModel.courseDetail.observe(this) {
             toolbar.title = it?.data?.courseName
-            val itemPicture = it?.data?.courseImage
+            val itemPicture = it?.data?.courseFile
             val imageView: ImageView = binding.ivContent
 
             Glide.with(this)

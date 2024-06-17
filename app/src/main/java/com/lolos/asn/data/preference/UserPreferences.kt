@@ -56,12 +56,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
-    suspend fun saveUserData(username: String, email: String, role: String, avatar: String, phone: String) {
+    suspend fun saveUserData(username: String, email: String, role: String, avatar: String?, phone: String) {
         dataStore.edit { preferences ->
             preferences[Username] = username
             preferences[Email] = email
             preferences[Role] = role
-            preferences[Avatar] = avatar
+            preferences[Avatar] = avatar ?: "avatar"
             preferences[Phone] = phone
         }
     }

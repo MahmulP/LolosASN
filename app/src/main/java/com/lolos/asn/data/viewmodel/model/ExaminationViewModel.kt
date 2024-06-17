@@ -78,9 +78,35 @@ class ExaminationViewModel: ViewModel() {
                     _tryoutData.value = responseBody?.let {
                         it
                     }
+
                     responseBody?.data?.tryoutContent?.let { content ->
                         _examTryout.value = content
+
+                        val uniqueSubCategoryIds = content.map { it.subCategoryId.toInt() }.toSet()
+
+                        val subCategoryScores = uniqueSubCategoryIds.map { subCategoryId ->
+                            ListCategoryScoreItem(
+                                subCategoryScore = 0,
+                                subCategoryId = subCategoryId
+                            )
+                        }
+
+                        val tryoutRequestData = TryoutRequest(
+                            twkWrong = 0,
+                            twkScore = 0,
+                            tiuScore = 0,
+                            tkpScore = 0,
+                            listCategoryScore = subCategoryScores,
+                            tiuWrong = 0,
+                            tryoutScore = 0
+                        )
+
+
+                        _tryoutRequest.value = tryoutRequestData
+                        _subCategoryScores.value = subCategoryScores
                     }
+
+                    Log.d("TESTNGAB", "onResponse: ${_tryoutRequest.value}")
                 }
             }
 

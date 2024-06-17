@@ -40,14 +40,14 @@
         app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/content_image"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
-            android:src="@drawable/long_image" />
+            tools:src="@drawable/long_image" />
 
     </ScrollView>
 

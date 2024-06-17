@@ -102,10 +102,6 @@ class NotificationViewModel: ViewModel() {
         })
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
-
     companion object {
         private const val TAG = "NotificationViewModel"
     }

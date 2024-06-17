@@ -145,11 +145,11 @@ class ResultActivity : AppCompatActivity() {
 
         // Create BarEntry objects using the extracted scores
         val entries = listOf(
-            BarEntry(0f, 0f),                  // Dummy entry for padding
-            BarEntry(1f, twkScore.toFloat()),  // TWK
-            BarEntry(2f, tiuScore.toFloat()),  // TIU
-            BarEntry(3f, tkpScore.toFloat()),  // TKP
-            BarEntry(4f, 0f)                   // Dummy entry for padding
+            BarEntry(0f, 0f),
+            BarEntry(1f, twkScore.toFloat()),
+            BarEntry(2f, tiuScore.toFloat()),
+            BarEntry(3f, tkpScore.toFloat()),
+            BarEntry(4f, 0f)
         )
 
         // Set colors based on conditions
@@ -264,7 +264,7 @@ class ResultActivity : AppCompatActivity() {
         val finishedTryouts = finishedTryoutResponse.data
 
         // Sort finishedTryouts by createdAt and take the last 5 entries
-        val limitedTryouts = finishedTryouts.sortedByDescending { it.createdAt }.takeLast(5)
+        val limitedTryouts = finishedTryouts.sortedBy { it.createdAt }.takeLast(5)
 
         val entries = mutableListOf<BarEntry>()
         val colors = mutableListOf<Int>()
