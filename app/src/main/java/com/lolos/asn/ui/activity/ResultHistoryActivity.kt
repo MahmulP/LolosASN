@@ -38,6 +38,8 @@ class ResultHistoryActivity : AppCompatActivity() {
 
         transactionFrom = intent.getStringExtra("transactionFrom")
 
+        Log.d("LAPETGADUNG", "onCreate: $transactionFrom")
+
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
 
@@ -71,6 +73,7 @@ class ResultHistoryActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (transactionFrom == "TryoutFragment") {
+                    remove()
                     onBackPressedDispatcher.onBackPressed()
                 } else {
                     val intent = Intent(this@ResultHistoryActivity, MainActivity::class.java).apply {
@@ -81,6 +84,7 @@ class ResultHistoryActivity : AppCompatActivity() {
                 }
             }
         })
+
     }
 
     private fun showEmpty(isEmpty: Boolean) {

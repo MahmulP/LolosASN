@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lolos.asn.R
@@ -20,12 +21,13 @@ import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.FragmentTryoutBinding
 import com.lolos.asn.ui.activity.ResultHistoryActivity
+import com.lolos.asn.ui.dialog.RedeemTokenDialog
 
 class TryoutFragment : Fragment() {
     private var _binding: FragmentTryoutBinding? = null
     private val binding get() = _binding!!
 
-    private val tryoutViewModel by viewModels<TryoutViewModel>()
+    private val tryoutViewModel: TryoutViewModel by activityViewModels()
 
     private val authViewModel: AuthViewModel by viewModels {
         val pref = UserPreferences.getInstance(requireContext().userPreferencesDataStore)
@@ -38,6 +40,35 @@ class TryoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        tryoutViewModel.isEmpty.observe(viewLifecycleOwner) {
+            showEmpty(it)
+        }
+
+        val toolbar = binding.toolbar
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+
+        binding.cvTryoutHistory.setOnClickListener {
+            val intent = Intent(requireActivity(), ResultHistoryActivity::class.java)
+            intent.putExtra("transactionFrom", "TryoutFragment")
+            startActivity(intent)
+        }
+
+        binding.btnRedeem.setOnClickListener {
+            val typeTryout = arguments?.getString("typeTryout") ?: ""
+            val dialog = RedeemTokenDialog.newInstance(typeTryout)
+            dialog.show(parentFragmentManager, "RedeemTokenDialog")
+        }
+
+        handleTryout()
+    }
+
+    private fun handleTryout() {
         val typeTryout = arguments?.getString("typeTryout")
 
         if (typeTryout == "Premium") {
@@ -69,30 +100,10 @@ class TryoutFragment : Fragment() {
             binding.tvType.text = typeTryout
             binding.tvType.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
             binding.toolbar.title = "Tryout Gratis"
-            binding.tvTryoutDescription.text = getString(R.string.freemium)
         }
 
         tryoutViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
-        }
-
-        tryoutViewModel.isEmpty.observe(viewLifecycleOwner) {
-            showEmpty(it)
-        }
-
-        val toolbar = binding.toolbar
-        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        toolbar.setNavigationOnClickListener {
-            activity?.onBackPressedDispatcher?.onBackPressed()
-        }
-
-        binding.cvTryoutHistory.setOnClickListener {
-            val intent = Intent(requireActivity(), ResultHistoryActivity::class.java)
-            intent.putExtra("transactionFrom", "TryoutFragment")
-            startActivity(intent)
         }
     }
 

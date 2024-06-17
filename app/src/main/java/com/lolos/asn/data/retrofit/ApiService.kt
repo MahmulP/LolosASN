@@ -20,6 +20,8 @@ import com.lolos.asn.data.response.NotificationResponse
 import com.lolos.asn.data.response.PurchaseResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
+import com.lolos.asn.data.response.TokenRequest
+import com.lolos.asn.data.response.TokenResponse
 import com.lolos.asn.data.response.TransactionHistoryResponse
 import com.lolos.asn.data.response.TryoutBundleDetailResponse
 import com.lolos.asn.data.response.TryoutBundleResponse
@@ -242,4 +244,11 @@ interface ApiService {
         @Path("account_id") userId: String?,
         @Header("Authorization") token: String
     ): Call<DrillingScoreDetailResponse>
+
+    @POST("redeem/{account_id}")
+    fun redeemToken(
+        @Path("account_id") userId: String?,
+        @Body request: TokenRequest,
+        @Header("Authorization") token: String
+    ): Call<TokenResponse>
 }

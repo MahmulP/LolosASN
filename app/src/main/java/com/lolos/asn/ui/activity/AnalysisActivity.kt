@@ -2,9 +2,16 @@ package com.lolos.asn.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lolos.asn.R
+import com.lolos.asn.adapter.AnalysisSectionsPageAdapter
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
@@ -14,15 +21,13 @@ import com.lolos.asn.databinding.ActivityAnalysisBinding
 
 class AnalysisActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnalysisBinding
+
     private val authViewModel: AuthViewModel by viewModels {
         val pref = UserPreferences.getInstance(application.userPreferencesDataStore)
         AuthViewModelFactory(pref)
     }
     private val analysisViewModel by viewModels<AnalysisViewModel>()
 
-    private var username: String? = null
-    private var userId: String? = null
-    private var token: String = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnalysisBinding.inflate(layoutInflater)
@@ -31,19 +36,26 @@ class AnalysisActivity : AppCompatActivity() {
         val tryoutId = intent.getStringExtra("tryout_id")
 
         authViewModel.getAuthUser().observe(this) { userData ->
-            userId = userData.userId
-            token = "Bearer ${userData.token}"
+            val userId = userData.userId
+            val token = "Bearer ${userData.token}"
             analysisViewModel.getAnalysis(tryoutId = tryoutId, userId = userId, token = token)
         }
 
-        authViewModel.getUserData().observe(this) { userData ->
-            username = userData.name
-            binding.tvGreet.text = getString(R.string.greet, username)
+        analysisViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
-        analysisViewModel.analysisAi.observe(this) { analysis ->
-            binding.tvContent.text = analysis.feedback?.twk
-        }
+        val analysisSectionsPagerAdapter = AnalysisSectionsPageAdapter(this)
+        val viewPager: ViewPager2 = binding.viewPager
+        viewPager.adapter = analysisSectionsPagerAdapter
+
+        val tabs: TabLayout = binding.tabs
+
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.setCustomView(R.layout.custom_tab)
+            val tabTextView = tab.customView?.findViewById<TextView>(R.id.tabTextView)
+            tabTextView?.text = resources.getString(TAB_TITLES[position])
+        }.attach()
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
@@ -51,9 +63,14 @@ class AnalysisActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            binding.tvContent.justificationMode = JUSTIFICATION_MODE_INTER_WORD
-//        }
+        binding.btnNext.setOnClickListener {
+            val currentItem = viewPager.currentItem
+            viewPager.setCurrentItem(currentItem + 1, true)
+        }
+    }
+
+    private fun showLoading(loading: Boolean) {
+        binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -64,5 +81,16 @@ class AnalysisActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    companion object {
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.tab_all,
+            R.string.tab_twk,
+            R.string.tab_tiu,
+            R.string.tab_tkp
+        )
     }
 }

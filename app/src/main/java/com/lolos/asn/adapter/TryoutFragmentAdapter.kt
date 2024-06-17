@@ -15,7 +15,6 @@ import com.lolos.asn.databinding.ListTryoutBinding
 import com.lolos.asn.ui.activity.PurchaseActivity
 import com.lolos.asn.ui.activity.ResultActivity
 import com.lolos.asn.ui.activity.TryoutDetailActivity
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -63,62 +62,44 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
             binding.tvTitleTryout.text = tryout.tryoutTitle
             binding.tvDateCpns.text = dateRange
 
-            if (isCleared == "1" && isAccessed == "1" || tryout.tryoutType == "FREE" && isCleared == "1") {
-                binding.btnDetail.setOnClickListener {
-                    val intent = Intent(context, ResultActivity::class.java)
-                    intent.putExtra("tryout_id", tryout.tryoutId)
-                    intent.putExtra("tryout_period", dateRange)
-                    context.startActivity(intent)
-                }
-            } else if (isAccessed == "1" || tryout.tryoutType == "FREE") {
-                binding.btnDetail.text = "Mulai"
-                binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
-                binding.btnDetail.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.primaryColor
+            if (isAccessed != null && isCleared != null) {
+                if (isCleared >= "1" && isAccessed >= "1" || tryout.tryoutType == "FREE" && isCleared >= "1") {
+                    binding.btnDetail.setOnClickListener {
+                        val intent = Intent(context, ResultActivity::class.java)
+                        intent.putExtra("tryout_id", tryout.tryoutId)
+                        intent.putExtra("tryout_period", dateRange)
+                        context.startActivity(intent)
+                    }
+                } else if (isAccessed >= "1" || tryout.tryoutType == "FREE") {
+                    binding.btnDetail.text = "Mulai"
+                    binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    binding.btnDetail.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.primaryColor
+                        )
                     )
-                )
-                binding.btnDetail.setOnClickListener {
-                    val intent = Intent(context, TryoutDetailActivity::class.java)
-                    intent.putExtra("tryout_id", tryout.tryoutId)
-                    intent.putExtra("tryout_period", dateRange)
-                    context.startActivity(intent)
-                }
-            } else {
-                binding.btnDetail.text = context.getString(R.string.buy_now)
-                binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
-                binding.btnDetail.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.primaryColor
+                    binding.btnDetail.setOnClickListener {
+                        val intent = Intent(context, TryoutDetailActivity::class.java)
+                        intent.putExtra("tryout_id", tryout.tryoutId)
+                        intent.putExtra("tryout_period", dateRange)
+                        context.startActivity(intent)
+                    }
+                } else {
+                    binding.btnDetail.text = context.getString(R.string.buy_now)
+                    binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    binding.btnDetail.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.primaryColor
+                        )
                     )
-                )
-                binding.btnDetail.setOnClickListener {
-                    val intent = Intent(context, PurchaseActivity::class.java)
-                    context.startActivity(intent)
+                    binding.btnDetail.setOnClickListener {
+                        val intent = Intent(context, PurchaseActivity::class.java)
+                        context.startActivity(intent)
+                    }
                 }
             }
-        }
-
-        private fun formatDate(date: String?, time: String?): String {
-            // Combine date and time parts
-            val formattedDateStr = "$date $time"
-
-            // Define the format pattern without milliseconds and time zone offset
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-
-            try {
-                // Parse the formatted date string
-                val createdAtDate = inputFormat.parse(formattedDateStr)
-                // Format the parsed date
-                val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-                return outputFormat.format(createdAtDate)
-            } catch (e: ParseException) {
-                // Handle the parsing exception
-                e.printStackTrace()
-            }
-            return ""
         }
     }
 

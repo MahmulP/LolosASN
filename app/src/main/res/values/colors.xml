@@ -24,4 +24,6 @@
     <color name="purple">#D9C5FF</color>
     <color name="grey_300">#E9EAEA</color>
     <color name="black_200">#5F5F5F</color>
+    <color name="green_300">#CDF0B4</color>
+    <color name="green_normal">#58CC02</color>
 </resources>

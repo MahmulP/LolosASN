@@ -22,18 +22,26 @@ class AnalysisViewModel: ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     fun getAnalysis(tryoutId: String?, userId: String?, token: String) {
+        _isLoading.value = true
         val client = AnalysisApiConfig.getApiService().getAnalysis(tryoutId = tryoutId, userId = userId, token = token)
         client.enqueue(object : Callback<AnalysisResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<AnalysisResponse>, response: Response<AnalysisResponse>) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    _analysisAi.value = responseBody
+                    if (responseBody?.feedback != null) {
+                        _analysisAi.value = responseBody
+                    } else {
+                        _isEmpty.value = true
+                    }
                 }
             }
 
             override fun onFailure(call: Call<AnalysisResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
+                _isLoading.value = false
+                _isEmpty.value = true
             }
         })
     }

@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
 
         tryoutViewModel.allTryout.observe(viewLifecycleOwner) { tryoutResponse ->
             tryoutResponse?.data?.let { dataList ->
-                val isPremiumMember = dataList.any { it?.accessed == "1" }
+                val isPremiumMember = dataList.any { (it?.accessed?.toIntOrNull() ?: 0) >= 1 }
                 if (isPremiumMember) {
                     binding.tvMember.text = getString(R.string.premium_member)
                     binding.tvMember.visibility = View.VISIBLE

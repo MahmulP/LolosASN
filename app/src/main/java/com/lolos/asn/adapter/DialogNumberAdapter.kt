@@ -64,7 +64,7 @@ class DialogNumberAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(examination: TryoutContentItem, position: Int) {
             currentExamination = examination
-            binding.btnNumber.text = (position + 1).toString()
+            binding.btnNumber.text = examination.tryoutNum
             val isFilled = viewModel.isAnswerFilled(examination.tryoutNum.toInt() - 1)
             updateBackgroundTint(isFilled)
         }

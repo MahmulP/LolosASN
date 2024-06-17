@@ -275,4 +275,10 @@
     <string name="waktu_pengerjaan">Waktu Pengerjaan</string>
     <string name="minute">Menit</string>
     <string name="second">Detik</string>
+    <string name="redeem_code">Redeem Code</string>
+    <string name="enter_code">Masukkan Kode</string>
+    <string name="redeem_note">* Copy dan Paste Code Paket Tryout yang Anda Terima</string>
+    <string name="success">Sukses</string>
+    <string name="wrong">Salah</string>
+    <string name="fail">Gagal</string>
 </resources>

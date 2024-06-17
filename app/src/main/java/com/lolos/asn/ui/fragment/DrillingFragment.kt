@@ -58,6 +58,22 @@ class DrillingFragment : Fragment() {
                 setupRecycleView(drilling)
             }
         }
+
+        drillingViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        drillingViewModel.isEmpty.observe(viewLifecycleOwner) { isEmpty ->
+            showEmpty(isEmpty)
+        }
+    }
+
+    private fun showEmpty(isEmpty: Boolean) {
+        binding.cvShowEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.cvProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun setupRecycleView(drillingResponse: DrillingResponse) {
