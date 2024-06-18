@@ -47,6 +47,12 @@ class TryoutViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isEmptyResult = MutableLiveData<Boolean>()
+    val isEmptyResult: LiveData<Boolean> = _isEmptyResult
+
+    private val _isLoadingResult = MutableLiveData<Boolean>()
+    val isLoadingResult: LiveData<Boolean> = _isLoadingResult
+
     fun getAllTryout(userId: String?, token: String) {
         val client = ApiConfig.getApiService().getAllTryouts(userId = userId, token = token)
         client.enqueue(object : Callback<TryoutResponse> {
@@ -131,10 +137,12 @@ class TryoutViewModel: ViewModel() {
     }
 
     fun getResultTryout(tryoutId: String?, userId: String?, token: String) {
+        _isLoadingResult.value = true
         val client = ApiConfig.getApiService().getTryoutResult(tryoutId = tryoutId, userId = userId, token = token)
         client.enqueue(object : Callback<TryoutResultResponse> {
             @SuppressLint("NullSafeMutableLiveData")
             override fun onResponse(call: Call<TryoutResultResponse>, response: Response<TryoutResultResponse>) {
+                _isLoadingResult.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     _resultTryout.value = responseBody
@@ -143,6 +151,8 @@ class TryoutViewModel: ViewModel() {
 
             override fun onFailure(call: Call<TryoutResultResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
+                _isLoadingResult.value = false
+                _isEmptyResult.value = true
             }
         })
     }
@@ -152,8 +162,8 @@ class TryoutViewModel: ViewModel() {
         val client = ApiConfig.getApiService().getFinishedTryout(userId = userId, token = token)
         client.enqueue(object : Callback<FinishedTryoutResponse> {
             override fun onResponse(call: Call<FinishedTryoutResponse>, response: Response<FinishedTryoutResponse>) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
-                    _isLoading.value = false
                     val responseBody = response.body()
                     if (responseBody?.data != null && responseBody.data.isNotEmpty()) {
                         _finishedTryout.value = responseBody

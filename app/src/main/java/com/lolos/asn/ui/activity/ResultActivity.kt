@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +47,15 @@ class ResultActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val tryoutId = intent.getStringExtra("tryout_id")
+
+        tryoutViewModel.isLoadingResult.observe(this) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        tryoutViewModel.isEmptyResult.observe(this) { isEmpty ->
+            showEmpty(isEmpty)
+        }
+
         authViewModel.getAuthUser().observe(this) { userData ->
             if (userData.userId != null && userData.token != null) {
                 val userId = userData.userId
@@ -134,6 +144,17 @@ class ResultActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun showLoading(loading: Boolean) {
+        binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+        binding.optionalLayout.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
+    private fun showEmpty(isEmpty: Boolean) {
+        binding.ivEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.optionalLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    }
+
 
     private fun showChartSubtest(tryoutResult: TryoutResultResponse) {
         val chart: BarChart = binding.chartSubtest

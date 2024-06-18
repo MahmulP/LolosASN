@@ -13,12 +13,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.lolos.asn.R
+import com.lolos.asn.adapter.ArticlePopularAdapter
 import com.lolos.asn.adapter.TryoutAdapter
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
+import com.lolos.asn.data.response.PopularArticleResponse
 import com.lolos.asn.data.response.TryoutResponse
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.factory.TryoutViewModelFactory
+import com.lolos.asn.data.viewmodel.model.ArticleViewModel
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.NotificationViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
@@ -43,6 +46,7 @@ class HomeFragment : Fragment() {
         TryoutViewModelFactory(requireContext())
     }
     private val notificationViewModel by viewModels<NotificationViewModel>()
+    private val articleViewModel by viewModels<ArticleViewModel>()
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,6 +61,7 @@ class HomeFragment : Fragment() {
                 tryoutViewModel.getAllTryout(userId, token)
                 notificationViewModel.getNotification(userId, token)
                 tryoutViewModel.getNewestTryout(token)
+                articleViewModel.getPopularArticle(token)
             }
         }
 
@@ -106,9 +111,12 @@ class HomeFragment : Fragment() {
         }
 
 
-
         tryoutViewModel.tryout.observe(viewLifecycleOwner) {
             setupRecyclerView(it)
+        }
+
+        articleViewModel.popularArticle.observe(viewLifecycleOwner) {
+            setupArticleRecycleView(it)
         }
 
         binding.ibTryout.setOnClickListener {
@@ -148,6 +156,47 @@ class HomeFragment : Fragment() {
         val greetingMessage = getGreetingMessage()
         binding.tvDateGreet.text = greetingMessage
     }
+
+    private fun setupArticleRecycleView(popularArticleResponseItems: List<PopularArticleResponse>?) {
+        binding.rvArticle.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        // Set up the adapter
+        val adapter = ArticlePopularAdapter(requireContext())
+        val density = requireContext().resources.displayMetrics.density
+        val smallestScreenWidthDp = resources.configuration.smallestScreenWidthDp
+
+        val firstItemStartMargin: Int
+        val lastItemEndMargin: Int
+        val restItemStartMargin = (16 * density).toInt() // This remains constant
+
+        if (smallestScreenWidthDp >= 420) {
+            firstItemStartMargin = (32 * density).toInt()
+            lastItemEndMargin = (32 * density).toInt()
+        } else if (smallestScreenWidthDp >= 320) {
+            firstItemStartMargin = (16 * density).toInt()
+            lastItemEndMargin = (16 * density).toInt()
+        } else {
+            firstItemStartMargin = (32 * density).toInt()
+            lastItemEndMargin = (32 * density).toInt()
+        }
+
+        val itemDecoration = MarginItemDecoration(firstItemStartMargin, restItemStartMargin, lastItemEndMargin)
+
+        // Remove all item decorations to avoid duplicates
+        val itemDecorationCount = binding.rvArticle.itemDecorationCount
+        for (i in 0 until itemDecorationCount) {
+            binding.rvArticle.removeItemDecorationAt(0)
+        }
+
+        binding.rvArticle.addItemDecoration(itemDecoration)
+        binding.rvArticle.adapter = adapter
+
+        // Submit the list to the adapter
+        popularArticleResponseItems?.let {
+            adapter.submitList(it)
+        }
+    }
+
 
     private fun setupRecyclerView(tryoutResponse: TryoutResponse) {
         binding.rvTryout.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

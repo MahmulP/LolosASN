@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView android:id="@+id/cv_newest_article"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="0dp"
+    app:cardBackgroundColor="@color/white"
+    app:layout_constraintTop_toBottomOf="@id/tv_newest_article"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/iv_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_picture"
+            android:src="@drawable/baby_photo"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/article_title"
+            android:textSize="17sp"
+            android:fontFamily="@font/roboto_bold"
+            app:layout_constraintStart_toEndOf="@id/iv_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_content" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/content"
+            app:layout_constraintStart_toStartOf="@id/tv_title_content"
+            app:layout_constraintEnd_toEndOf="@id/tv_title_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_content" />
+
+        <TextView
+            android:id="@+id/tv_date_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/content_date"
+            app:layout_constraintBottom_toBottomOf="@id/iv_content"
+            app:layout_constraintStart_toStartOf="@id/tv_content"
+            app:layout_constraintEnd_toEndOf="@id/tv_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

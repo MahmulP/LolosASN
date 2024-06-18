@@ -16,7 +16,9 @@ import com.lolos.asn.data.response.FinishedTryoutResponse
 import com.lolos.asn.data.response.LeaderboardResponse
 import com.lolos.asn.data.response.LoginRequest
 import com.lolos.asn.data.response.LoginResponse
+import com.lolos.asn.data.response.NewestArticleResponse
 import com.lolos.asn.data.response.NotificationResponse
+import com.lolos.asn.data.response.PopularArticleResponse
 import com.lolos.asn.data.response.PurchaseResponse
 import com.lolos.asn.data.response.RegisterRequest
 import com.lolos.asn.data.response.RegisterResponse
@@ -42,6 +44,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @POST("login")
@@ -251,4 +254,16 @@ interface ApiService {
         @Body request: TokenRequest,
         @Header("Authorization") token: String
     ): Call<TokenResponse>
+
+    @GET("popular")
+    fun getPopularArticles(
+        @Header("Authorization") token: String
+    ): Call<List<PopularArticleResponse>>
+
+    @GET("article")
+    fun getNewestArticles(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Header("Authorization") token: String
+    ): Call<NewestArticleResponse>
 }

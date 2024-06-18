@@ -112,7 +112,7 @@
     <string name="passed">SELAMAT ANDA LULUS!</string>
     <string name="passed_or_no">icon lulus atau tidak</string>
     <string name="total_point">"%d Poin"</string>
-    <string name="result_title">Tryout 1 Premium</string>
+    <string name="result_title">Hasil Tryout</string>
     <string name="point">120</string>
     <string name="keterangan">Keterangan</string>
     <string name="not_passed_rectangle">Persegi tidak lulus</string>
@@ -170,9 +170,9 @@
     <string name="detail_payment">Detail Pembayaran</string>
     <string name="product">Produk</string>
     <string name="payment_method">Pilih Metode Pembayaran</string>
-    <string name="bank_bni">Bank BNI</string>
-    <string name="bank_number">No. Rekening: 082741842</string>
-    <string name="bank_holder">A.n Ucok Santoso</string>
+    <string name="bank_dana">DANA</string>
+    <string name="bank_number_dana">081366971874</string>
+    <string name="bank_holder">A.n Trifine Laurensi Br Ginting</string>
     <string name="payment_info">Informasi Pembayaran</string>
     <string name="price_text">Harga</string>
     <string name="admin_text">Biaya Admin</string>
@@ -288,4 +288,6 @@
     <string name="reminder_logo">Logo Reminder</string>
     <string name="group_discussion">Grup Diskusi</string>
     <string name="two_packet">2 Paket Tryout</string>
+    <string name="bank_bri">Bank BRI</string>
+    <string name="bank_number_bri">0144 0103 8027 507</string>
 </resources>
