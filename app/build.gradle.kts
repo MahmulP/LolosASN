@@ -76,4 +76,9 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.service) // lifecycle service
 
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.paging.runtime.ktx)
+    ksp(libs.room.compiler)
+
+
 }

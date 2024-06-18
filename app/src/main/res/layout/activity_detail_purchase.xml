@@ -136,8 +136,9 @@
                         android:layout_width="118dp"
                         android:layout_height="49dp"
                         android:layout_marginTop="16dp"
+                        android:adjustViewBounds="true"
                         android:contentDescription="@string/icon"
-                        android:src="@drawable/ic_bni"
+                        android:src="@drawable/ic_bri"
                         app:layout_constraintStart_toStartOf="@id/tv_method_title"
                         app:layout_constraintTop_toBottomOf="@id/tv_method_title" />
 
@@ -186,7 +187,7 @@
                         android:id="@+id/iv_dana"
                         android:layout_width="118dp"
                         android:layout_height="49dp"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="48dp"
                         android:contentDescription="@string/icon"
                         android:src="@drawable/ic_dana"
                         app:layout_constraintStart_toStartOf="@id/iv_bank"

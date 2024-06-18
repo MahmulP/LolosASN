@@ -1,6 +1,7 @@
 package com.lolos.asn.ui.fragment
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -98,7 +99,7 @@ class TryoutFragment : Fragment() {
             }
 
             binding.tvType.text = typeTryout
-            binding.tvType.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+            binding.tvType.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.green_normal))
             binding.toolbar.title = "Tryout Gratis"
         }
 

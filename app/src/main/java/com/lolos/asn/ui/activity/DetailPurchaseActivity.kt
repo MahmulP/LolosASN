@@ -66,7 +66,7 @@ class DetailPurchaseActivity : AppCompatActivity() {
 
         tryoutViewModel.bundleTryoutDetail.observe(this) { bundleDetail ->
             if (bundleDetail != null) {
-                val basePrice = bundleDetail.data.basePrice
+                val basePrice = bundleDetail.data.price.toInt()
                 val totalPrice = basePrice + 0
                 val indonesianLocale = Locale("in", "ID")
                 val formattedBasePrice = NumberFormat.getNumberInstance(indonesianLocale).format(basePrice)

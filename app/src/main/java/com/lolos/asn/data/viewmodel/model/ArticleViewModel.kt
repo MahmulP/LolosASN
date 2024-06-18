@@ -14,43 +14,32 @@ class ArticleViewModel: ViewModel() {
     private val _popularArticle = MutableLiveData<List<PopularArticleResponse>?>()
     val popularArticle: LiveData<List<PopularArticleResponse>?> = _popularArticle
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isEmpty = MutableLiveData<Boolean>()
+    val isEmpty: LiveData<Boolean> = _isEmpty
+
     fun getPopularArticle(token: String) {
+        _isLoading.value = true
         val client = AnalysisApiConfig.getApiService().getPopularArticles(token)
         client.enqueue(object : Callback<List<PopularArticleResponse>> {
             override fun onResponse(
                 call: Call<List<PopularArticleResponse>>,
                 response: Response<List<PopularArticleResponse>>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _popularArticle.value = responseBody
+                    } else {
+                        _isEmpty.value = true
                     }
                 } else {
                     Log.e(TAG, "onResponse: ${response.errorBody()?.string()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<PopularArticleResponse>>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
-    }
-
-    fun getNewestArticle(token: String) {
-        val client = AnalysisApiConfig.getApiService().getPopularArticles(token)
-        client.enqueue(object : Callback<List<PopularArticleResponse>> {
-            override fun onResponse(
-                call: Call<List<PopularArticleResponse>>,
-                response: Response<List<PopularArticleResponse>>
-            ) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        _popularArticle.value = responseBody
-                    }
-                } else {
-                    Log.e(TAG, "onResponse: ${response.errorBody()?.string()}")
+                    _isLoading.value = false
+                    _isEmpty.value = true
                 }
             }
 

@@ -1,6 +1,8 @@
 package com.lolos.asn.ui.activity
 
 import android.Manifest
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -102,6 +104,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         val serviceIntent = Intent(this, WebSocketService::class.java)
-        startService(serviceIntent)
+        if (!isServiceRunning(WebSocketService::class.java)) {
+            startService(serviceIntent)
+        }
+    }
+
+    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        @Suppress("DEPRECATION")
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 }

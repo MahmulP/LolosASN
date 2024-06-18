@@ -63,7 +63,7 @@ class PurchaseAdapter(private val context: Context) : ListAdapter<TryoutBundleIt
                 binding.tvPrice.text = context.getString(R.string.owned_bundle)
             } else {
                 binding.tvTotalPackage.text = bundle.listTryoutId?.size.toString()
-                binding.tvPrice.text = basePriceString
+                binding.tvPrice.text = priceString
             }
 
             binding.tvTitle.text = bundle.tryoutBundleName
@@ -71,7 +71,7 @@ class PurchaseAdapter(private val context: Context) : ListAdapter<TryoutBundleIt
             if (basePrice == price) {
                 binding.tvNormalPrice.visibility = View.GONE
             } else {
-                binding.tvNormalPrice.text = priceString
+                binding.tvNormalPrice.text = basePriceString
             }
         }
     }

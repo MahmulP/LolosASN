@@ -415,6 +415,14 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_newest_tryout"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <View
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_all_tryout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_tryout"
             android:layout_width="match_parent"
@@ -427,6 +435,28 @@
             android:orientation="horizontal"
             tools:listitem="@layout/list_newest_tryout"/>
 
+        <ProgressBar
+            android:id="@+id/progressBarTryout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_all_tryout"
+            app:layout_constraintBottom_toTopOf="@id/tv_popular_article"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_empty_tryout"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/empty_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_all_tryout"
+            app:layout_constraintBottom_toTopOf="@id/tv_popular_article"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_popular_article"
             android:layout_width="wrap_content"
@@ -436,7 +466,7 @@
             android:text="@string/popular_article"
             android:textStyle="bold"
             android:fontFamily="@font/roboto_bold"
-            app:layout_constraintTop_toBottomOf="@id/rv_tryout"
+            app:layout_constraintTop_toBottomOf="@id/empty_view"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -452,6 +482,14 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_popular_article"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <View
+            android:id="@+id/empty_view_article"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_all_article"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_article"
             android:layout_width="wrap_content"
@@ -463,6 +501,28 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
             tools:listitem="@layout/list_popular_article" />
+
+        <ProgressBar
+            android:id="@+id/progressBarArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_all_article"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_empty_article"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/empty_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_all_article"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

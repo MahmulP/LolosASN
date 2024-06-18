@@ -47,7 +47,7 @@ class CourseAdapter(private val context: Context) : ListAdapter<Course, CourseAd
     class MyViewHolder(val binding: ListCourseBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(course: Course, position: Int, context: Context, totalItems: Int) {
-            binding.tvTitle.text = "${position + 1}. ${course.courseName}"
+            binding.tvTitle.text = course.courseName
             binding.tvDescription.text = course.courseDescription
 
             val thumbnail = course.courseImage

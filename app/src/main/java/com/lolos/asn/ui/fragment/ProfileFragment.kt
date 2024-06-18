@@ -74,7 +74,7 @@ class ProfileFragment : Fragment() {
 
         tryoutViewModel.allTryout.observe(viewLifecycleOwner) { tryoutResponse ->
             tryoutResponse?.data?.let { dataList ->
-                val isPremiumMember = dataList.any { (it?.accessed?.toIntOrNull() ?: 0) >= 1 }
+                val isPremiumMember = dataList.any { it?.tryoutType == "PAY" && (it.accessed?.toIntOrNull() ?: 0) >= 1 }
                 if (isPremiumMember) {
                     binding.tvType.text = getString(R.string.premium_member)
                     binding.tvType.visibility = View.VISIBLE

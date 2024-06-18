@@ -3,6 +3,7 @@ package com.lolos.asn.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -63,14 +64,14 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
             binding.tvDateCpns.text = dateRange
 
             if (isAccessed != null && isCleared != null) {
-                if (isCleared >= "1" && isAccessed >= "1" || tryout.tryoutType == "FREE" && isCleared >= "1") {
+                if (isCleared >= "1" && isAccessed >= "1") {
                     binding.btnDetail.setOnClickListener {
                         val intent = Intent(context, ResultActivity::class.java)
                         intent.putExtra("tryout_id", tryout.tryoutId)
                         intent.putExtra("tryout_period", dateRange)
                         context.startActivity(intent)
                     }
-                } else if (isAccessed >= "1" || tryout.tryoutType == "FREE") {
+                } else if (isAccessed >= "1") {
                     binding.btnDetail.text = "Mulai"
                     binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
                     binding.btnDetail.setBackgroundColor(
@@ -83,6 +84,19 @@ class TryoutFragmentAdapter(private val context: Context) : ListAdapter<DataItem
                         val intent = Intent(context, TryoutDetailActivity::class.java)
                         intent.putExtra("tryout_id", tryout.tryoutId)
                         intent.putExtra("tryout_period", dateRange)
+                        context.startActivity(intent)
+                    }
+                } else if (tryout.tryoutType == "FREE" && isAccessed == "0") {
+                    binding.btnDetail.text = context.getString(R.string.request_now)
+                    binding.btnDetail.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    binding.btnDetail.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.primaryColor
+                        )
+                    )
+                    binding.btnDetail.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://pasti.lolosasn.id"))
                         context.startActivity(intent)
                     }
                 } else {

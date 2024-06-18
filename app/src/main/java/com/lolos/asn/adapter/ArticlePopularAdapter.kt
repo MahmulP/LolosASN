@@ -2,6 +2,7 @@ package com.lolos.asn.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.lolos.asn.R
 import com.lolos.asn.data.response.PopularArticleResponse
 import com.lolos.asn.databinding.ListPopularArticleBinding
+import com.lolos.asn.ui.activity.ArticleDetailActivity
 
 class ArticlePopularAdapter(private val context: Context): ListAdapter<PopularArticleResponse, ArticlePopularAdapter.MyViewHolder>(
     DIFF_CALLBACK
@@ -23,6 +25,12 @@ class ArticlePopularAdapter(private val context: Context): ListAdapter<PopularAr
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val article = getItem(position)
         holder.bind(article, context)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ArticleDetailActivity::class.java)
+            intent.putExtra("alamat_url", article.linkBerita)
+            context.startActivity(intent)
+        }
     }
     class MyViewHolder(val binding: ListPopularArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")

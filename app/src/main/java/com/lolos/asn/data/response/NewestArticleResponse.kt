@@ -1,5 +1,7 @@
 package com.lolos.asn.data.response
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class NewestArticleResponse(
@@ -17,10 +19,11 @@ data class NewestArticleResponse(
 	val page: Int? = null,
 
 	@field:SerializedName("items")
-	val items: List<ItemsItem?>? = null
+	val items: List<ArticleResponseItem?>? = null
 )
 
-data class ItemsItem(
+@Entity(tableName = "article")
+data class ArticleResponseItem(
 
 	@field:SerializedName("themes")
 	val themes: String? = null,
@@ -34,6 +37,7 @@ data class ItemsItem(
 	@field:SerializedName("recomendation")
 	val recomendation: String? = null,
 
+	@PrimaryKey
 	@field:SerializedName("judul_berita")
-	val judulBerita: String? = null
+	val judulBerita: String
 )

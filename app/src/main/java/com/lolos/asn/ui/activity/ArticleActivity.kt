@@ -1,19 +1,25 @@
 package com.lolos.asn.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lolos.asn.R
+import com.lolos.asn.adapter.ArticleNewestAdapter
 import com.lolos.asn.adapter.ArticlePopularAdapter
+import com.lolos.asn.adapter.LoadingStateAdapter
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
 import com.lolos.asn.data.response.PopularArticleResponse
 import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
+import com.lolos.asn.data.viewmodel.model.ArticleNewestViewModel
 import com.lolos.asn.data.viewmodel.model.ArticleViewModel
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
+import com.lolos.asn.data.viewmodel.model.ViewModelFactory
 import com.lolos.asn.databinding.ActivityArticleBinding
 import com.lolos.asn.utils.MarginItemDecoration
 
@@ -25,6 +31,7 @@ class ArticleActivity : AppCompatActivity() {
         AuthViewModelFactory(pref)
     }
     private val articleViewModel by viewModels<ArticleViewModel>()
+    private lateinit var articleNewestViewModel: ArticleNewestViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +53,35 @@ class ArticleActivity : AppCompatActivity() {
             setupPopularArticleRecycleView(it)
         }
 
-        binding.cvNewestArticle.setOnClickListener {
-            startActivity(Intent(this, ArticleDetailActivity::class.java))
+        articleViewModel.isLoading.observe(this) {
+            binding.progressBarPopular.visibility = if (it) View.VISIBLE else View.GONE
+            binding.layoutEmpty.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        articleViewModel.isEmpty.observe(this) {
+            binding.ivEmptyPopular.visibility = if (it) View.VISIBLE else View.GONE
+            binding.layoutEmpty.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        val factory = ViewModelFactory(this)
+        articleNewestViewModel = ViewModelProvider(this, factory).get(ArticleNewestViewModel::class.java)
+
+        getData()
+    }
+
+    private fun getData() {
+        binding.rvNewestArticle.layoutManager = LinearLayoutManager(this)
+
+        val adapter = ArticleNewestAdapter(this)
+        binding.rvNewestArticle.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
+
+        articleNewestViewModel.article.observe(this) { pagingData ->
+            Log.d("ArticleActivity", "Submitting data to adapter")
+            adapter.submitData(lifecycle, pagingData)
         }
     }
 

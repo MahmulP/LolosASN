@@ -1,10 +1,12 @@
 package com.lolos.asn.ui.activity
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.lolos.asn.R
 import com.lolos.asn.data.preference.UserPreferences
 import com.lolos.asn.data.preference.userPreferencesDataStore
@@ -55,18 +57,28 @@ class TryoutDetailActivity : AppCompatActivity() {
             binding.tvDateRange.text = period
 
             if (type == "FREE") {
-                if (isCleared != null) {
-                    if (isCleared >= "1") {
+                if (isCleared != null && isAccessed != null) {
+                    if (isAccessed >= "1" && isCleared >= "1") {
                         binding.btnStart.text = getString(R.string.result)
                         binding.btnStart.setOnClickListener {
                             val intent = Intent(this, ResultActivity::class.java)
                             intent.putExtra("tryout_id", tryoutResponse.data.tryoutId)
                             startActivity(intent)
                         }
-                    } else {
+                        binding.btnStart.setTextColor(ContextCompat.getColor(this, R.color.primaryColor))
+                        binding.btnStart.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
+                        binding.btnStart.setStrokeColorResource(R.color.primaryColor)
+                        binding.btnStart.strokeWidth = resources.getDimensionPixelSize(R.dimen.stroke_width)
+
+                    } else if (isAccessed >= "1") {
                         binding.btnStart.setOnClickListener {
                             val dialog = StartDialogFragment.newInstance(tryoutId, tryoutName)
                             dialog.show(supportFragmentManager, "CustomDialog")
+                        }
+                    } else {
+                        binding.btnStart.text = getString(R.string.buy_now)
+                        binding.btnStart.setOnClickListener {
+                            startActivity(Intent(this, PurchaseActivity::class.java))
                         }
                     }
                 }
@@ -79,6 +91,11 @@ class TryoutDetailActivity : AppCompatActivity() {
                             intent.putExtra("tryout_id", tryoutResponse.data.tryoutId)
                             startActivity(intent)
                         }
+                        binding.btnStart.setTextColor(ContextCompat.getColor(this, R.color.primaryColor))
+                        binding.btnStart.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
+                        binding.btnStart.setStrokeColorResource(R.color.primaryColor)
+                        binding.btnStart.strokeWidth = resources.getDimensionPixelSize(R.dimen.stroke_width)
+
                     } else if (isAccessed >= "1") {
                         binding.btnStart.setOnClickListener {
                             val dialog = StartDialogFragment.newInstance(tryoutId, tryoutName)

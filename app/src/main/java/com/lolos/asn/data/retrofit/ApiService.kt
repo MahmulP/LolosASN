@@ -263,7 +263,6 @@ interface ApiService {
     @GET("article")
     fun getNewestArticles(
         @Query("page") page: Int,
-        @Query("size") size: Int,
-        @Header("Authorization") token: String
+        @Query("size") size: Int
     ): Call<NewestArticleResponse>
 }

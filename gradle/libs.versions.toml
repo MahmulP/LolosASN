@@ -24,10 +24,13 @@ activity = "1.9.0"
 constraintlayout = "2.1.4"
 materialVersion = "1.12.0"
 mpandroidchart = "v3.1.0"
+pagingRuntimeKtx = "3.3.0"
 photoview = "2.3.0"
 playServicesBasement = "18.4.0"
 playServicesMetadata = "16.0.0"
 retrofit = "2.11.0"
+roomCompiler = "2.6.1"
+roomKtx = "2.6.1"
 viewpager2 = "1.1.0"
 lifecycleLivedataKtx = "2.8.0"
 lifecycleViewmodelKtx = "2.8.0"
@@ -40,6 +43,8 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "lifecycleService" }
 androidx-lifecycle-viewmodel-ktx-v280 = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtxVersion" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 autofittextview = { module = "me.grantland:autofittextview", version.ref = "autofittextview" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
@@ -67,6 +72,7 @@ play-services-basement = { module = "com.google.android.gms:play-services-baseme
 play-services-metadata = { module = "com.google.android.gms:play-services-metadata", version.ref = "playServicesMetadata" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit2-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

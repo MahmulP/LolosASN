@@ -62,11 +62,11 @@ class ValidationPurchaseDialogFragment : BottomSheetDialogFragment() {
 
                 binding.tvTitle.text = bundleDetail.data.tryoutBundleName
                 binding.tvDescription.text = bundleDetail.data.description
-                binding.tvPrice.text = getString(R.string.price, formattedBasePrice)
+                binding.tvPrice.text = getString(R.string.price, formattedPrice)
                 if (price.toInt() == basePrice) {
                     binding.tvNormalPrice.visibility = View.GONE
                 } else {
-                    binding.tvNormalPrice.text = getString(R.string.price, formattedPrice)
+                    binding.tvNormalPrice.text = getString(R.string.price, formattedBasePrice)
                 }
 
                 binding.btnBuy.setOnClickListener {

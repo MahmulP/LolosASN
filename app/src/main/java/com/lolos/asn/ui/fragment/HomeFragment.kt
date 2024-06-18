@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
 
         tryoutViewModel.allTryout.observe(viewLifecycleOwner) { tryoutResponse ->
             tryoutResponse?.data?.let { dataList ->
-                val isPremiumMember = dataList.any { (it?.accessed?.toIntOrNull() ?: 0) >= 1 }
+                val isPremiumMember = dataList.any { it?.tryoutType == "PAY" && (it.accessed?.toIntOrNull() ?: 0) >= 1 }
                 if (isPremiumMember) {
                     binding.tvMember.text = getString(R.string.premium_member)
                     binding.tvMember.visibility = View.VISIBLE
@@ -117,6 +117,22 @@ class HomeFragment : Fragment() {
 
         articleViewModel.popularArticle.observe(viewLifecycleOwner) {
             setupArticleRecycleView(it)
+        }
+
+        articleViewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.progressBarArticle.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        articleViewModel.isEmpty.observe(viewLifecycleOwner) {
+            binding.ivEmptyArticle.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        tryoutViewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.progressBarTryout.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        tryoutViewModel.isEmpty.observe(viewLifecycleOwner) {
+            binding.ivEmptyTryout.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         binding.ibTryout.setOnClickListener {

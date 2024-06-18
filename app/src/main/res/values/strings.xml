@@ -290,4 +290,7 @@
     <string name="two_packet">2 Paket Tryout</string>
     <string name="bank_bri">Bank BRI</string>
     <string name="bank_number_bri">0144 0103 8027 507</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="request_now">Ajukan Sekarang</string>
+    <string name="time_45">40 Menit</string>
 </resources>
