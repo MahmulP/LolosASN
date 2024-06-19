@@ -1,5 +1,7 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -49,10 +51,13 @@ class DetailPurchaseActivity : AppCompatActivity() {
         AuthViewModelFactory(pref)
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailPurchaseBinding.inflate(layoutInflater)
         setContentView(binding.main)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val bundleId = intent.getStringExtra("bundle_id")
 

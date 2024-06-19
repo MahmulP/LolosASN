@@ -1,5 +1,7 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -28,10 +30,13 @@ class NotificationActivity : AppCompatActivity() {
 
     private var userId: String? = null
     private var token: String = "token"
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)

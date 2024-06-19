@@ -1,6 +1,8 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -31,10 +33,13 @@ class ResultHistoryActivity : AppCompatActivity() {
     private var token: String = "token"
     private var transactionFrom: String? = null
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         transactionFrom = intent.getStringExtra("transactionFrom")
 

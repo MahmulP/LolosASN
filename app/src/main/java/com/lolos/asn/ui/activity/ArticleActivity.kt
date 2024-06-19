@@ -1,5 +1,7 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -33,10 +35,13 @@ class ArticleActivity : AppCompatActivity() {
     private val articleViewModel by viewModels<ArticleViewModel>()
     private lateinit var articleNewestViewModel: ArticleNewestViewModel
     
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)

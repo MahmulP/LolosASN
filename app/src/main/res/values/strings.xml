@@ -293,4 +293,5 @@
     <string name="retry">Coba Lagi</string>
     <string name="request_now">Ajukan Sekarang</string>
     <string name="time_45">40 Menit</string>
+    <string name="note_purchase">Note: Anda sudah memiliki %1d tryout untuk bundle ini</string>
 </resources>

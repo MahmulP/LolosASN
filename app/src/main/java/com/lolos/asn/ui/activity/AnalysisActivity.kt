@@ -1,5 +1,7 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -28,10 +30,13 @@ class AnalysisActivity : AppCompatActivity() {
     }
     private val analysisViewModel by viewModels<AnalysisViewModel>()
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnalysisBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val tryoutId = intent.getStringExtra("tryout_id")
 

@@ -1,9 +1,11 @@
 package com.lolos.asn.ui.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authViewModel.getAuthUser().observe(this) { authUser ->
@@ -52,6 +55,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val navView = binding.bottomNavigation
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

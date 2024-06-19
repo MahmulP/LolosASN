@@ -1,6 +1,8 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,7 @@ class IntroductionActivity : AppCompatActivity() {
         IntroViewModelFactory(pref)
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,6 +31,8 @@ class IntroductionActivity : AppCompatActivity() {
 
         binding = ActivityIntroductionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         binding.skipText.setOnClickListener {
             introViewModel.changeStatus(true)

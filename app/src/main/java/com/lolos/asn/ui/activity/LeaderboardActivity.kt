@@ -1,6 +1,7 @@
 package com.lolos.asn.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MenuItem
@@ -28,11 +29,13 @@ class LeaderboardActivity : AppCompatActivity() {
         AuthViewModelFactory(pref)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLeaderboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)

@@ -2,6 +2,7 @@ package com.lolos.asn.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -42,10 +43,13 @@ class DrillingExamActivity : AppCompatActivity() {
     private var currentDrillingData: DrillingStartResponse? = null
     private var currentUserData: UserData? = null
     private var authToken: String = "token"
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDrillingExamBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val latsolId = intent.getStringExtra("latsol_id")
 

@@ -1,6 +1,8 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MenuItem
@@ -27,10 +29,13 @@ class TryoutDetailActivity : AppCompatActivity() {
 
     private var tryoutName: String? = null
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTryoutDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)

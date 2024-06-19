@@ -1,6 +1,7 @@
 package com.lolos.asn.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,11 +16,13 @@ class ArticleDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArticleDetailBinding
     private lateinit var webView: WebView
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint("SetJavaScriptEnabled", "SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArticleDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = binding.toolbar
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)

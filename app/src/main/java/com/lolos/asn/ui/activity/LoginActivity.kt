@@ -1,6 +1,8 @@
 package com.lolos.asn.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -20,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
         AuthViewModelFactory(pref)
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authViewModel.getAuthUser().observe(this) { authUser ->
@@ -37,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val email = intent.getStringExtra("email")
         binding.edLoginEmail.setText(email)

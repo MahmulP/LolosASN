@@ -83,10 +83,12 @@ class ExaminationViewModel: ViewModel() {
                         _examTryout.value = content
 
                         val uniqueSubCategoryIds = content.map { it.subCategoryId.toInt() }.toSet()
+                        val groupedBySubCategory = content.groupBy { it.subCategoryId.toInt() }
 
-                        val subCategoryScores = uniqueSubCategoryIds.map { subCategoryId ->
+                        val subCategoryScores = groupedBySubCategory.map { (subCategoryId, items) ->
+                            val itemCount = items.count { it.category != 3 }
                             ListCategoryScoreItem(
-                                subCategoryScore = 0,
+                                subCategoryScore = itemCount,
                                 subCategoryId = subCategoryId
                             )
                         }
@@ -228,9 +230,9 @@ class ExaminationViewModel: ViewModel() {
                 var scoreChange: Int = 0
                 if (contentItem.category != 3) {
                     scoreChange = if (previousAnswer == contentItem.jawaban) {
-                        -5
+                        1
                     } else if (contentItem.jawaban == optionIndex) {
-                        5
+                        -1
                     } else {
                         0
                     }
@@ -247,7 +249,7 @@ class ExaminationViewModel: ViewModel() {
                 )
             } else {
                 if (contentItem.category != 3) {
-                    val scoreChange = if (contentItem.jawaban == optionIndex) 5 else 0
+                    val scoreChange = if (contentItem.jawaban == optionIndex) -1 else 0
                     updatedSubCategoryScores.add(
                         ListCategoryScoreItem(
                             subCategoryId = subCategoryId,

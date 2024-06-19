@@ -52,6 +52,7 @@ class ValidationPurchaseDialogFragment : BottomSheetDialogFragment() {
 
         tryoutViewModel.bundleTryoutDetail.observe(viewLifecycleOwner) { bundleDetail ->
             if (bundleDetail != null) {
+                val ownedTryout = bundleDetail.data.userBought?.size
                 val price = bundleDetail.data.price
                 val basePrice = bundleDetail.data.basePrice
                 val priceFormat = price.toInt()
@@ -67,6 +68,15 @@ class ValidationPurchaseDialogFragment : BottomSheetDialogFragment() {
                     binding.tvNormalPrice.visibility = View.GONE
                 } else {
                     binding.tvNormalPrice.text = getString(R.string.price, formattedBasePrice)
+                }
+
+                if (ownedTryout != null) {
+                    if (ownedTryout >= 1) {
+                        binding.tvNote.visibility = View.VISIBLE
+                        binding.tvNote.text = getString(R.string.note_purchase, ownedTryout)
+                    } else {
+                        binding.tvNote.visibility = View.GONE
+                    }
                 }
 
                 binding.btnBuy.setOnClickListener {
