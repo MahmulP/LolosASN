@@ -54,7 +54,9 @@ Once the app is installed on your device, you can use it to practice exams and t
 ## Github Links
 
 Here is the links for all the path of ours: 
-1. Cloud Computing: https://github.com/KenzieFu/backend-asn
-2. Mobile Development: This GITHUB
-3. Machine Learning: https://github.com/trifine/LolosASN-ML
-4. Admin Dashboard for LolosASN: https://github.com/MahmulP/admin-lolosasn
+1. Cloud Computing (Express JS) : https://github.com/KenzieFu/backend-asn
+2. Cloud Computing (Fast API): https://github.com/KenzieFu/asnml
+3. Mobile Development: This GITHUB
+4. Machine Learning: https://github.com/trifine/LolosASN-ML
+5. Admin Dashboard for LolosASN: https://github.com/MahmulP/admin-lolosasn
+6. LolosASN Landing Page: https://github.com/MahmulP/LolosASN-landing
