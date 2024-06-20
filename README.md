@@ -58,3 +58,4 @@ Here is the links for all the path of ours:
 2. Mobile Development: This GITHUB
 3. Machine Learning: https://github.com/trifine/LolosASN-ML
 4. Admin Dashboard for LolosASN: https://github.com/MahmulP/admin-lolosasn
+5. LolosASN Landing Page: https://github.com/MahmulP/LolosASN-landing
