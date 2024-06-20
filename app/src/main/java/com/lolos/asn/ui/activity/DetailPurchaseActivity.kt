@@ -86,7 +86,7 @@ class DetailPurchaseActivity : AppCompatActivity() {
                 }
 
                 title = bundleDetail.data.tryoutBundleName
-                price = bundleDetail.data.price.toInt()
+                price = bundleDetail.data.basePrice
                 listTryout = bundleDetail.data.listTryoutId
 
             }
