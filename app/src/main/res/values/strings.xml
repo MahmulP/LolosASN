@@ -294,4 +294,8 @@
     <string name="request_now">Ajukan Sekarang</string>
     <string name="time_45">40 Menit</string>
     <string name="note_purchase">Note: Anda sudah memiliki %1d tryout untuk bundle ini</string>
+    <string name="keep_spirit">Tetap Semangat</string>
+    <string name="failed_text_spirit">Nilai ini bukanlah akhir dari segalanya, maka dari itu mari belajar terus untuk mendapatkan nilai yang lebih baik ke depannya.</string>
+    <string name="good_result">Hasil Memuaskan</string>
+    <string name="good_result_text">Hasil Anda sudah sangat memuaskan akan tetapi tetap terus belajar agar dapat meningkatkan hasil ini di kemudian hari</string>
 </resources>

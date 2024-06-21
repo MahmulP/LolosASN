@@ -27,6 +27,7 @@ import com.lolos.asn.data.viewmodel.factory.AuthViewModelFactory
 import com.lolos.asn.data.viewmodel.model.AuthViewModel
 import com.lolos.asn.data.viewmodel.model.TryoutViewModel
 import com.lolos.asn.databinding.ActivityResultBinding
+import com.lolos.asn.ui.dialog.TextDialogFragment
 
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding
@@ -108,6 +109,9 @@ class ResultActivity : AppCompatActivity() {
                 }
 
                 showChartSubtest(tryoutResult)
+
+                val dialog = TextDialogFragment.newInstance(tryoutResult.data.tryoutPassed)
+                dialog.show(supportFragmentManager, "TextDialogFragment")
             }
         }
 
